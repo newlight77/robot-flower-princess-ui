@@ -70,19 +70,19 @@ class GameBoardWidget extends StatelessWidget {
     String icon = CellType.empty.icon;
 
     if (isRobotHere) {
-      backgroundColor = AppColors.robotBlue.withOpacity(0.3);
+      backgroundColor = AppColors.robotBlue.withValues(alpha: 0.3);
       icon = '🤖';
     } else if (isPrincessHere) {
-      backgroundColor = AppColors.princessPink.withOpacity(0.3);
+      backgroundColor = AppColors.princessPink.withValues(alpha: 0.3);
       icon = '👑';
     } else if (cell != null) {
       switch (cell.type) {
         case CellType.flower:
-          backgroundColor = AppColors.flowerPink.withOpacity(0.3);
+          backgroundColor = AppColors.flowerPink.withValues(alpha: 0.3);
           icon = '🌸';
           break;
         case CellType.obstacle:
-          backgroundColor = AppColors.obstacleGray.withOpacity(0.3);
+          backgroundColor = AppColors.obstacleGray.withValues(alpha: 0.3);
           icon = '🗑️';
           break;
         default:
@@ -94,7 +94,7 @@ class GameBoardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border.all(
-          color: AppColors.mossGreen.withOpacity(0.2),
+          color: AppColors.mossGreen.withValues(alpha: 0.2),
           width: 0.5,
         ),
       ),

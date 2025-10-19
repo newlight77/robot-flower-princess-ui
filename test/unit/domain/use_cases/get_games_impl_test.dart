@@ -76,7 +76,7 @@ void main() {
 
     test('should return empty list when no games exist', () async {
       when(mockRepository.getGames(limit: anyNamed('limit')))
-          .thenAnswer((_) async => Right(<Game>[]));
+          .thenAnswer((_) async => const Right(<Game>[]));
 
       final result = await useCase();
 
