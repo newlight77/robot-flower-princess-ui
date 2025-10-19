@@ -40,10 +40,18 @@ class Robot extends Equatable {
   }
 
   factory Robot.fromJson(Map<String, dynamic> json) {
-    return Robot(
-      position: Position.fromJson(json['position'] as Map<String, dynamic>),
-      orientation: Direction.values.firstWhere((e) => e.name == json['orientation']),
-      flowersHeld: json['flowersHeld'] as int? ?? 0,
-    );
+    try {
+      return Robot(
+        position: json['position'] != null
+            ? Position.fromJson(json['position'] as Map<String, dynamic>)
+            : throw Exception('Robot position is required but was null'),
+        orientation: json['orientation'] != null
+            ? Direction.values.firstWhere((e) => e.name == json['orientation'])
+            : Direction.north,
+        flowersHeld: json['flowersHeld'] as int? ?? 0,
+      );
+    } catch (e) {
+      throw Exception('Failed to parse Robot from JSON: $e. JSON: $json');
+    }
   }
 }

@@ -86,18 +86,25 @@ class GameBoard extends Equatable {
   }
 
   factory GameBoard.fromJson(Map<String, dynamic> json) {
-    return GameBoard(
-      width: json['width'] as int,
-      height: json['height'] as int,
-      cells: (json['cells'] as List)
-          .map((c) => Cell.fromJson(c as Map<String, dynamic>))
-          .toList(),
-      robot: Robot.fromJson(json['robot'] as Map<String, dynamic>),
-      princessPosition: Position.fromJson(
-        json['princessPosition'] as Map<String, dynamic>,
-      ),
-      totalFlowers: json['totalFlowers'] as int,
-      flowersDelivered: json['flowersDelivered'] as int? ?? 0,
-    );
+    try {
+      return GameBoard(
+        width: json['width'] as int? ?? 0,
+        height: json['height'] as int? ?? 0,
+        cells: (json['cells'] as List?)
+                ?.map((c) => Cell.fromJson(c as Map<String, dynamic>))
+                .toList() ??
+            [],
+        robot: json['robot'] != null
+            ? Robot.fromJson(json['robot'] as Map<String, dynamic>)
+            : throw Exception('Robot is required but was null'),
+        princessPosition: json['princessPosition'] != null
+            ? Position.fromJson(json['princessPosition'] as Map<String, dynamic>)
+            : throw Exception('Princess position is required but was null'),
+        totalFlowers: json['totalFlowers'] as int? ?? 0,
+        flowersDelivered: json['flowersDelivered'] as int? ?? 0,
+      );
+    } catch (e) {
+      throw Exception('Failed to parse GameBoard from JSON: $e. JSON: $json');
+    }
   }
 }

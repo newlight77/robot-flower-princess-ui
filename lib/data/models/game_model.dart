@@ -14,20 +14,30 @@ class GameModel extends Game {
   });
 
   factory GameModel.fromJson(Map<String, dynamic> json) {
-    return GameModel(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      board: GameBoard.fromJson(json['board'] as Map<String, dynamic>),
-      status: GameStatus.values.firstWhere((e) => e.name == json['status']),
-      actions: (json['actions'] as List?)
-              ?.map((a) => GameAction.fromJson(a as Map<String, dynamic>))
-              .toList() ??
-          [],
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] != null
-          ? DateTime.parse(json['updatedAt'] as String)
-          : null,
-    );
+    try {
+      return GameModel(
+        id: json['id'] as String? ?? '',
+        name: json['name'] as String? ?? '',
+        board: json['board'] != null
+            ? GameBoard.fromJson(json['board'] as Map<String, dynamic>)
+            : throw Exception('Board is required but was null'),
+        status: json['status'] != null
+            ? GameStatus.values.firstWhere((e) => e.name == json['status'])
+            : GameStatus.playing,
+        actions: (json['actions'] as List?)
+                ?.map((a) => GameAction.fromJson(a as Map<String, dynamic>))
+                .toList() ??
+            [],
+        createdAt: json['createdAt'] != null
+            ? DateTime.parse(json['createdAt'] as String)
+            : DateTime.now(),
+        updatedAt: json['updatedAt'] != null
+            ? DateTime.parse(json['updatedAt'] as String)
+            : null,
+      );
+    } catch (e) {
+      throw Exception('Failed to parse GameModel from JSON: $e. JSON: $json');
+    }
   }
 
   @override

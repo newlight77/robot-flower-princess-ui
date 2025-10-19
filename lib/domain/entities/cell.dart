@@ -32,9 +32,17 @@ class Cell extends Equatable {
   }
 
   factory Cell.fromJson(Map<String, dynamic> json) {
-    return Cell(
-      position: Position.fromJson(json['position'] as Map<String, dynamic>),
-      type: CellType.values.firstWhere((e) => e.name == json['type']),
-    );
+    try {
+      return Cell(
+        position: json['position'] != null
+            ? Position.fromJson(json['position'] as Map<String, dynamic>)
+            : throw Exception('Cell position is required but was null'),
+        type: json['type'] != null
+            ? CellType.values.firstWhere((e) => e.name == json['type'])
+            : CellType.empty,
+      );
+    } catch (e) {
+      throw Exception('Failed to parse Cell from JSON: $e. JSON: $json');
+    }
   }
 }
