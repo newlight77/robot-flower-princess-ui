@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import '../../core/constants/api_endpoints.dart';
 import '../../core/error/exceptions.dart';
 import '../../core/network/api_client.dart';
+import '../../core/utils/logger.dart';
 import '../../domain/value_objects/action_type.dart';
 import '../../domain/value_objects/direction.dart';
 import '../models/game_model.dart';
@@ -44,7 +45,39 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
   Future<List<GameModel>> getGames() async {
     try {
       final response = await client.get(ApiEndpoints.games);
-      final List<dynamic> data = response.data as List<dynamic>;
+
+      // Debug logging to understand response structure
+      Logger.info('getGames response type: ${response.data.runtimeType}');
+      Logger.info('getGames response data: ${response.data}');
+
+      // Handle different response formats
+      List<dynamic> data;
+      if (response.data is List) {
+        // Direct array format
+        Logger.info('Processing direct array format');
+        data = response.data as List<dynamic>;
+      } else if (response.data is Map<String, dynamic>) {
+        // Wrapped in object format - check common property names
+        Logger.info('Processing wrapped object format');
+        final responseMap = response.data as Map<String, dynamic>;
+        Logger.info('Response map keys: ${responseMap.keys.toList()}');
+
+        if (responseMap.containsKey('games')) {
+          data = responseMap['games'] as List<dynamic>;
+        } else if (responseMap.containsKey('data')) {
+          data = responseMap['data'] as List<dynamic>;
+        } else if (responseMap.containsKey('items')) {
+          data = responseMap['items'] as List<dynamic>;
+        } else {
+          // If it's a single game object, wrap it in a list
+          Logger.info('Treating response as single game object');
+          data = [responseMap];
+        }
+      } else {
+        throw Exception('Unexpected response format: ${response.data.runtimeType}');
+      }
+
+      Logger.info('Final data length: ${data.length}');
       return data
           .map((json) => GameModel.fromJson(json as Map<String, dynamic>))
           .toList();
