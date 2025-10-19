@@ -1,0 +1,12 @@
+**/.git
+**/.github
+**/.vscode
+**/build
+**/.dart_tool
+**/.idea
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/.pub-cache
+**/.pub/
+**/coverage

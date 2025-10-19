@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    environment:
+      - API_BASE_URL=${API_BASE_URL:-http://localhost:8081}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
