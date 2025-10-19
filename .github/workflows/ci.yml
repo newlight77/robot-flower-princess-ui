@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
 
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
@@ -29,9 +29,10 @@ jobs:
       run: flutter test --coverage
 
     - name: Upload coverage
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       with:
-        file: ./coverage/lcov.info
+        files:
+          ./coverage/lcov.info
 
   build-web:
     needs: test
@@ -39,7 +40,7 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
 
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
@@ -54,7 +55,7 @@ jobs:
       run: flutter build web --release
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: web-build
         path: build/web
@@ -65,7 +66,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v5
 
     - name: Build Docker image
       run: docker build -t robot-flower-princess:${{ github.sha }} .
