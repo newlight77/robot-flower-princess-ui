@@ -101,7 +101,7 @@ flutter run -d chrome
 ## 📱 Technical Stack
 
 ### Frontend Framework
-- **Flutter 3.16+**: Cross-platform UI framework
+- **Flutter 3.35+**: Cross-platform UI framework
 - **Dart 3.0+**: Programming language
 
 ### State Management
@@ -272,7 +272,7 @@ static const int maxBoardSize = 100; // Change from 50
 ## 🚦 Getting Started Checklist
 
 - [ ] Extract `robot-flower-princess-complete.zip`
-- [ ] Install Flutter SDK (3.16+)
+- [ ] Install Flutter SDK (3.35+)
 - [ ] Run setup script (`setup.sh` or `setup.bat`)
 - [ ] Configure API endpoint in `.env`
 - [ ] Run `flutter pub get`
