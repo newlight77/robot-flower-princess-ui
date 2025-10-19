@@ -9,7 +9,8 @@ I've created **5 Python generator scripts** that produce a complete, production-
 | Script | Purpose | Output |
 |--------|---------|--------|
 | `robot_flower_part1.py` | Project structure, core utilities, theme, Docker, CI/CD | Part 1 ZIP |
-| `robot_flower_part2.py` | Domain layer (entities, value objects, use cases, ports) | Part 2 ZIP |
+| `robot_flower_part2-code.py` | Domain layer (entities, value objects, use cases, ports) | Part 2 ZIP |
+| `robot_flower_part2-test-code.py` | Test for Domain layer | Part 2 ZIP |
 | `robot_flower_part3.py` | Data & presentation (repositories, providers, widgets) | Part 3 ZIP |
 | `robot_flower_part4.py` | Application pages (home, game page, dialogs) | Part 4 ZIP |
 | `robot_flower_part5.py` | Setup scripts, documentation, master package | Complete ZIP |
@@ -23,7 +24,8 @@ Copy each of the 5 artifact code blocks from this conversation.
 ```bash
 # Run each script in order
 python robot_flower_part1.py
-python robot_flower_part2.py
+python robot_flower_part2-code.py
+python robot_flower_part2-test-code.py
 python robot_flower_part3.py
 python robot_flower_part4.py
 python robot_flower_part5.py
