@@ -63,35 +63,36 @@ void main() {
 
   group('GetGamesImpl', () {
     test('should return list of games when repository succeeds', () async {
-      when(mockRepository.getGames())
+      when(mockRepository.getGames(limit: anyNamed('limit')))
           .thenAnswer((_) async => Right(testGames));
 
       final result = await useCase();
 
       expect(result, Right(testGames));
       expect((result as Right).value.length, 2);
-      verify(mockRepository.getGames());
+      verify(mockRepository.getGames(limit: anyNamed('limit')));
       verifyNoMoreInteractions(mockRepository);
     });
 
     test('should return empty list when no games exist', () async {
-      when(mockRepository.getGames())
-          .thenAnswer((_) async => const Right([]));
+      when(mockRepository.getGames(limit: anyNamed('limit')))
+          .thenAnswer((_) async => Right(<Game>[]));
 
       final result = await useCase();
 
-      expect(result, const Right([]));
-      verify(mockRepository.getGames());
+  // Match the successful Right result by asserting on the contained value
+  expect((result as Right).value, <Game>[]);
+      verify(mockRepository.getGames(limit: anyNamed('limit')));
     });
 
     test('should return ServerFailure when repository fails', () async {
-      when(mockRepository.getGames())
+      when(mockRepository.getGames(limit: anyNamed('limit')))
           .thenAnswer((_) async => const Left(ServerFailure('Server error')));
 
       final result = await useCase();
 
       expect(result, const Left(ServerFailure('Server error')));
-      verify(mockRepository.getGames());
+      verify(mockRepository.getGames(limit: anyNamed('limit')));
     });
   });
 }

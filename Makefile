@@ -1,4 +1,8 @@
+#!make
+
 # Robot Flower Princess - Makefile
+
+SHELL := /bin/sh
 
 .PHONY: help install clean test build run docker-build docker-run
 

@@ -78,13 +78,13 @@ void main() {
   group('getGames', () {
     test('should return list of Games when datasource call is successful',
         () async {
-      when(mockDataSource.getGames())
+      when(mockDataSource.getGames(limit: anyNamed('limit')))
           .thenAnswer((_) async => [testGameModel]);
 
       final result = await repository.getGames();
 
       expect(result.isRight(), true);
-      verify(mockDataSource.getGames());
+      verify(mockDataSource.getGames(limit: anyNamed('limit')));
     });
   });
 }
