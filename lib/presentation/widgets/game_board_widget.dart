@@ -73,7 +73,7 @@ class GameBoardWidget extends StatelessWidget {
     String icon = CellType.empty.icon;
 
     if (isRobotHere) {
-      backgroundColor = AppColors.robotBlue.with(alpha: 0.3);
+      backgroundColor = AppColors.robotBlue.withValues(alpha: 0.3);
       icon = '🤖';
     } else if (isPrincessHere) {
       backgroundColor = AppColors.princessPink.withValues(alpha: 0.3);
