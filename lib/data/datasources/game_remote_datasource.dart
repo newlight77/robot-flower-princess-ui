@@ -43,12 +43,15 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
 
       Logger.info('Create game response status: ${response.statusCode}');
       Logger.info('Create game response headers: ${response.headers}');
-      Logger.info('Create game response data type: ${response.data.runtimeType}');
+      Logger.info(
+          'Create game response data type: ${response.data.runtimeType}');
       Logger.info('Create game response data: ${response.data}');
 
       if (response.data is! Map<String, dynamic>) {
-        Logger.error('Response data is not a Map<String, dynamic>, it is: ${response.data.runtimeType}');
-        throw Exception('Expected Map<String, dynamic> but got ${response.data.runtimeType}');
+        Logger.error(
+            'Response data is not a Map<String, dynamic>, it is: ${response.data.runtimeType}');
+        throw Exception(
+            'Expected Map<String, dynamic> but got ${response.data.runtimeType}');
       }
 
       // Some backends wrap the created game under a 'game' property
@@ -100,7 +103,8 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
           data = [responseMap];
         }
       } else {
-        throw Exception('Unexpected response format: ${response.data.runtimeType}');
+        throw Exception(
+            'Unexpected response format: ${response.data.runtimeType}');
       }
 
       Logger.info('Final data length: ${data.length}');

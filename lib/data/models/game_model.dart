@@ -10,13 +10,15 @@ class GameModel extends Game {
     required super.name,
     required super.board,
     required super.status,
-    required super.createdAt, super.actions,
+    required super.createdAt,
+    super.actions,
     super.updatedAt,
   });
 
   factory GameModel.fromJson(Map<String, dynamic> json) {
     try {
-  Logger.debug('GameModel.fromJson - Parsing JSON: $json', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - Parsing JSON: $json',
+          tag: 'GameModel');
 
       // Parse each field individually with detailed logging
       final rawId = (json['id'] ?? json['_id'] ?? json['gameId']) as String?;
@@ -24,41 +26,51 @@ class GameModel extends Game {
         throw Exception('Game id is missing or empty');
       }
       final id = rawId;
-  Logger.debug('GameModel.fromJson - id: $id', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - id: $id', tag: 'GameModel');
 
       final name = json['name'] as String? ?? '';
-  Logger.debug('GameModel.fromJson - name: $name', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - name: $name', tag: 'GameModel');
 
-  Logger.debug('GameModel.fromJson - board field: ${json['board']}', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - board field: ${json['board']}',
+          tag: 'GameModel');
       final board = json['board'] != null
           ? GameBoard.fromJson(json['board'] as Map<String, dynamic>)
           : throw Exception('Board is required but was null');
-  Logger.debug('GameModel.fromJson - board parsed successfully', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - board parsed successfully',
+          tag: 'GameModel');
 
-  Logger.debug('GameModel.fromJson - status field: ${json['status']}', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - status field: ${json['status']}',
+          tag: 'GameModel');
       final status = json['status'] != null
           ? GameStatus.values.firstWhere((e) => e.name == json['status'])
           : GameStatus.playing;
-  Logger.debug('GameModel.fromJson - status: $status', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - status: $status', tag: 'GameModel');
 
-  Logger.debug('GameModel.fromJson - actions field: ${json['actions']}', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - actions field: ${json['actions']}',
+          tag: 'GameModel');
       final actions = (json['actions'] as List?)
               ?.map((a) => GameAction.fromJson(a as Map<String, dynamic>))
               .toList() ??
           [];
-  Logger.debug('GameModel.fromJson - actions parsed successfully, count: ${actions.length}', tag: 'GameModel');
+      Logger.debug(
+          'GameModel.fromJson - actions parsed successfully, count: ${actions.length}',
+          tag: 'GameModel');
 
-  Logger.debug('GameModel.fromJson - createdAt field: ${json['createdAt']}', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - createdAt field: ${json['createdAt']}',
+          tag: 'GameModel');
       final createdAt = json['createdAt'] != null
           ? DateTime.parse(json['createdAt'] as String)
           : DateTime.now();
-  Logger.debug('GameModel.fromJson - createdAt: $createdAt', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - createdAt: $createdAt',
+          tag: 'GameModel');
 
-  Logger.debug('GameModel.fromJson - updatedAt field: ${json['updatedAt']}', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - updatedAt field: ${json['updatedAt']}',
+          tag: 'GameModel');
       final updatedAt = json['updatedAt'] != null
           ? DateTime.parse(json['updatedAt'] as String)
           : null;
-  Logger.debug('GameModel.fromJson - updatedAt: $updatedAt', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - updatedAt: $updatedAt',
+          tag: 'GameModel');
 
       final gameModel = GameModel(
         id: id,
@@ -70,11 +82,14 @@ class GameModel extends Game {
         updatedAt: updatedAt,
       );
 
-  Logger.info('GameModel.fromJson - Successfully created GameModel', tag: 'GameModel');
+      Logger.info('GameModel.fromJson - Successfully created GameModel',
+          tag: 'GameModel');
       return gameModel;
     } catch (e, stackTrace) {
-  Logger.error('GameModel.fromJson - Error: $e', tag: 'GameModel', error: e);
-  Logger.error('GameModel.fromJson - Stack trace: $stackTrace', tag: 'GameModel');
+      Logger.error('GameModel.fromJson - Error: $e',
+          tag: 'GameModel', error: e);
+      Logger.error('GameModel.fromJson - Stack trace: $stackTrace',
+          tag: 'GameModel');
       throw Exception('Failed to parse GameModel from JSON: $e. JSON: $json');
     }
   }

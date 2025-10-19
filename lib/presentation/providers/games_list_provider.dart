@@ -11,7 +11,8 @@ class GamesListNotifier extends StateNotifier<AsyncValue<List<Game>>> {
     state = const AsyncValue.loading();
     final result = await _getGamesUseCase(limit: limit);
     result.fold(
-      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (failure) =>
+          state = AsyncValue.error(failure.message, StackTrace.current),
       (games) => state = AsyncValue.data(games),
     );
   }

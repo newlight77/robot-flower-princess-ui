@@ -34,7 +34,8 @@ class GameAction extends Equatable {
   }
 
   @override
-  List<Object?> get props => [type, direction, timestamp, success, errorMessage];
+  List<Object?> get props =>
+      [type, direction, timestamp, success, errorMessage];
 
   Map<String, dynamic> toJson() {
     return {
@@ -49,7 +50,8 @@ class GameAction extends Equatable {
   factory GameAction.fromJson(Map<String, dynamic> json) {
     return GameAction(
       type: ActionType.values.firstWhere((e) => e.name == json['type']),
-      direction: Direction.values.firstWhere((e) => e.name == json['direction']),
+      direction:
+          Direction.values.firstWhere((e) => e.name == json['direction']),
       timestamp: DateTime.parse(json['timestamp'] as String),
       success: json['success'] as bool? ?? true,
       errorMessage: json['errorMessage'] as String?,

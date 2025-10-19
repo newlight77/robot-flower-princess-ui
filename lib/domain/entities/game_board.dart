@@ -27,7 +27,8 @@ class GameBoard extends Equatable {
   Cell? getCellAt(Position position) {
     try {
       return cells.firstWhere(
-        (cell) => cell.position.x == position.x && cell.position.y == position.y,
+        (cell) =>
+            cell.position.x == position.x && cell.position.y == position.y,
       );
     } catch (e) {
       return null;
@@ -97,39 +98,54 @@ class GameBoard extends Equatable {
       final height = json['height'] as int? ?? 0;
       Logger.debug('GameBoard.fromJson - height: $height', tag: 'GameBoard');
 
-      Logger.debug('GameBoard.fromJson - cells field: ${json['cells']}', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - cells field: ${json['cells']}',
+          tag: 'GameBoard');
       final cells = (json['cells'] as List?)
               ?.map((c) => Cell.fromJson(c as Map<String, dynamic>))
               .toList() ??
           [];
-      Logger.debug('GameBoard.fromJson - cells parsed successfully, count: ${cells.length}', tag: 'GameBoard');
+      Logger.debug(
+          'GameBoard.fromJson - cells parsed successfully, count: ${cells.length}',
+          tag: 'GameBoard');
 
-      Logger.debug('GameBoard.fromJson - robot field: ${json['robot']}', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - robot field: ${json['robot']}',
+          tag: 'GameBoard');
       final robot = json['robot'] != null
           ? Robot.fromJson(json['robot'] as Map<String, dynamic>)
           : throw Exception('Robot is required but was null');
-      Logger.debug('GameBoard.fromJson - robot parsed successfully', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - robot parsed successfully',
+          tag: 'GameBoard');
 
-      Logger.debug('GameBoard.fromJson - princessPosition field: ${json['princessPosition']}');
+      Logger.debug(
+          'GameBoard.fromJson - princessPosition field: ${json['princessPosition']}');
       Position princessPosition;
       if (json['princessPosition'] != null) {
-        princessPosition = Position.fromJson(json['princessPosition'] as Map<String, dynamic>);
+        princessPosition =
+            Position.fromJson(json['princessPosition'] as Map<String, dynamic>);
       } else {
         // Fallback: find princess position from cells list
         final princessCell = cells.firstWhere(
           (c) => c.type.name == 'princess',
-          orElse: () => const Cell(position: Position(x: 0, y: 0), type: CellType.empty),
+          orElse: () =>
+              const Cell(position: Position(x: 0, y: 0), type: CellType.empty),
         );
-        princessPosition = princessCell.type.name == 'princess' ? princessCell.position : const Position(x: 0, y: 0);
-      Logger.debug('GameBoard.fromJson - princessPosition derived from cells: $princessPosition', tag: 'GameBoard');
+        princessPosition = princessCell.type.name == 'princess'
+            ? princessCell.position
+            : const Position(x: 0, y: 0);
+        Logger.debug(
+            'GameBoard.fromJson - princessPosition derived from cells: $princessPosition',
+            tag: 'GameBoard');
       }
-      Logger.debug('GameBoard.fromJson - princessPosition parsed successfully', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - princessPosition parsed successfully',
+          tag: 'GameBoard');
 
       final totalFlowers = json['totalFlowers'] as int? ?? 0;
-      Logger.debug('GameBoard.fromJson - totalFlowers: $totalFlowers', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - totalFlowers: $totalFlowers',
+          tag: 'GameBoard');
 
       final flowersDelivered = json['flowersDelivered'] as int? ?? 0;
-      Logger.debug('GameBoard.fromJson - flowersDelivered: $flowersDelivered', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - flowersDelivered: $flowersDelivered',
+          tag: 'GameBoard');
 
       final gameBoard = GameBoard(
         width: width,
@@ -141,11 +157,14 @@ class GameBoard extends Equatable {
         flowersDelivered: flowersDelivered,
       );
 
-      Logger.info('GameBoard.fromJson - Successfully created GameBoard', tag: 'GameBoard');
+      Logger.info('GameBoard.fromJson - Successfully created GameBoard',
+          tag: 'GameBoard');
       return gameBoard;
     } catch (e, stackTrace) {
-      Logger.error('GameBoard.fromJson - Error: $e', tag: 'GameBoard', error: e);
-      Logger.error('GameBoard.fromJson - Stack trace: $stackTrace', tag: 'GameBoard');
+      Logger.error('GameBoard.fromJson - Error: $e',
+          tag: 'GameBoard', error: e);
+      Logger.error('GameBoard.fromJson - Stack trace: $stackTrace',
+          tag: 'GameBoard');
       throw Exception('Failed to parse GameBoard from JSON: $e. JSON: $json');
     }
   }

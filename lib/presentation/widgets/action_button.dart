@@ -8,7 +8,9 @@ class ActionButton extends StatelessWidget {
   final bool isEnabled;
 
   const ActionButton({
-    required this.actionType, required this.onPressed, super.key,
+    required this.actionType,
+    required this.onPressed,
+    super.key,
     this.isEnabled = true,
   });
 
@@ -19,7 +21,8 @@ class ActionButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isEnabled ? onPressed : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor: isEnabled ? AppColors.forestGreen : AppColors.obstacleGray,
+          backgroundColor:
+              isEnabled ? AppColors.forestGreen : AppColors.obstacleGray,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

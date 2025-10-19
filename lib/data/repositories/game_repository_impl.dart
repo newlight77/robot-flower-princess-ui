@@ -103,9 +103,8 @@ class GameRepositoryImpl implements GameRepository {
   Future<Either<Failure, List<GameBoard>>> replayGame(String gameId) async {
     try {
       final boardStates = await remoteDataSource.replayGame(gameId);
-      final boards = boardStates
-          .map((json) => GameBoard.fromJson(json))
-          .toList();
+      final boards =
+          boardStates.map((json) => GameBoard.fromJson(json)).toList();
       return Right(boards);
     } on NotFoundException catch (e) {
       return Left(NotFoundFailure(e.message));

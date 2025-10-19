@@ -80,8 +80,8 @@ void main() {
 
       final result = await useCase();
 
-  // Match the successful Right result by asserting on the contained value
-  expect((result as Right).value, <Game>[]);
+      // Match the successful Right result by asserting on the contained value
+      expect((result as Right).value, <Game>[]);
       verify(mockRepository.getGames(limit: anyNamed('limit')));
     });
 

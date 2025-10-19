@@ -6,7 +6,8 @@ class GameStatusBadge extends StatelessWidget {
   final GameStatus status;
 
   const GameStatusBadge({
-    required this.status, super.key,
+    required this.status,
+    super.key,
   });
 
   @override

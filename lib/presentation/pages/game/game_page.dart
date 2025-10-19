@@ -13,7 +13,8 @@ class GamePage extends ConsumerStatefulWidget {
   final String gameId;
 
   const GamePage({
-    required this.gameId, super.key,
+    required this.gameId,
+    super.key,
   });
 
   @override
@@ -82,7 +83,8 @@ class _GamePageState extends ConsumerState<GamePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(Icons.error_outline, size: 64, color: AppColors.error),
+                const Icon(Icons.error_outline,
+                    size: 64, color: AppColors.error),
                 const SizedBox(height: 16),
                 Text(
                   error.toString(),
@@ -92,7 +94,9 @@ class _GamePageState extends ConsumerState<GamePage> {
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: () {
-                    ref.read(currentGameProvider.notifier).loadGame(widget.gameId);
+                    ref
+                        .read(currentGameProvider.notifier)
+                        .loadGame(widget.gameId);
                   },
                   child: const Text('Retry'),
                 ),

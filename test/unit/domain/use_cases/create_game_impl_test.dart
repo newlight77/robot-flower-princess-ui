@@ -57,11 +57,13 @@ void main() {
     test('should return ValidationFailure when name is empty', () async {
       final result = await useCase('', 10);
 
-      expect(result, const Left(ValidationFailure('Game name cannot be empty')));
+      expect(
+          result, const Left(ValidationFailure('Game name cannot be empty')));
       verifyZeroInteractions(mockRepository);
     });
 
-    test('should return ValidationFailure when board size is too small', () async {
+    test('should return ValidationFailure when board size is too small',
+        () async {
       final result = await useCase('Test Game', 2);
 
       expect(
@@ -71,7 +73,8 @@ void main() {
       verifyZeroInteractions(mockRepository);
     });
 
-    test('should return ValidationFailure when board size is too large', () async {
+    test('should return ValidationFailure when board size is too large',
+        () async {
       final result = await useCase('Test Game', 51);
 
       expect(

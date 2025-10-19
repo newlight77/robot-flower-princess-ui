@@ -7,7 +7,9 @@ class DirectionSelector extends StatelessWidget {
   final ValueChanged<Direction> onDirectionSelected;
 
   const DirectionSelector({
-    required this.selectedDirection, required this.onDirectionSelected, super.key,
+    required this.selectedDirection,
+    required this.onDirectionSelected,
+    super.key,
   });
 
   @override
@@ -44,7 +46,8 @@ class DirectionSelector extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => onDirectionSelected(direction),
       style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected ? AppColors.warmOrange : AppColors.mossGreen,
+        backgroundColor:
+            isSelected ? AppColors.warmOrange : AppColors.mossGreen,
         padding: const EdgeInsets.all(12),
         shape: const CircleBorder(),
       ),

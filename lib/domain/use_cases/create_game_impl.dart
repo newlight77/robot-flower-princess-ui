@@ -15,7 +15,8 @@ class CreateGameImpl implements CreateGameUseCase {
       return const Left(ValidationFailure('Game name cannot be empty'));
     }
     if (boardSize < 3 || boardSize > 50) {
-      return const Left(ValidationFailure('Board size must be between 3 and 50'));
+      return const Left(
+          ValidationFailure('Board size must be between 3 and 50'));
     }
     return await repository.createGame(name, boardSize);
   }

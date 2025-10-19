@@ -9,7 +9,8 @@ class ReplayDialog extends ConsumerStatefulWidget {
   final String gameId;
 
   const ReplayDialog({
-    required this.gameId, super.key,
+    required this.gameId,
+    super.key,
   });
 
   @override
@@ -191,7 +192,8 @@ class _ReplayDialogState extends ConsumerState<ReplayDialog> {
               IconButton(
                 icon: const Icon(Icons.skip_next),
                 onPressed: _currentStep < _boardStates!.length - 1
-                    ? () => setState(() => _currentStep = _boardStates!.length - 1)
+                    ? () =>
+                        setState(() => _currentStep = _boardStates!.length - 1)
                     : null,
               ),
             ],

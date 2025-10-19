@@ -11,7 +11,8 @@ class GameBoardWidget extends StatelessWidget {
   final double cellSize;
 
   const GameBoardWidget({
-    required this.board, super.key,
+    required this.board,
+    super.key,
     this.cellSize = 50,
   });
 
@@ -19,7 +20,8 @@ class GameBoardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final calculatedCellSize = (constraints.maxWidth / board.width).clamp(20.0, 60.0);
+        final calculatedCellSize =
+            (constraints.maxWidth / board.width).clamp(20.0, 60.0);
         final boardWidth = calculatedCellSize * board.width;
         final boardHeight = calculatedCellSize * board.height;
 
@@ -37,7 +39,8 @@ class GameBoardWidget extends StatelessWidget {
                 child: GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: _getSafeCrossAxisCount(constraints.maxWidth, board.width),
+                    crossAxisCount: _getSafeCrossAxisCount(
+                        constraints.maxWidth, board.width),
                   ),
                   itemCount: board.width * board.height,
                   itemBuilder: (context, index) {

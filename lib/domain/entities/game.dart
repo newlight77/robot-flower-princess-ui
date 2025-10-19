@@ -17,7 +17,8 @@ class Game extends Equatable {
     required this.name,
     required this.board,
     required this.status,
-    required this.createdAt, this.actions = const [],
+    required this.createdAt,
+    this.actions = const [],
     this.updatedAt,
   });
 

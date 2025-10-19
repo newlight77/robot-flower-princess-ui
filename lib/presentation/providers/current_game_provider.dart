@@ -19,7 +19,8 @@ class CurrentGameNotifier extends StateNotifier<AsyncValue<Game?>> {
     state = const AsyncValue.loading();
     final result = await _getGameUseCase(gameId);
     result.fold(
-      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (failure) =>
+          state = AsyncValue.error(failure.message, StackTrace.current),
       (game) => state = AsyncValue.data(game),
     );
   }
@@ -29,9 +30,11 @@ class CurrentGameNotifier extends StateNotifier<AsyncValue<Game?>> {
     if (currentGame == null) return;
 
     state = const AsyncValue.loading();
-    final result = await _executeActionUseCase(currentGame.id, action, direction);
+    final result =
+        await _executeActionUseCase(currentGame.id, action, direction);
     result.fold(
-      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (failure) =>
+          state = AsyncValue.error(failure.message, StackTrace.current),
       (game) => state = AsyncValue.data(game),
     );
   }
@@ -43,7 +46,8 @@ class CurrentGameNotifier extends StateNotifier<AsyncValue<Game?>> {
     state = const AsyncValue.loading();
     final result = await _autoPlayUseCase(currentGame.id);
     result.fold(
-      (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
+      (failure) =>
+          state = AsyncValue.error(failure.message, StackTrace.current),
       (game) => state = AsyncValue.data(game),
     );
   }

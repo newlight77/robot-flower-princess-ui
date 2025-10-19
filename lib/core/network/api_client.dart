@@ -25,7 +25,8 @@ class ApiClient {
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          Logger.info('Response: ${response.statusCode} ${response.requestOptions.path}');
+          Logger.info(
+              'Response: ${response.statusCode} ${response.requestOptions.path}');
           return handler.next(response);
         },
         onError: (error, handler) {
@@ -39,7 +40,8 @@ class ApiClient {
     );
   }
 
-  Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) async {
+  Future<Response> get(String path,
+      {Map<String, dynamic>? queryParameters}) async {
     return await _dio.get(path, queryParameters: queryParameters);
   }
 

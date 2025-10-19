@@ -8,7 +8,8 @@ class CreateGameDialog extends ConsumerStatefulWidget {
   final Function(Game) onGameCreated;
 
   const CreateGameDialog({
-    required this.onGameCreated, super.key,
+    required this.onGameCreated,
+    super.key,
   });
 
   @override
