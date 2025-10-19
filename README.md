@@ -1,4 +1,4 @@
-# Robot Flower Princess Frontend
+# Robot Flower Princess UI
 
 A strategic puzzle game built with Flutter following hexagonal architecture principles.
 
