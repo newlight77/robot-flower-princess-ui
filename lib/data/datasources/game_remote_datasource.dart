@@ -41,8 +41,23 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
         data: requestData,
       );
 
-      Logger.info('Create game response: ${response.data}');
-      return GameModel.fromJson(response.data as Map<String, dynamic>);
+      Logger.info('Create game response status: ${response.statusCode}');
+      Logger.info('Create game response headers: ${response.headers}');
+      Logger.info('Create game response data type: ${response.data.runtimeType}');
+      Logger.info('Create game response data: ${response.data}');
+
+      if (response.data is! Map<String, dynamic>) {
+        Logger.error('Response data is not a Map<String, dynamic>, it is: ${response.data.runtimeType}');
+        throw Exception('Expected Map<String, dynamic> but got ${response.data.runtimeType}');
+      }
+
+      // Some backends wrap the created game under a 'game' property
+      final responseMap = response.data as Map<String, dynamic>;
+      final gameJson = responseMap['game'] is Map<String, dynamic>
+          ? responseMap['game'] as Map<String, dynamic>
+          : responseMap;
+
+      return GameModel.fromJson(gameJson);
     } on DioException catch (e) {
       Logger.error('Create game error: ${e.response?.data}');
       throw _handleDioError(e);

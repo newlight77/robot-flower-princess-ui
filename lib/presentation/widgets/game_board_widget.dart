@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 import '../../core/theme/app_colors.dart';
 import '../../domain/entities/game_board.dart';
 import '../../domain/entities/cell.dart';
@@ -18,10 +19,7 @@ class GameBoardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final availableWidth = constraints.maxWidth;
-        final availableHeight = constraints.maxHeight;
-
-        final calculatedCellSize = (availableWidth / board.width).clamp(20.0, 60.0);
+        final calculatedCellSize = (constraints.maxWidth / board.width).clamp(20.0, 60.0);
         final boardWidth = calculatedCellSize * board.width;
         final boardHeight = calculatedCellSize * board.height;
 
@@ -39,7 +37,7 @@ class GameBoardWidget extends StatelessWidget {
                 child: GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: board.width,
+                    crossAxisCount: _getSafeCrossAxisCount(constraints.maxWidth, board.width),
                   ),
                   itemCount: board.width * board.height,
                   itemBuilder: (context, index) {
@@ -57,6 +55,11 @@ class GameBoardWidget extends StatelessWidget {
         );
       },
     );
+  }
+
+  int _getSafeCrossAxisCount(double availableWidth, int itemWidth) {
+    if (availableWidth <= 0 || itemWidth <= 0) return 1;
+    return math.max(1, (availableWidth / itemWidth).floor());
   }
 
   Widget _buildCell(BuildContext context, Cell? cell, Position position) {

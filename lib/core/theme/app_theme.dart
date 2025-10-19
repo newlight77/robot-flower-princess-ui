@@ -79,7 +79,6 @@ class AppTheme {
         secondary: AppColors.warmOrange,
         tertiary: AppColors.skyBlue,
         surface: AppColors.earthBrown,
-        background: Color(0xFF1A1A1A),
         error: AppColors.error,
       ),
       textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),

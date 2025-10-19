@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'cell.dart';
 import 'robot.dart';
 import '../value_objects/position.dart';
+import '../value_objects/cell_type.dart';
 
 class GameBoard extends Equatable {
   final int width;
@@ -87,23 +88,63 @@ class GameBoard extends Equatable {
 
   factory GameBoard.fromJson(Map<String, dynamic> json) {
     try {
-      return GameBoard(
-        width: json['width'] as int? ?? 0,
-        height: json['height'] as int? ?? 0,
-        cells: (json['cells'] as List?)
-                ?.map((c) => Cell.fromJson(c as Map<String, dynamic>))
-                .toList() ??
-            [],
-        robot: json['robot'] != null
-            ? Robot.fromJson(json['robot'] as Map<String, dynamic>)
-            : throw Exception('Robot is required but was null'),
-        princessPosition: json['princessPosition'] != null
-            ? Position.fromJson(json['princessPosition'] as Map<String, dynamic>)
-            : throw Exception('Princess position is required but was null'),
-        totalFlowers: json['totalFlowers'] as int? ?? 0,
-        flowersDelivered: json['flowersDelivered'] as int? ?? 0,
+      print('GameBoard.fromJson - Parsing JSON: $json');
+
+      final width = json['width'] as int? ?? 0;
+      print('GameBoard.fromJson - width: $width');
+
+      final height = json['height'] as int? ?? 0;
+      print('GameBoard.fromJson - height: $height');
+
+      print('GameBoard.fromJson - cells field: ${json['cells']}');
+      final cells = (json['cells'] as List?)
+              ?.map((c) => Cell.fromJson(c as Map<String, dynamic>))
+              .toList() ??
+          [];
+      print('GameBoard.fromJson - cells parsed successfully, count: ${cells.length}');
+
+      print('GameBoard.fromJson - robot field: ${json['robot']}');
+      final robot = json['robot'] != null
+          ? Robot.fromJson(json['robot'] as Map<String, dynamic>)
+          : throw Exception('Robot is required but was null');
+      print('GameBoard.fromJson - robot parsed successfully');
+
+      print('GameBoard.fromJson - princessPosition field: ${json['princessPosition']}');
+      Position princessPosition;
+      if (json['princessPosition'] != null) {
+        princessPosition = Position.fromJson(json['princessPosition'] as Map<String, dynamic>);
+      } else {
+        // Fallback: find princess position from cells list
+        final princessCell = cells.firstWhere(
+          (c) => c.type.name == 'princess',
+          orElse: () => const Cell(position: Position(x: 0, y: 0), type: CellType.empty),
+        );
+        princessPosition = princessCell.type.name == 'princess' ? princessCell.position : const Position(x: 0, y: 0);
+        print('GameBoard.fromJson - princessPosition derived from cells: $princessPosition');
+      }
+      print('GameBoard.fromJson - princessPosition parsed successfully');
+
+      final totalFlowers = json['totalFlowers'] as int? ?? 0;
+      print('GameBoard.fromJson - totalFlowers: $totalFlowers');
+
+      final flowersDelivered = json['flowersDelivered'] as int? ?? 0;
+      print('GameBoard.fromJson - flowersDelivered: $flowersDelivered');
+
+      final gameBoard = GameBoard(
+        width: width,
+        height: height,
+        cells: cells,
+        robot: robot,
+        princessPosition: princessPosition,
+        totalFlowers: totalFlowers,
+        flowersDelivered: flowersDelivered,
       );
-    } catch (e) {
+
+      print('GameBoard.fromJson - Successfully created GameBoard');
+      return gameBoard;
+    } catch (e, stackTrace) {
+      print('GameBoard.fromJson - Error: $e');
+      print('GameBoard.fromJson - Stack trace: $stackTrace');
       throw Exception('Failed to parse GameBoard from JSON: $e. JSON: $json');
     }
   }
