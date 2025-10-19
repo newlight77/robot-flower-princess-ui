@@ -11,7 +11,8 @@ Content-Type: application/json
 
 {
   "name": "string",
-  "boardSize": number
+  "cols": number,
+  "rows": number
 }
 
 Response: Game object
@@ -19,7 +20,10 @@ Response: Game object
 
 ### Get All Games
 ```http
-GET /api/games
+GET /api/games?limit=10
+
+Query Parameters:
+- limit (optional): Maximum number of games to return (default: 10)
 
 Response: Array of Game objects
 ```

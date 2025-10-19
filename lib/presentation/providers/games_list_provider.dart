@@ -7,9 +7,9 @@ class GamesListNotifier extends StateNotifier<AsyncValue<List<Game>>> {
 
   final dynamic _getGamesUseCase;
 
-  Future<void> loadGames() async {
+  Future<void> loadGames({int limit = 10}) async {
     state = const AsyncValue.loading();
-    final result = await _getGamesUseCase();
+    final result = await _getGamesUseCase(limit: limit);
     result.fold(
       (failure) => state = AsyncValue.error(failure.message, StackTrace.current),
       (games) => state = AsyncValue.data(games),

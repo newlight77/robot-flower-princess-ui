@@ -7,7 +7,7 @@ import '../../value_objects/direction.dart';
 
 abstract class GameRepository {
   Future<Either<Failure, Game>> createGame(String name, int boardSize);
-  Future<Either<Failure, List<Game>>> getGames();
+  Future<Either<Failure, List<Game>>> getGames({int limit = 10});
   Future<Either<Failure, Game>> getGame(String gameId);
   Future<Either<Failure, Game>> executeAction(
     String gameId,

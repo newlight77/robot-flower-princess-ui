@@ -30,9 +30,9 @@ class GameRepositoryImpl implements GameRepository {
   }
 
   @override
-  Future<Either<Failure, List<Game>>> getGames() async {
+  Future<Either<Failure, List<Game>>> getGames({int limit = 10}) async {
     try {
-      final gameModels = await remoteDataSource.getGames();
+      final gameModels = await remoteDataSource.getGames(limit: limit);
       return Right(gameModels.map((model) => model.toEntity()).toList());
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

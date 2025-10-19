@@ -9,7 +9,7 @@ import '../models/game_model.dart';
 
 abstract class GameRemoteDataSource {
   Future<GameModel> createGame(String name, int boardSize);
-  Future<List<GameModel>> getGames();
+  Future<List<GameModel>> getGames({int limit = 10});
   Future<GameModel> getGame(String gameId);
   Future<GameModel> executeAction(
     String gameId,
@@ -28,23 +28,34 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
   @override
   Future<GameModel> createGame(String name, int boardSize) async {
     try {
+      final requestData = {
+        'name': name,
+        'cols': boardSize,
+        'rows': boardSize,
+      };
+
+      Logger.info('Creating game with data: $requestData');
+
       final response = await client.post(
         ApiEndpoints.games,
-        data: {
-          'name': name,
-          'boardSize': boardSize,
-        },
+        data: requestData,
       );
+
+      Logger.info('Create game response: ${response.data}');
       return GameModel.fromJson(response.data as Map<String, dynamic>);
     } on DioException catch (e) {
+      Logger.error('Create game error: ${e.response?.data}');
       throw _handleDioError(e);
     }
   }
 
   @override
-  Future<List<GameModel>> getGames() async {
+  Future<List<GameModel>> getGames({int limit = 10}) async {
     try {
-      final response = await client.get(ApiEndpoints.games);
+      final response = await client.get(
+        ApiEndpoints.games,
+        queryParameters: {'limit': limit},
+      );
 
       // Debug logging to understand response structure
       Logger.info('getGames response type: ${response.data.runtimeType}');

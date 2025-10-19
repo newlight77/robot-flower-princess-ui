@@ -1,5 +1,6 @@
 class ApiEndpoints {
   static const String games = '/api/games';
+  static const String gamesEnded = '/api/games/ended';
   static String game(String id) => '/api/games/$id';
   static String gameAction(String id) => '/api/games/$id/action';
   static String autoPlay(String id) => '/api/games/$id/autoplay';
