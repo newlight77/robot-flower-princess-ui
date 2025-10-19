@@ -3,6 +3,7 @@ import 'cell.dart';
 import 'robot.dart';
 import '../value_objects/position.dart';
 import '../value_objects/cell_type.dart';
+import '../../core/utils/logger.dart';
 
 class GameBoard extends Equatable {
   final int width;
@@ -88,28 +89,28 @@ class GameBoard extends Equatable {
 
   factory GameBoard.fromJson(Map<String, dynamic> json) {
     try {
-      print('GameBoard.fromJson - Parsing JSON: $json');
+      Logger.info('GameBoard.fromJson - Parsing JSON: $json', tag: 'GameBoard');
 
       final width = json['width'] as int? ?? 0;
-      print('GameBoard.fromJson - width: $width');
+      Logger.debug('GameBoard.fromJson - width: $width', tag: 'GameBoard');
 
       final height = json['height'] as int? ?? 0;
-      print('GameBoard.fromJson - height: $height');
+      Logger.debug('GameBoard.fromJson - height: $height', tag: 'GameBoard');
 
-      print('GameBoard.fromJson - cells field: ${json['cells']}');
+      Logger.debug('GameBoard.fromJson - cells field: ${json['cells']}', tag: 'GameBoard');
       final cells = (json['cells'] as List?)
               ?.map((c) => Cell.fromJson(c as Map<String, dynamic>))
               .toList() ??
           [];
-      print('GameBoard.fromJson - cells parsed successfully, count: ${cells.length}');
+      Logger.debug('GameBoard.fromJson - cells parsed successfully, count: ${cells.length}', tag: 'GameBoard');
 
-      print('GameBoard.fromJson - robot field: ${json['robot']}');
+      Logger.debug('GameBoard.fromJson - robot field: ${json['robot']}', tag: 'GameBoard');
       final robot = json['robot'] != null
           ? Robot.fromJson(json['robot'] as Map<String, dynamic>)
           : throw Exception('Robot is required but was null');
-      print('GameBoard.fromJson - robot parsed successfully');
+      Logger.debug('GameBoard.fromJson - robot parsed successfully', tag: 'GameBoard');
 
-      print('GameBoard.fromJson - princessPosition field: ${json['princessPosition']}');
+      Logger.debug('GameBoard.fromJson - princessPosition field: ${json['princessPosition']}');
       Position princessPosition;
       if (json['princessPosition'] != null) {
         princessPosition = Position.fromJson(json['princessPosition'] as Map<String, dynamic>);
@@ -120,15 +121,15 @@ class GameBoard extends Equatable {
           orElse: () => const Cell(position: Position(x: 0, y: 0), type: CellType.empty),
         );
         princessPosition = princessCell.type.name == 'princess' ? princessCell.position : const Position(x: 0, y: 0);
-        print('GameBoard.fromJson - princessPosition derived from cells: $princessPosition');
+      Logger.debug('GameBoard.fromJson - princessPosition derived from cells: $princessPosition', tag: 'GameBoard');
       }
-      print('GameBoard.fromJson - princessPosition parsed successfully');
+      Logger.debug('GameBoard.fromJson - princessPosition parsed successfully', tag: 'GameBoard');
 
       final totalFlowers = json['totalFlowers'] as int? ?? 0;
-      print('GameBoard.fromJson - totalFlowers: $totalFlowers');
+      Logger.debug('GameBoard.fromJson - totalFlowers: $totalFlowers', tag: 'GameBoard');
 
       final flowersDelivered = json['flowersDelivered'] as int? ?? 0;
-      print('GameBoard.fromJson - flowersDelivered: $flowersDelivered');
+      Logger.debug('GameBoard.fromJson - flowersDelivered: $flowersDelivered', tag: 'GameBoard');
 
       final gameBoard = GameBoard(
         width: width,
@@ -140,11 +141,11 @@ class GameBoard extends Equatable {
         flowersDelivered: flowersDelivered,
       );
 
-      print('GameBoard.fromJson - Successfully created GameBoard');
+      Logger.info('GameBoard.fromJson - Successfully created GameBoard', tag: 'GameBoard');
       return gameBoard;
     } catch (e, stackTrace) {
-      print('GameBoard.fromJson - Error: $e');
-      print('GameBoard.fromJson - Stack trace: $stackTrace');
+      Logger.error('GameBoard.fromJson - Error: $e', tag: 'GameBoard', error: e);
+      Logger.error('GameBoard.fromJson - Stack trace: $stackTrace', tag: 'GameBoard');
       throw Exception('Failed to parse GameBoard from JSON: $e. JSON: $json');
     }
   }
