@@ -1,0 +1,1 @@
+Place icons (svg/png) for robot, princess, flower, obstacle here.

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../providers/games_list_provider.dart';
-import '../../providers/game_provider.dart';
-import '../../providers/current_game_provider.dart';
 import 'widgets/create_game_dialog.dart';
 import 'widgets/game_list_item.dart';
 import '../game/game_page.dart';
@@ -75,25 +73,25 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Widget _buildEmptyState() {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
+          Icon(
             Icons.games_outlined,
             size: 100,
             color: AppColors.mossGreen,
           ),
-          const SizedBox(height: 24),
-          const Text(
+          SizedBox(height: 24),
+          Text(
             'No games yet!',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(height: 8),
-          const Text(
+          SizedBox(height: 8),
+          Text(
             'Create a new game to start playing',
             style: TextStyle(fontSize: 16),
           ),

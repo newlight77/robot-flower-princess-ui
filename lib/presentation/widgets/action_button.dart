@@ -8,9 +8,7 @@ class ActionButton extends StatelessWidget {
   final bool isEnabled;
 
   const ActionButton({
-    super.key,
-    required this.actionType,
-    required this.onPressed,
+    required this.actionType, required this.onPressed, super.key,
     this.isEnabled = true,
   });
 

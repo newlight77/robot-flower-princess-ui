@@ -62,6 +62,9 @@ setup: ## Complete setup (install + generate code)
 dev: ## Run in development mode
 	flutter run -d chrome --hot
 
+run: ## Run in production mode
+	flutter run -d chrome
+
 ci: ## Run CI checks
 	flutter pub get
 	flutter analyze

@@ -2,7 +2,7 @@ class AppConstants {
   // API Configuration
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:8080',
+    defaultValue: 'http://localhost:8000',
   );
   static const Duration apiTimeout = Duration(seconds: 30);
 

@@ -10,8 +10,7 @@ class GameBoardWidget extends StatelessWidget {
   final double cellSize;
 
   const GameBoardWidget({
-    super.key,
-    required this.board,
+    required this.board, super.key,
     this.cellSize = 50,
   });
 

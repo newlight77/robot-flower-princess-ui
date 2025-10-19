@@ -9,8 +9,7 @@ class GameModel extends Game {
     required super.name,
     required super.board,
     required super.status,
-    super.actions,
-    required super.createdAt,
+    required super.createdAt, super.actions,
     super.updatedAt,
   });
 

@@ -10,21 +10,21 @@ abstract class Failure extends Equatable {
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure([String message = 'Server error occurred']) : super(message);
+  const ServerFailure([super.message = 'Server error occurred']);
 }
 
 class NetworkFailure extends Failure {
-  const NetworkFailure([String message = 'Network connection failed']) : super(message);
+  const NetworkFailure([super.message = 'Network connection failed']);
 }
 
 class ValidationFailure extends Failure {
-  const ValidationFailure([String message = 'Validation error']) : super(message);
+  const ValidationFailure([super.message = 'Validation error']);
 }
 
 class GameOverFailure extends Failure {
-  const GameOverFailure([String message = 'Game Over']) : super(message);
+  const GameOverFailure([super.message = 'Game Over']);
 }
 
 class NotFoundFailure extends Failure {
-  const NotFoundFailure([String message = 'Resource not found']) : super(message);
+  const NotFoundFailure([super.message = 'Resource not found']);
 }

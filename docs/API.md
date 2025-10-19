@@ -144,11 +144,11 @@ Response: Array of GameBoard objects (step-by-step states)
 
 Set the API base URL in `.env`:
 ```
-API_BASE_URL=http://localhost:8080
+API_BASE_URL=http://localhost:8000
 ```
 
 Or via environment variable:
 ```bash
-export API_BASE_URL=http://localhost:8080
+export API_BASE_URL=http://localhost:8000
 flutter run
 ```

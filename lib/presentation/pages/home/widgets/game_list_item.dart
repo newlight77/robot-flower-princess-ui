@@ -8,9 +8,7 @@ class GameListItem extends StatelessWidget {
   final VoidCallback onTap;
 
   const GameListItem({
-    super.key,
-    required this.game,
-    required this.onTap,
+    required this.game, required this.onTap, super.key,
   });
 
   @override

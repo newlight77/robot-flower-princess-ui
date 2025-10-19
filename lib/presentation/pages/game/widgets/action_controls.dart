@@ -12,11 +12,7 @@ class ActionControls extends StatelessWidget {
   final bool isGameFinished;
 
   const ActionControls({
-    super.key,
-    required this.selectedDirection,
-    required this.onDirectionSelected,
-    required this.onActionPressed,
-    required this.onAutoPlay,
+    required this.selectedDirection, required this.onDirectionSelected, required this.onActionPressed, required this.onAutoPlay, super.key,
     this.isGameFinished = false,
   });
 

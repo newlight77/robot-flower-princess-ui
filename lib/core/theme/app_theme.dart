@@ -6,12 +6,11 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.light(
+      colorScheme: const ColorScheme.light(
         primary: AppColors.forestGreen,
         secondary: AppColors.warmOrange,
         tertiary: AppColors.skyBlue,
         surface: AppColors.softCream,
-        background: AppColors.earthBrown.withOpacity(0.05),
         error: AppColors.error,
       ),
       textTheme: GoogleFonts.poppinsTextTheme(),
@@ -41,7 +40,7 @@ class AppTheme {
           ),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: Colors.white,
         elevation: 2,
         shape: RoundedRectangleBorder(
@@ -54,7 +53,7 @@ class AppTheme {
         fillColor: Colors.white,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.mossGreen),
+          borderSide: const BorderSide(color: AppColors.mossGreen),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -62,7 +61,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: AppColors.forestGreen, width: 2),
+          borderSide: const BorderSide(color: AppColors.forestGreen, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -75,12 +74,12 @@ class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
       useMaterial3: true,
-      colorScheme: ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: AppColors.mossGreen,
         secondary: AppColors.warmOrange,
         tertiary: AppColors.skyBlue,
         surface: AppColors.earthBrown,
-        background: const Color(0xFF1A1A1A),
+        background: Color(0xFF1A1A1A),
         error: AppColors.error,
       ),
       textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),

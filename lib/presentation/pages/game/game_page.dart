@@ -13,8 +13,7 @@ class GamePage extends ConsumerStatefulWidget {
   final String gameId;
 
   const GamePage({
-    super.key,
-    required this.gameId,
+    required this.gameId, super.key,
   });
 
   @override

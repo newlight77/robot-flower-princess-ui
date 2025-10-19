@@ -6,8 +6,7 @@ class GameInfoPanel extends StatelessWidget {
   final Game game;
 
   const GameInfoPanel({
-    super.key,
-    required this.game,
+    required this.game, super.key,
   });
 
   @override

@@ -9,8 +9,7 @@ class ReplayDialog extends ConsumerStatefulWidget {
   final String gameId;
 
   const ReplayDialog({
-    super.key,
-    required this.gameId,
+    required this.gameId, super.key,
   });
 
   @override

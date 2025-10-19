@@ -7,9 +7,7 @@ class DirectionSelector extends StatelessWidget {
   final ValueChanged<Direction> onDirectionSelected;
 
   const DirectionSelector({
-    super.key,
-    required this.selectedDirection,
-    required this.onDirectionSelected,
+    required this.selectedDirection, required this.onDirectionSelected, super.key,
   });
 
   @override
