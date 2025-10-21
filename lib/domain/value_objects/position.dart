@@ -23,10 +23,11 @@ class Position extends Equatable {
 
   factory Position.fromJson(Map<String, dynamic> json) {
     try {
-      return Position(
-        x: json['x'] as int? ?? 0,
-        y: json['y'] as int? ?? 0,
-      );
+      // Handle both x/y format and col/row format from backend
+      final x = json['x'] as int? ?? json['col'] as int? ?? 0;
+      final y = json['y'] as int? ?? json['row'] as int? ?? 0;
+
+      return Position(x: x, y: y);
     } catch (e) {
       throw Exception('Failed to parse Position from JSON: $e. JSON: $json');
     }

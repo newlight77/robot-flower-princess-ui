@@ -66,16 +66,38 @@ class Game extends Equatable {
   }
 
   factory Game.fromJson(Map<String, dynamic> json) {
+    // Handle backend status format
+    String statusString = json['status'] as String? ?? 'playing';
+    GameStatus status;
+
+    switch (statusString) {
+      case 'in_progress':
+        status = GameStatus.playing;
+        break;
+      case 'won':
+        status = GameStatus.won;
+        break;
+      case 'gameOver':
+      case 'game_over':
+        status = GameStatus.gameOver;
+        break;
+      default:
+        status = GameStatus.playing;
+        break;
+    }
+
     return Game(
       id: json['id'] as String,
-      name: json['name'] as String,
+      name: json['name'] as String? ?? 'Unnamed Game',
       board: GameBoard.fromJson(json['board'] as Map<String, dynamic>),
-      status: GameStatus.values.firstWhere((e) => e.name == json['status']),
+      status: status,
       actions: (json['actions'] as List?)
               ?.map((a) => GameAction.fromJson(a as Map<String, dynamic>))
               .toList() ??
           [],
-      createdAt: DateTime.parse(json['createdAt'] as String),
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : DateTime.now(),
       updatedAt: json['updatedAt'] != null
           ? DateTime.parse(json['updatedAt'] as String)
           : null,
