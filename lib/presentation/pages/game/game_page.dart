@@ -142,12 +142,9 @@ class _GamePageState extends ConsumerState<GamePage> {
             padding: const EdgeInsets.all(16),
             child: GameInfoPanel(game: game),
           ),
-          SizedBox(
-            height: 400,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GameBoardWidget(board: game.board),
-            ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: GameBoardWidget(board: game.board),
           ),
           Padding(
             padding: const EdgeInsets.all(16),
