@@ -49,10 +49,10 @@ run-mobile: ## Run on mobile device
 	flutter run
 
 docker-build: ## Build Docker image
-	docker build -t robot-flower-princess:latest .
+	docker build -t robot-flower-princess-ui:latest .
 
 docker-run: ## Run Docker container
-	docker run -p 8080:80 robot-flower-princess:latest
+	docker run -p 8080:80 robot-flower-princess-ui:latest
 
 docker-stop: ## Stop Docker container
 	docker stop $(docker ps -q --filter ancestor=robot-flower-princess:latest)
