@@ -18,11 +18,11 @@ void main() {
     });
 
     test('should check if robot has flowers', () {
-      final robotWithFlowers = Robot(
-        position: const Position(x: 0, y: 0),
+      final robotWithFlowers = const Robot(
+        position: Position(x: 0, y: 0),
         orientation: Direction.north,
-        collectedFlowers: const [Position(x: 1, y: 1), Position(x: 2, y: 2)],
-        deliveredFlowers: const [Position(x: 1, y: 1)],
+        collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
+        deliveredFlowers: [Position(x: 1, y: 1)],
       );
 
       const robotWithoutFlowers = Robot(
@@ -35,11 +35,11 @@ void main() {
     });
 
     test('should check if robot can pick more flowers', () {
-      final robotCanPick = Robot(
-        position: const Position(x: 0, y: 0),
+      final robotCanPick = const Robot(
+        position: Position(x: 0, y: 0),
         orientation: Direction.north,
-        collectedFlowers: const [Position(x: 1, y: 1), Position(x: 2, y: 2)],
-        deliveredFlowers: const [Position(x: 1, y: 1)],
+        collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
+        deliveredFlowers: [Position(x: 1, y: 1)],
       );
 
       final robotFull = Robot(
@@ -70,11 +70,11 @@ void main() {
     });
 
     test('should serialize to JSON', () {
-      final robot = Robot(
-        position: const Position(x: 2, y: 3),
+      final robot = const Robot(
+        position: Position(x: 2, y: 3),
         orientation: Direction.east,
-        collectedFlowers: const [Position(x: 1, y: 1), Position(x: 2, y: 2)],
-        deliveredFlowers: const [Position(x: 1, y: 1)],
+        collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
+        deliveredFlowers: [Position(x: 1, y: 1)],
       );
 
       final json = robot.toJson();
@@ -115,18 +115,18 @@ void main() {
     });
 
     test('should maintain equality for same values', () {
-      final robot1 = Robot(
-        position: const Position(x: 1, y: 1),
+      final robot1 = const Robot(
+        position: Position(x: 1, y: 1),
         orientation: Direction.north,
-        collectedFlowers: const [Position(x: 1, y: 1), Position(x: 2, y: 2)],
-        deliveredFlowers: const [Position(x: 1, y: 1)],
+        collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
+        deliveredFlowers: [Position(x: 1, y: 1)],
       );
 
-      final robot2 = Robot(
-        position: const Position(x: 1, y: 1),
+      final robot2 = const Robot(
+        position: Position(x: 1, y: 1),
         orientation: Direction.north,
-        collectedFlowers: const [Position(x: 1, y: 1), Position(x: 2, y: 2)],
-        deliveredFlowers: const [Position(x: 1, y: 1)],
+        collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
+        deliveredFlowers: [Position(x: 1, y: 1)],
       );
 
       expect(robot1, robot2);

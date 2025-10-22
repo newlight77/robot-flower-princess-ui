@@ -105,8 +105,8 @@ class GameMockDataSource {
 
   GameBoard _generateBoard(int size) {
     final cells = <Cell>[];
-    final robot = Robot(
-      position: const Position(x: 0, y: 0),
+    final robot = const Robot(
+      position: Position(x: 0, y: 0),
       orientation: Direction.north,
     );
 

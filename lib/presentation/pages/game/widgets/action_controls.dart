@@ -85,9 +85,9 @@ class ActionControls extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: isGameFinished ? null : onAutoPlay,
-                icon: const Icon(Icons.smart_toy),
-                label: const Text('Auto Play'),
+                onPressed: onAutoPlay,
+                icon: Icon(isGameFinished ? Icons.replay : Icons.smart_toy),
+                label: Text(isGameFinished ? 'Replay Game' : 'Auto Play'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),

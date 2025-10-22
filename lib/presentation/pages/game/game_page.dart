@@ -232,30 +232,36 @@ class _GamePageState extends ConsumerState<GamePage> {
 
   Future<void> _autoPlay() async {
     final game = ref.read(currentGameProvider).value;
-    if (game == null || game.status.isFinished) return;
+    if (game == null) return;
 
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Auto Play'),
-        content: const Text(
-          'Let the AI try to solve the game automatically?',
+    if (game.status.isFinished) {
+      // For finished games, show the replay dialog
+      _showReplayDialog();
+    } else {
+      // For active games, show auto-play confirmation
+      final confirmed = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Auto Play'),
+          content: const Text(
+            'Let the AI try to solve the game automatically?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Start'),
+            ),
+          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Start'),
-          ),
-        ],
-      ),
-    );
+      );
 
-    if (confirmed == true) {
-      await ref.read(currentGameProvider.notifier).autoPlay();
+      if (confirmed == true) {
+        await ref.read(currentGameProvider.notifier).autoPlay();
+      }
     }
   }
 

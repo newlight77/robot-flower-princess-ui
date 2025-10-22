@@ -23,6 +23,7 @@ class _ReplayDialogState extends ConsumerState<ReplayDialog> {
   bool _isPlaying = false;
   bool _isLoading = true;
   String? _error;
+  double _playbackSpeed = 1.0; // 1.0 = normal speed
 
   @override
   void initState() {
@@ -84,9 +85,9 @@ class _ReplayDialogState extends ConsumerState<ReplayDialog> {
         children: [
           const Icon(Icons.play_circle_outline, color: Colors.white),
           const SizedBox(width: 12),
-          const Text(
-            'Game Replay',
-            style: TextStyle(
+          Text(
+            'Game Replay${_boardStates != null ? ' (${_boardStates!.length} steps)' : ''}',
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.w600,
@@ -166,6 +167,30 @@ class _ReplayDialogState extends ConsumerState<ReplayDialog> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Icon(Icons.speed, size: 16),
+              const SizedBox(width: 8),
+              const Text('Speed:'),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Slider(
+                  value: _playbackSpeed,
+                  min: 0.25,
+                  max: 4.0,
+                  divisions: 15,
+                  label: '${(_playbackSpeed * 100).round()}%',
+                  onChanged: (value) {
+                    setState(() {
+                      _playbackSpeed = value;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               IconButton(
                 icon: const Icon(Icons.skip_previous),
                 onPressed: _currentStep > 0
@@ -214,7 +239,10 @@ class _ReplayDialogState extends ConsumerState<ReplayDialog> {
 
   Future<void> _playReplay() async {
     while (_isPlaying && _currentStep < _boardStates!.length - 1) {
-      await Future.delayed(AppConstants.replayStepDuration);
+      final adjustedDuration = Duration(
+        milliseconds: (AppConstants.replayStepDuration.inMilliseconds / _playbackSpeed).round(),
+      );
+      await Future.delayed(adjustedDuration);
       if (!mounted || !_isPlaying) break;
       setState(() => _currentStep++);
     }

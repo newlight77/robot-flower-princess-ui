@@ -46,7 +46,8 @@ class GameBoard extends Equatable {
         position.y < height;
   }
 
-  int get flowersDelivered => cells.where((c) => c.type == CellType.flower).length - flowersRemaining;
+  int get totalFlowers => cells.where((c) => c.type == CellType.flower).length;
+  int get flowersDelivered => totalFlowers - flowersRemaining;
   bool get isComplete => flowersRemaining == 0;
 
   GameBoard copyWith({
