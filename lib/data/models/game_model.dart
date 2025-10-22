@@ -21,19 +21,24 @@ class GameModel extends Game {
 
       // Parse each field individually with detailed logging
       final rawId = (json['id'] ?? json['_id'] ?? json['gameId']) as String?;
-      if (rawId == null || rawId.isEmpty) {
-        throw Exception('Game id is missing or empty');
-      }
-      final id = rawId;
+      final id = rawId ?? 'game_${DateTime.now().millisecondsSinceEpoch}';
       Logger.debug('GameModel.fromJson - id: $id', tag: 'GameModel');
 
-      final name = json['name'] as String? ?? 'Unnamed Game';
+      final name = json['name'] as String? ?? 'Game ${DateTime.now().toString().substring(0, 19)}';
       Logger.debug('GameModel.fromJson - name: $name', tag: 'GameModel');
 
       Logger.debug('GameModel.fromJson - board field: ${json['board']}', tag: 'GameModel');
-      final board = json['board'] != null
-          ? GameBoard.fromJson(json['board'] as Map<String, dynamic>)
-          : throw Exception('Board is required but was null');
+
+      // Handle new format where board data is at root level
+      Map<String, dynamic> boardData;
+      if (json['board'] != null) {
+        boardData = json['board'] as Map<String, dynamic>;
+      } else {
+        // New format has board data at root level
+        boardData = json;
+      }
+
+      final board = GameBoard.fromJson(boardData);
       Logger.debug('GameModel.fromJson - board parsed successfully', tag: 'GameModel');
 
       // Handle backend status format
@@ -44,10 +49,9 @@ class GameModel extends Game {
         case 'in_progress':
           status = GameStatus.playing;
           break;
-        case 'won':
+        case 'victory':
           status = GameStatus.won;
           break;
-        case 'gameOver':
         case 'game_over':
           status = GameStatus.gameOver;
           break;

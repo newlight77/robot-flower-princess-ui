@@ -63,7 +63,7 @@ class GameBoardWidget extends StatelessWidget {
 
   Widget _buildCell(BuildContext context, Cell? cell, Position position) {
     final isRobotHere = board.robot.position == position;
-    final isPrincessHere = board.princessPosition == position;
+    final isPrincessHere = board.princess.position == position;
 
     Color backgroundColor = AppColors.emptyCell;
     String icon = CellType.empty.icon;

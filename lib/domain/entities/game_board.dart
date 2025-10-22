@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'cell.dart';
 import 'robot.dart';
+import 'princess.dart';
 import '../value_objects/position.dart';
 import '../value_objects/cell_type.dart';
+import '../value_objects/direction.dart';
 import '../../core/utils/logger.dart';
 
 class GameBoard extends Equatable {
@@ -10,18 +12,22 @@ class GameBoard extends Equatable {
   final int height;
   final List<Cell> cells;
   final Robot robot;
-  final Position princessPosition;
+  final Princess princess;
   final int totalFlowers;
-  final int flowersDelivered;
+  final int flowersRemaining;
+  final int totalObstacles;
+  final int obstaclesRemaining;
 
   const GameBoard({
     required this.width,
     required this.height,
     required this.cells,
     required this.robot,
-    required this.princessPosition,
+    required this.princess,
     required this.totalFlowers,
-    this.flowersDelivered = 0,
+    required this.flowersRemaining,
+    required this.totalObstacles,
+    required this.obstaclesRemaining,
   });
 
   Cell? getCellAt(Position position) {
@@ -42,26 +48,30 @@ class GameBoard extends Equatable {
         position.y < height;
   }
 
-  int get remainingFlowers => totalFlowers - flowersDelivered;
-  bool get isComplete => flowersDelivered >= totalFlowers;
+  int get flowersDelivered => totalFlowers - flowersRemaining;
+  bool get isComplete => flowersRemaining == 0;
 
   GameBoard copyWith({
     int? width,
     int? height,
     List<Cell>? cells,
     Robot? robot,
-    Position? princessPosition,
+    Princess? princess,
     int? totalFlowers,
-    int? flowersDelivered,
+    int? flowersRemaining,
+    int? totalObstacles,
+    int? obstaclesRemaining,
   }) {
     return GameBoard(
       width: width ?? this.width,
       height: height ?? this.height,
       cells: cells ?? this.cells,
       robot: robot ?? this.robot,
-      princessPosition: princessPosition ?? this.princessPosition,
+      princess: princess ?? this.princess,
       totalFlowers: totalFlowers ?? this.totalFlowers,
-      flowersDelivered: flowersDelivered ?? this.flowersDelivered,
+      flowersRemaining: flowersRemaining ?? this.flowersRemaining,
+      totalObstacles: totalObstacles ?? this.totalObstacles,
+      obstaclesRemaining: obstaclesRemaining ?? this.obstaclesRemaining,
     );
   }
 
@@ -71,20 +81,28 @@ class GameBoard extends Equatable {
         height,
         cells,
         robot,
-        princessPosition,
+        princess,
         totalFlowers,
-        flowersDelivered,
+        flowersRemaining,
+        totalObstacles,
+        obstaclesRemaining,
       ];
 
   Map<String, dynamic> toJson() {
     return {
-      'width': width,
-      'height': height,
-      'cells': cells.map((c) => c.toJson()).toList(),
+      'rows': height,
+      'cols': width,
+      'grid': _cellsToGrid(),
       'robot': robot.toJson(),
-      'princessPosition': princessPosition.toJson(),
-      'totalFlowers': totalFlowers,
-      'flowersDelivered': flowersDelivered,
+      'princess': princess.toJson(),
+      'flowers': {
+        'total': totalFlowers,
+        'remaining': flowersRemaining,
+      },
+      'obstacles': {
+        'total': totalObstacles,
+        'remaining': obstaclesRemaining,
+      },
     };
   }
 
@@ -98,12 +116,13 @@ class GameBoard extends Equatable {
       Logger.debug('GameBoard.fromJson - width: $width, height: $height', tag: 'GameBoard');
 
       List<Cell> cells = [];
+      List<List<dynamic>>? grid;
 
       // Handle grid format from backend
       if (json['grid'] != null) {
         final gridData = json['grid'] as List<dynamic>;
         // Convert to List<List<dynamic>> safely
-        final grid = gridData.map((row) => row as List<dynamic>).toList();
+        grid = gridData.map((row) => row as List<dynamic>).toList();
         cells = _parseGridToCells(grid);
         Logger.debug('GameBoard.fromJson - grid parsed to ${cells.length} cells', tag: 'GameBoard');
       } else if (json['cells'] != null) {
@@ -116,44 +135,77 @@ class GameBoard extends Equatable {
       }
 
       Logger.debug('GameBoard.fromJson - robot field: ${json['robot']}', tag: 'GameBoard');
-      final robot = json['robot'] != null
-          ? Robot.fromJson(json['robot'] as Map<String, dynamic>)
-          : throw Exception('Robot is required but was null');
-      Logger.debug('GameBoard.fromJson - robot parsed successfully', tag: 'GameBoard');
-
-      Logger.debug('GameBoard.fromJson - princessPosition field: ${json['princessPosition'] ?? json['princess_position']}');
-      Position princessPosition;
-      if (json['princessPosition'] != null) {
-        princessPosition = Position.fromJson(json['princessPosition'] as Map<String, dynamic>);
-      } else if (json['princess_position'] != null) {
-        princessPosition = Position.fromJson(json['princess_position'] as Map<String, dynamic>);
+      Robot robot;
+      if (json['robot'] != null) {
+        robot = Robot.fromJson(json['robot'] as Map<String, dynamic>);
+        Logger.debug('GameBoard.fromJson - robot parsed successfully', tag: 'GameBoard');
+      } else if (grid != null) {
+        // Extract robot position from grid
+        final robotPosition = _findRobotPositionInGrid(grid);
+        robot = Robot(position: robotPosition, orientation: Direction.north);
+        Logger.debug('GameBoard.fromJson - robot position extracted from grid: $robotPosition', tag: 'GameBoard');
       } else {
-        // Fallback: find princess position from cells list
-        final princessCell = cells.firstWhere(
-          (c) => c.type.name == 'princess',
-          orElse: () => const Cell(position: Position(x: 0, y: 0), type: CellType.empty),
-        );
-        princessPosition = princessCell.type.name == 'princess'
-            ? princessCell.position
-            : const Position(x: 0, y: 0);
-        Logger.debug('GameBoard.fromJson - princessPosition derived from cells: $princessPosition', tag: 'GameBoard');
+        // Fallback to default position
+        robot = const Robot(position: Position(x: 0, y: 0), orientation: Direction.north);
+        Logger.debug('GameBoard.fromJson - robot using default position', tag: 'GameBoard');
       }
-      Logger.debug('GameBoard.fromJson - princessPosition parsed successfully', tag: 'GameBoard');
 
-      final totalFlowers = json['totalFlowers'] as int? ?? json['total_flowers'] as int? ?? 0;
-      Logger.debug('GameBoard.fromJson - totalFlowers: $totalFlowers', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - princess field: ${json['princess']}');
+      Princess princess;
+      if (json['princess'] != null) {
+        princess = Princess.fromJson(json['princess'] as Map<String, dynamic>);
+        Logger.debug('GameBoard.fromJson - princess parsed successfully', tag: 'GameBoard');
+      } else if (grid != null) {
+        // Extract princess position from grid
+        final princessPosition = _findPrincessPositionInGrid(grid);
+        princess = Princess(position: princessPosition);
+        Logger.debug('GameBoard.fromJson - princess position extracted from grid: $princessPosition', tag: 'GameBoard');
+      } else {
+        // Fallback to default position
+        princess = Princess(position: Position(x: width - 1, y: height - 1));
+        Logger.debug('GameBoard.fromJson - princess using default position', tag: 'GameBoard');
+      }
 
-      final flowersDelivered = json['flowersDelivered'] as int? ?? json['flowers_delivered'] as int? ?? 0;
-      Logger.debug('GameBoard.fromJson - flowersDelivered: $flowersDelivered', tag: 'GameBoard');
+      // Parse flowers data
+      int totalFlowers = 0;
+      int flowersRemaining = 0;
+      if (json['flowers'] != null) {
+        final flowersData = json['flowers'] as Map<String, dynamic>;
+        totalFlowers = flowersData['total'] as int? ?? 0;
+        flowersRemaining = flowersData['remaining'] as int? ?? 0;
+      } else {
+        // Count flowers from cells
+        totalFlowers = cells.where((c) => c.type == CellType.flower).length;
+        flowersRemaining = totalFlowers;
+        Logger.debug('GameBoard.fromJson - flowers counted from cells: $totalFlowers', tag: 'GameBoard');
+      }
+      Logger.debug('GameBoard.fromJson - totalFlowers: $totalFlowers, flowersRemaining: $flowersRemaining', tag: 'GameBoard');
+
+      // Parse obstacles data
+      int totalObstacles = 0;
+      int obstaclesRemaining = 0;
+      if (json['obstacles'] != null) {
+        final obstaclesData = json['obstacles'] as Map<String, dynamic>;
+        totalObstacles = obstaclesData['total'] as int? ?? 0;
+        obstaclesRemaining = obstaclesData['remaining'] as int? ?? 0;
+      } else {
+        // Count obstacles from cells
+        totalObstacles = cells.where((c) => c.type == CellType.obstacle).length;
+        obstaclesRemaining = totalObstacles;
+        Logger.debug('GameBoard.fromJson - obstacles counted from cells: $totalObstacles', tag: 'GameBoard');
+      }
+      Logger.debug('GameBoard.fromJson - totalObstacles: $totalObstacles, obstaclesRemaining: $obstaclesRemaining', tag: 'GameBoard');
 
       final gameBoard = GameBoard(
         width: width,
         height: height,
         cells: cells,
         robot: robot,
-        princessPosition: princessPosition,
+        princess: princess,
         totalFlowers: totalFlowers,
-        flowersDelivered: flowersDelivered,
+        flowersRemaining: flowersRemaining,
+        totalObstacles: totalObstacles,
+        obstaclesRemaining: obstaclesRemaining,
       );
 
       Logger.info('GameBoard.fromJson - Successfully created GameBoard', tag: 'GameBoard');
@@ -198,5 +250,58 @@ class GameBoard extends Equatable {
     }
 
     return cells;
+  }
+
+  List<List<String>> _cellsToGrid() {
+    final grid = List.generate(height, (row) => List.generate(width, (col) => '⬜'));
+
+    // Place cells
+    for (final cell in cells) {
+      String emoji;
+      switch (cell.type) {
+        case CellType.flower:
+          emoji = '🌸';
+          break;
+        case CellType.obstacle:
+          emoji = '🗑️';
+          break;
+        default:
+          emoji = '⬜';
+          break;
+      }
+      grid[cell.position.y][cell.position.x] = emoji;
+    }
+
+    // Place robot
+    grid[robot.position.y][robot.position.x] = '🤖';
+
+    // Place princess
+    grid[princess.position.y][princess.position.x] = '👑';
+
+    return grid;
+  }
+
+  static Position _findRobotPositionInGrid(List<List<dynamic>> grid) {
+    for (int row = 0; row < grid.length; row++) {
+      for (int col = 0; col < grid[row].length; col++) {
+        if (grid[row][col].toString() == '🤖') {
+          return Position(x: col, y: row);
+        }
+      }
+    }
+    // Fallback to top-left if not found
+    return const Position(x: 0, y: 0);
+  }
+
+  static Position _findPrincessPositionInGrid(List<List<dynamic>> grid) {
+    for (int row = 0; row < grid.length; row++) {
+      for (int col = 0; col < grid[row].length; col++) {
+        if (grid[row][col].toString() == '👑') {
+          return Position(x: col, y: row);
+        }
+      }
+    }
+    // Fallback to bottom-right if not found
+    return Position(x: grid[0].length - 1, y: grid.length - 1);
   }
 }

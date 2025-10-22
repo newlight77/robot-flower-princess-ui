@@ -74,10 +74,9 @@ class Game extends Equatable {
       case 'in_progress':
         status = GameStatus.playing;
         break;
-      case 'won':
+      case 'victory':
         status = GameStatus.won;
         break;
-      case 'gameOver':
       case 'game_over':
         status = GameStatus.gameOver;
         break;
@@ -86,21 +85,34 @@ class Game extends Equatable {
         break;
     }
 
+    // Handle new format where board data is at root level
+    Map<String, dynamic> boardData;
+    if (json['board'] != null) {
+      boardData = json['board'] as Map<String, dynamic>;
+    } else {
+      // New format has board data at root level
+      boardData = json;
+    }
+
     return Game(
-      id: json['id'] as String,
-      name: json['name'] as String? ?? 'Unnamed Game',
-      board: GameBoard.fromJson(json['board'] as Map<String, dynamic>),
+      id: json['id'] as String? ?? 'game_${DateTime.now().millisecondsSinceEpoch}',
+      name: json['name'] as String? ?? 'Game ${DateTime.now().toString().substring(0, 19)}',
+      board: GameBoard.fromJson(boardData),
       status: status,
       actions: (json['actions'] as List?)
               ?.map((a) => GameAction.fromJson(a as Map<String, dynamic>))
               .toList() ??
           [],
-      createdAt: json['createdAt'] != null
-          ? DateTime.parse(json['createdAt'] as String)
-          : DateTime.now(),
-      updatedAt: json['updatedAt'] != null
-          ? DateTime.parse(json['updatedAt'] as String)
-          : null,
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'] as String)
+          : json['createdAt'] != null
+              ? DateTime.parse(json['createdAt'] as String)
+              : DateTime.now(),
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'] as String)
+          : json['updatedAt'] != null
+              ? DateTime.parse(json['updatedAt'] as String)
+              : null,
     );
   }
 }

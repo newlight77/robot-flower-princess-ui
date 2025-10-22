@@ -93,6 +93,8 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
 
         if (responseMap.containsKey('games')) {
           data = responseMap['games'] as List<dynamic>;
+        } else if (responseMap.containsKey('gamess')) {
+          data = responseMap['gamess'] as List<dynamic>;
         } else if (responseMap.containsKey('data')) {
           data = responseMap['data'] as List<dynamic>;
         } else if (responseMap.containsKey('items')) {
