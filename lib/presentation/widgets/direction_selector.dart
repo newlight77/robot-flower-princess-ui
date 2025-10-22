@@ -5,11 +5,13 @@ import '../../domain/value_objects/direction.dart';
 class DirectionSelector extends StatelessWidget {
   final Direction? selectedDirection;
   final ValueChanged<Direction> onDirectionSelected;
+  final bool isEnabled;
 
   const DirectionSelector({
     required this.selectedDirection,
     required this.onDirectionSelected,
     super.key,
+    this.isEnabled = true,
   });
 
   @override
@@ -44,7 +46,7 @@ class DirectionSelector extends StatelessWidget {
     final isSelected = selectedDirection == direction;
 
     return ElevatedButton(
-      onPressed: () => onDirectionSelected(direction),
+      onPressed: isEnabled ? () => onDirectionSelected(direction) : null,
       style: ElevatedButton.styleFrom(
         backgroundColor:
             isSelected ? AppColors.warmOrange : AppColors.mossGreen,

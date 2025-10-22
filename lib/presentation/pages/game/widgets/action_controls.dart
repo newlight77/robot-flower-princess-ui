@@ -30,6 +30,7 @@ class ActionControls extends StatelessWidget {
             DirectionSelector(
               selectedDirection: selectedDirection,
               onDirectionSelected: onDirectionSelected,
+              isEnabled: !isGameFinished,
             ),
             const SizedBox(height: 24),
             const Divider(),
@@ -85,9 +86,9 @@ class ActionControls extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: onAutoPlay,
-                icon: Icon(isGameFinished ? Icons.replay : Icons.smart_toy),
-                label: Text(isGameFinished ? 'Replay Game' : 'Auto Play'),
+                onPressed: isGameFinished ? null : onAutoPlay,
+                icon: const Icon(Icons.smart_toy),
+                label: const Text('Auto Play'),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
