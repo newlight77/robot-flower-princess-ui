@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:robot_flower_princess_front/domain/entities/game_board.dart';
 import 'package:robot_flower_princess_front/domain/entities/robot.dart';
+import 'package:robot_flower_princess_front/domain/entities/princess.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/direction.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/position.dart';
 import 'package:robot_flower_princess_front/presentation/widgets/game_board_widget.dart';
@@ -16,8 +17,10 @@ void main() {
         position: Position(x: 0, y: 0),
         orientation: Direction.north,
       ),
-      princessPosition: Position(x: 4, y: 4),
-      totalFlowers: 3,
+      princess: Princess(position: Position(x: 4, y: 4)),
+      flowersRemaining: 3,
+      totalObstacles: 0,
+      obstaclesRemaining: 0,
     );
 
     await tester.pumpWidget(

@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:robot_flower_princess_front/domain/entities/game_board.dart';
 import 'package:robot_flower_princess_front/domain/entities/robot.dart';
+import 'package:robot_flower_princess_front/domain/entities/princess.dart';
 import 'package:robot_flower_princess_front/domain/entities/cell.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/position.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/direction.dart';
@@ -23,9 +24,10 @@ void main() {
           position: Position(x: 0, y: 0),
           orientation: Direction.north,
         ),
-        princessPosition: Position(x: 4, y: 4),
-        totalFlowers: 3,
-        flowersDelivered: 0,
+        princess: Princess(position: Position(x: 4, y: 4)),
+        flowersRemaining: 3,
+        totalObstacles: 1,
+        obstaclesRemaining: 1,
       );
     });
 
@@ -49,32 +51,31 @@ void main() {
     });
 
     test('should calculate remaining flowers', () {
-      expect(testBoard.remainingFlowers, 3);
+      expect(testBoard.flowersRemaining, 3);
 
-      final updatedBoard = testBoard.copyWith(flowersDelivered: 1);
-      expect(updatedBoard.remainingFlowers, 2);
+      final updatedBoard = testBoard.copyWith(flowersRemaining: 2);
+      expect(updatedBoard.flowersRemaining, 2);
     });
 
     test('should check if board is complete', () {
       expect(testBoard.isComplete, false);
 
-      final completeBoard = testBoard.copyWith(flowersDelivered: 3);
+      final completeBoard = testBoard.copyWith(flowersRemaining: 0);
       expect(completeBoard.isComplete, true);
 
-      final overCompleteBoard = testBoard.copyWith(flowersDelivered: 5);
+      final overCompleteBoard = testBoard.copyWith(flowersRemaining: 0);
       expect(overCompleteBoard.isComplete, true);
     });
 
     test('should serialize to JSON', () {
       final json = testBoard.toJson();
 
-      expect(json['width'], 5);
-      expect(json['height'], 5);
-      expect(json['totalFlowers'], 3);
-      expect(json['flowersDelivered'], 0);
-      expect(json['cells'], isA<List>());
+      expect(json['cols'], 5);
+      expect(json['rows'], 5);
+      expect(json['flowers']['remaining'], 3);
+      expect(json['grid'], isA<List>());
       expect(json['robot'], isA<Map>());
-      expect(json['princessPosition'], isA<Map>());
+      expect(json['princess'], isA<Map>());
     });
 
     test('should deserialize from JSON', () {
@@ -83,7 +84,7 @@ void main() {
 
       expect(board.width, testBoard.width);
       expect(board.height, testBoard.height);
-      expect(board.totalFlowers, testBoard.totalFlowers);
+      expect(board.flowersRemaining, testBoard.flowersRemaining);
       expect(board.robot.position, testBoard.robot.position);
     });
   });

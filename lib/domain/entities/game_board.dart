@@ -13,7 +13,6 @@ class GameBoard extends Equatable {
   final List<Cell> cells;
   final Robot robot;
   final Princess princess;
-  final int totalFlowers;
   final int flowersRemaining;
   final int totalObstacles;
   final int obstaclesRemaining;
@@ -24,7 +23,6 @@ class GameBoard extends Equatable {
     required this.cells,
     required this.robot,
     required this.princess,
-    required this.totalFlowers,
     required this.flowersRemaining,
     required this.totalObstacles,
     required this.obstaclesRemaining,
@@ -48,7 +46,7 @@ class GameBoard extends Equatable {
         position.y < height;
   }
 
-  int get flowersDelivered => totalFlowers - flowersRemaining;
+  int get flowersDelivered => cells.where((c) => c.type == CellType.flower).length - flowersRemaining;
   bool get isComplete => flowersRemaining == 0;
 
   GameBoard copyWith({
@@ -57,7 +55,6 @@ class GameBoard extends Equatable {
     List<Cell>? cells,
     Robot? robot,
     Princess? princess,
-    int? totalFlowers,
     int? flowersRemaining,
     int? totalObstacles,
     int? obstaclesRemaining,
@@ -68,7 +65,6 @@ class GameBoard extends Equatable {
       cells: cells ?? this.cells,
       robot: robot ?? this.robot,
       princess: princess ?? this.princess,
-      totalFlowers: totalFlowers ?? this.totalFlowers,
       flowersRemaining: flowersRemaining ?? this.flowersRemaining,
       totalObstacles: totalObstacles ?? this.totalObstacles,
       obstaclesRemaining: obstaclesRemaining ?? this.obstaclesRemaining,
@@ -82,7 +78,6 @@ class GameBoard extends Equatable {
         cells,
         robot,
         princess,
-        totalFlowers,
         flowersRemaining,
         totalObstacles,
         obstaclesRemaining,
@@ -96,7 +91,7 @@ class GameBoard extends Equatable {
       'robot': robot.toJson(),
       'princess': princess.toJson(),
       'flowers': {
-        'total': totalFlowers,
+        'total': cells.where((c) => c.type == CellType.flower).length,
         'remaining': flowersRemaining,
       },
       'obstacles': {
@@ -167,19 +162,16 @@ class GameBoard extends Equatable {
       }
 
       // Parse flowers data
-      int totalFlowers = 0;
       int flowersRemaining = 0;
       if (json['flowers'] != null) {
         final flowersData = json['flowers'] as Map<String, dynamic>;
-        totalFlowers = flowersData['total'] as int? ?? 0;
         flowersRemaining = flowersData['remaining'] as int? ?? 0;
       } else {
         // Count flowers from cells
-        totalFlowers = cells.where((c) => c.type == CellType.flower).length;
-        flowersRemaining = totalFlowers;
-        Logger.debug('GameBoard.fromJson - flowers counted from cells: $totalFlowers', tag: 'GameBoard');
+        flowersRemaining = cells.where((c) => c.type == CellType.flower).length;
+        Logger.debug('GameBoard.fromJson - flowers counted from cells: $flowersRemaining', tag: 'GameBoard');
       }
-      Logger.debug('GameBoard.fromJson - totalFlowers: $totalFlowers, flowersRemaining: $flowersRemaining', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - flowersRemaining: $flowersRemaining', tag: 'GameBoard');
 
       // Parse obstacles data
       int totalObstacles = 0;
@@ -202,7 +194,6 @@ class GameBoard extends Equatable {
         cells: cells,
         robot: robot,
         princess: princess,
-        totalFlowers: totalFlowers,
         flowersRemaining: flowersRemaining,
         totalObstacles: totalObstacles,
         obstaclesRemaining: obstaclesRemaining,

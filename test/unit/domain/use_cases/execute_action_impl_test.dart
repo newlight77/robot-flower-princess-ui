@@ -6,6 +6,7 @@ import 'package:robot_flower_princess_front/core/error/failures.dart';
 import 'package:robot_flower_princess_front/domain/entities/game.dart';
 import 'package:robot_flower_princess_front/domain/entities/game_board.dart';
 import 'package:robot_flower_princess_front/domain/entities/robot.dart';
+import 'package:robot_flower_princess_front/domain/entities/princess.dart';
 import 'package:robot_flower_princess_front/domain/ports/outbound/game_repository.dart';
 import 'package:robot_flower_princess_front/domain/use_cases/execute_action_impl.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/action_type.dart';
@@ -35,10 +36,13 @@ void main() {
       robot: Robot(
         position: Position(x: 1, y: 1),
         orientation: Direction.north,
-        flowersHeld: 2,
+        collectedFlowers: const [Position(x: 1, y: 1), Position(x: 2, y: 2)],
+        deliveredFlowers: const [Position(x: 1, y: 1)],
       ),
-      princessPosition: Position(x: 4, y: 4),
-      totalFlowers: 3,
+      princess: Princess(position: Position(x: 4, y: 4)),
+      flowersRemaining: 3,
+      totalObstacles: 0,
+      obstaclesRemaining: 0,
     ),
     status: GameStatus.playing,
     createdAt: DateTime.now(),
