@@ -70,7 +70,7 @@ class GameBoardWidget extends StatelessWidget {
 
     if (isRobotHere) {
       backgroundColor = AppColors.robotBlue.withValues(alpha: 0.3);
-      icon = '🤖';
+      icon = board.robot.hasFlowers ? '🤖ིྀ' : '🤖';
     } else if (isPrincessHere) {
       backgroundColor = AppColors.princessPink.withValues(alpha: 0.3);
       icon = '👑';

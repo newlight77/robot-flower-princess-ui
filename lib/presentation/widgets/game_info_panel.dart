@@ -35,7 +35,7 @@ class GameInfoPanel extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             _buildInfoRow(
-              '🤖 Robot Position',
+              '${game.board.robot.hasFlowers ? '🤖ིྀ' : '🤖'} Robot Position',
               '(${game.board.robot.position.x}, ${game.board.robot.position.y})',
             ),
             _buildInfoRow(
