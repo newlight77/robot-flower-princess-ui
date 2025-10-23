@@ -9,7 +9,7 @@ import '../models/game_model.dart';
 
 abstract class GameRemoteDataSource {
   Future<GameModel> createGame(String name, int boardSize);
-  Future<List<GameModel>> getGames({int limit = 10});
+  Future<List<GameModel>> getGames({int limit = 10, String? status});
   Future<GameModel> getGame(String gameId);
   Future<GameModel> executeAction(
     String gameId,
@@ -17,7 +17,7 @@ abstract class GameRemoteDataSource {
     Direction direction,
   );
   Future<GameModel> autoPlay(String gameId);
-  Future<List<Map<String, dynamic>>> replayGame(String gameId);
+  Future<Map<String, dynamic>> getGameHistory(String gameId);
 }
 
 class GameRemoteDataSourceImpl implements GameRemoteDataSource {
@@ -68,11 +68,16 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
   }
 
   @override
-  Future<List<GameModel>> getGames({int limit = 10}) async {
+  Future<List<GameModel>> getGames({int limit = 10, String? status}) async {
     try {
+      final queryParams = <String, dynamic>{'limit': limit};
+      if (status != null) {
+        queryParams['status'] = status;
+      }
+
       final response = await client.get(
         ApiEndpoints.games,
-        queryParameters: {'limit': limit},
+        queryParameters: queryParams,
       );
 
       // Debug logging to understand response structure
@@ -94,6 +99,7 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
         if (responseMap.containsKey('games')) {
           data = responseMap['games'] as List<dynamic>;
         } else if (responseMap.containsKey('gamess')) {
+          // Note: API has typo 'gamess' instead of 'games'
           data = responseMap['gamess'] as List<dynamic>;
         } else if (responseMap.containsKey('data')) {
           data = responseMap['data'] as List<dynamic>;
@@ -159,11 +165,17 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
   }
 
   @override
-  Future<List<Map<String, dynamic>>> replayGame(String gameId) async {
+  Future<Map<String, dynamic>> getGameHistory(String gameId) async {
     try {
-      final response = await client.get(ApiEndpoints.replay(gameId));
-      final List<dynamic> data = response.data as List<dynamic>;
-      return data.map((json) => json as Map<String, dynamic>).toList();
+      final response = await client.get(ApiEndpoints.gameHistory(gameId));
+      Logger.info('getGameHistory response: ${response.data}');
+
+      if (response.data is! Map<String, dynamic>) {
+        throw Exception(
+            'Expected Map<String, dynamic> but got ${response.data.runtimeType}');
+      }
+
+      return response.data as Map<String, dynamic>;
     } on DioException catch (e) {
       throw _handleDioError(e);
     }

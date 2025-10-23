@@ -77,12 +77,12 @@ class MockGameRepository extends _i1.Mock implements _i3.GameRepository {
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Game>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Game>>> getGames({int? limit}) =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i6.Game>>> getGames({int? limit, String? status}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getGames,
           [],
-          {#limit: limit},
+          {#limit: limit, #status: status},
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i6.Game>>>.value(
             _FakeEither_0<_i5.Failure, List<_i6.Game>>(
@@ -90,7 +90,7 @@ class MockGameRepository extends _i1.Mock implements _i3.GameRepository {
           Invocation.method(
             #getGames,
             [],
-            {#limit: limit},
+            {#limit: limit, #status: status},
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, List<_i6.Game>>>);

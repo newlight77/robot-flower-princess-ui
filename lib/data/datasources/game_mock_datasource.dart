@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../../domain/entities/cell.dart';
 import '../../domain/entities/game_action.dart';
 import '../../domain/entities/game_board.dart';
+import '../../domain/entities/princess.dart';
 import '../../domain/entities/robot.dart';
 import '../../domain/value_objects/action_type.dart';
 import '../../domain/value_objects/cell_type.dart';
@@ -35,11 +36,25 @@ class GameMockDataSource {
     return game;
   }
 
-  Future<List<GameModel>> getGames({int limit = 10}) async {
+  Future<List<GameModel>> getGames({int limit = 10, String? status}) async {
     // Simulate network delay
     await Future.delayed(const Duration(milliseconds: 300));
 
-    return _games.take(limit).toList();
+    var filteredGames = _games;
+    if (status != null) {
+      filteredGames = _games.where((game) {
+        if (status == 'in_progress') {
+          return game.status == GameStatus.playing;
+        } else if (status == 'victory') {
+          return game.status == GameStatus.won;
+        } else if (status == 'game_over') {
+          return game.status == GameStatus.gameOver;
+        }
+        return true;
+      }).toList();
+    }
+
+    return filteredGames.take(limit).toList();
   }
 
   Future<GameModel> getGame(String gameId) async {
@@ -90,7 +105,7 @@ class GameMockDataSource {
     return updatedGame;
   }
 
-  Future<List<Map<String, dynamic>>> replayGame(String gameId) async {
+  Future<Map<String, dynamic>> getGameHistory(String gameId) async {
     // Simulate network delay
     await Future.delayed(const Duration(milliseconds: 200));
 
@@ -99,8 +114,11 @@ class GameMockDataSource {
       orElse: () => throw Exception('Game not found'),
     );
 
-    // Return a simple replay with the current board state
-    return [game.board.toJson()];
+    // Return history response matching the API format
+    return {
+      'id': gameId,
+      'history': [game.board.toJson()],
+    };
   }
 
   GameBoard _generateBoard(int size) {
@@ -120,27 +138,29 @@ class GameMockDataSource {
 
         // Skip robot and princess positions
         if (position == robot.position || position == princessPosition) {
+          cells.add(Cell(position: position, type: CellType.empty));
           continue;
         }
 
         // Randomly place flowers and obstacles
         final cellType = _getRandomCellType();
-        if (cellType != CellType.empty) {
-          cells.add(Cell(position: position, type: cellType));
-        }
+        cells.add(Cell(position: position, type: cellType));
       }
     }
 
-    // Count flowers
-    final totalFlowers = cells.where((cell) => cell.type == CellType.flower).length;
+    // Count flowers and obstacles
+    final flowersRemaining = cells.where((cell) => cell.type == CellType.flower).length;
+    final totalObstacles = cells.where((cell) => cell.type == CellType.obstacle).length;
 
     return GameBoard(
       width: size,
       height: size,
       cells: cells,
       robot: robot,
-      princessPosition: princessPosition,
-      totalFlowers: totalFlowers,
+      princess: Princess(position: princessPosition),
+      flowersRemaining: flowersRemaining,
+      totalObstacles: totalObstacles,
+      obstaclesRemaining: totalObstacles,
     );
   }
 

@@ -68,16 +68,21 @@ class GameModel extends Game {
           [];
       Logger.debug('GameModel.fromJson - actions parsed successfully, count: ${actions.length}', tag: 'GameModel');
 
-      Logger.debug('GameModel.fromJson - createdAt field: ${json['createdAt']}', tag: 'GameModel');
+      // Handle both snake_case (from API) and camelCase (from local)
+      Logger.debug('GameModel.fromJson - createdAt field: ${json['createdAt']} or created_at: ${json['created_at']}', tag: 'GameModel');
       final createdAt = json['createdAt'] != null
           ? DateTime.parse(json['createdAt'] as String)
-          : DateTime.now();
+          : json['created_at'] != null
+              ? DateTime.parse(json['created_at'] as String)
+              : DateTime.now();
       Logger.debug('GameModel.fromJson - createdAt: $createdAt', tag: 'GameModel');
 
-      Logger.debug('GameModel.fromJson - updatedAt field: ${json['updatedAt']}', tag: 'GameModel');
+      Logger.debug('GameModel.fromJson - updatedAt field: ${json['updatedAt']} or updated_at: ${json['updated_at']}', tag: 'GameModel');
       final updatedAt = json['updatedAt'] != null
           ? DateTime.parse(json['updatedAt'] as String)
-          : null;
+          : json['updated_at'] != null
+              ? DateTime.parse(json['updated_at'] as String)
+              : null;
       Logger.debug('GameModel.fromJson - updatedAt: $updatedAt', tag: 'GameModel');
 
       final gameModel = GameModel(
