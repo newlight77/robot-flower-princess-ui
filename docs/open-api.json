@@ -1,0 +1,706 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Robot-Flower-Princess Game API",
+    "description": "A strategic puzzle game API where you guide a robot to collect flowers and deliver them to a princess",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/games/": {
+      "post": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Create Game",
+        "description": "Create a new game with specified board size.",
+        "operationId": "create_game_api_games__post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameStateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Get Games",
+        "description": "Get the last N games, optionally filtered by status.",
+        "operationId": "get_games_api_games__get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "in_progress",
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GamesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/games/{game_id}": {
+      "get": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Get Game State",
+        "description": "Get the current state of a game.",
+        "operationId": "get_game_state_api_games__game_id__get",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameStateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/games/{game_id}/history": {
+      "get": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Get Game History",
+        "description": "Get the history of a game.",
+        "operationId": "get_game_history_api_games__game_id__history_get",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GameHistoryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/games/{game_id}/action": {
+      "post": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Perform Action",
+        "description": "Perform an action on the game. The request.action selects the operation.\n\nIf action is 'rotate', provide a 'direction' field.",
+        "operationId": "perform_action_api_games__game_id__action_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActionRequest",
+                "examples": {
+                  "rotate": {
+                    "summary": "Rotate robot",
+                    "value": {
+                      "action": "rotate",
+                      "direction": "south"
+                    }
+                  },
+                  "move": {
+                    "summary": "Move robot",
+                    "value": {
+                      "action": "move",
+                      "direction": "south"
+                    }
+                  },
+                  "pickFlower": {
+                    "summary": "Pick a flower",
+                    "value": {
+                      "action": "pickFlower",
+                      "direction": "south"
+                    }
+                  },
+                  "dropFlower": {
+                    "summary": "Drop a flower",
+                    "value": {
+                      "action": "dropFlower",
+                      "direction": "south"
+                    }
+                  },
+                  "giveFlower": {
+                    "summary": "Give flowers",
+                    "value": {
+                      "action": "giveFlower",
+                      "direction": "south"
+                    }
+                  },
+                  "clean": {
+                    "summary": "Clean obstacle",
+                    "value": {
+                      "action": "clean",
+                      "direction": "south"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/games/{game_id}/autoplay": {
+      "post": {
+        "tags": [
+          "games"
+        ],
+        "summary": "Autoplay",
+        "description": "Let AI solve the game automatically.",
+        "operationId": "autoplay_api_games__game_id__autoplay_post",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Game Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "description": "Root endpoint.",
+        "operationId": "root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Root  Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health Check",
+        "description": "Health check endpoint.",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Health Check Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActionRequest": {
+        "properties": {
+          "action": {
+            "$ref": "#/components/schemas/ActionType"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "north",
+              "south",
+              "east",
+              "west"
+            ],
+            "title": "Direction"
+          }
+        },
+        "type": "object",
+        "required": [
+          "action",
+          "direction"
+        ],
+        "title": "ActionRequest"
+      },
+      "ActionResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "board": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Board"
+          },
+          "robot": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Robot"
+          },
+          "princess": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Princess"
+          },
+          "obstacles": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Obstacles"
+          },
+          "flowers": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Flowers"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "id",
+          "status",
+          "board",
+          "robot",
+          "princess",
+          "obstacles",
+          "flowers",
+          "message"
+        ],
+        "title": "ActionResponse"
+      },
+      "ActionType": {
+        "type": "string",
+        "enum": [
+          "rotate",
+          "move",
+          "pickFlower",
+          "dropFlower",
+          "giveFlower",
+          "clean"
+        ],
+        "title": "ActionType"
+      },
+      "CreateGameRequest": {
+        "properties": {
+          "rows": {
+            "type": "integer",
+            "maximum": 50,
+            "minimum": 3,
+            "title": "Rows",
+            "description": "Number of rows (3-50)"
+          },
+          "cols": {
+            "type": "integer",
+            "maximum": 50,
+            "minimum": 3,
+            "title": "Cols",
+            "description": "Number of columns (3-50)"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Optional game name",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "rows",
+          "cols"
+        ],
+        "title": "CreateGameRequest"
+      },
+      "GameHistoryResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "history": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "History"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "history"
+        ],
+        "title": "GameHistoryResponse"
+      },
+      "GameStateResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "default": ""
+          },
+          "board": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Board"
+          },
+          "robot": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Robot"
+          },
+          "princess": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Princess"
+          },
+          "obstacles": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Obstacles"
+          },
+          "flowers": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Flowers"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "status",
+          "board",
+          "robot",
+          "princess",
+          "obstacles",
+          "flowers",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "GameStateResponse"
+      },
+      "GameSummary": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "board": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Board"
+          },
+          "robot": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Robot"
+          },
+          "princess": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Princess"
+          },
+          "obstacles": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Obstacles"
+          },
+          "flowers": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Flowers"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "created_at": {
+            "type": "string",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "board",
+          "robot",
+          "princess",
+          "obstacles",
+          "flowers",
+          "status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "GameSummary"
+      },
+      "GamesResponse": {
+        "properties": {
+          "gamess": {
+            "items": {
+              "$ref": "#/components/schemas/GameSummary"
+            },
+            "type": "array",
+            "title": "Gamess"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          }
+        },
+        "type": "object",
+        "required": [
+          "gamess",
+          "total"
+        ],
+        "title": "GamesResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
