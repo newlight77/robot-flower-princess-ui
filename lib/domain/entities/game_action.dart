@@ -52,7 +52,9 @@ class GameAction extends Equatable {
       type: ActionType.values.firstWhere((e) => e.name == json['type']),
       direction:
           Direction.values.firstWhere((e) => e.name == json['direction']),
-      timestamp: DateTime.parse(json['timestamp'] as String),
+      timestamp: json['timestamp'] != null
+          ? DateTime.parse(json['timestamp'] as String)
+          : DateTime.now(), // Backend doesn't send timestamp, use current time
       success: json['success'] as bool? ?? true,
       errorMessage: json['errorMessage'] as String?,
     );

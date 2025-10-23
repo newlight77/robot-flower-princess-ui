@@ -70,7 +70,9 @@ class GameBoardWidget extends StatelessWidget {
 
     if (isRobotHere) {
       backgroundColor = AppColors.robotBlue.withValues(alpha: 0.3);
+      print('DEBUG GameBoard: Robot at $position - collectedFlowers=${board.robot.collectedFlowers.length}, deliveredFlowers=${board.robot.deliveredFlowers.length}, hasFlowers=${board.robot.hasFlowers}, flowersHeld=${board.robot.flowersHeld}');
       icon = board.robot.hasFlowers ? '🤖ིྀ' : '🤖';
+      print('DEBUG GameBoard: Using icon: $icon');
     } else if (isPrincessHere) {
       backgroundColor = AppColors.princessPink.withValues(alpha: 0.3);
       icon = '👑';

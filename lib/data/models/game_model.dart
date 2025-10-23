@@ -32,7 +32,22 @@ class GameModel extends Game {
       // Handle new format where board data is at root level
       Map<String, dynamic> boardData;
       if (json['board'] != null) {
-        boardData = json['board'] as Map<String, dynamic>;
+        boardData = Map<String, dynamic>.from(json['board'] as Map<String, dynamic>);
+
+        // Backend puts robot/princess/flowers/obstacles at root level, not in board
+        // Merge them into boardData so GameBoard.fromJson can access them
+        if (json['robot'] != null) {
+          boardData['robot'] = json['robot'];
+        }
+        if (json['princess'] != null) {
+          boardData['princess'] = json['princess'];
+        }
+        if (json['flowers'] != null) {
+          boardData['flowers'] = json['flowers'];
+        }
+        if (json['obstacles'] != null) {
+          boardData['obstacles'] = json['obstacles'];
+        }
       } else {
         // New format has board data at root level
         boardData = json;
