@@ -19,8 +19,53 @@ clean: ## Clean build artifacts
 	rm -rf build/
 	rm -rf .dart_tool/
 
-test: ## Run tests
+test: ## Run all tests
 	flutter test
+
+test-unit: ## Run unit tests only (individual functions and classes)
+	@echo "🧪 Running UNIT tests..."
+	@flutter test test/unit/
+	@echo "✅ Unit tests complete!"
+
+test-use-case: ## Run use case tests only (business logic and rules)
+	@echo "🧪 Running USE CASE tests..."
+	@flutter test test/use_case/
+	@echo "✅ Use case tests complete!"
+
+test-widget: ## Run widget tests only (UI component tests)
+	@echo "🧪 Running WIDGET tests..."
+	@flutter test test/widget/
+	@echo "✅ Widget tests complete!"
+
+test-feature: ## Run feature tests only (end-to-end with fake backend)
+	@echo "🧪 Running FEATURE tests..."
+	@flutter test test/feature/
+	@echo "✅ Feature tests complete!"
+
+test-all-suites: ## Run all test suites separately
+	@echo "🧪 Running ALL TEST SUITES..."
+	@echo ""
+	@echo "═══════════════════════════════════════════════════"
+	@echo "1️⃣  UNIT TESTS (Functions & Classes)"
+	@echo "═══════════════════════════════════════════════════"
+	@make test-unit
+	@echo ""
+	@echo "═══════════════════════════════════════════════════"
+	@echo "2️⃣  USE CASE TESTS (Business Logic)"
+	@echo "═══════════════════════════════════════════════════"
+	@make test-use-case
+	@echo ""
+	@echo "═══════════════════════════════════════════════════"
+	@echo "3️⃣  WIDGET TESTS (UI Components)"
+	@echo "═══════════════════════════════════════════════════"
+	@make test-widget
+	@echo ""
+	@echo "═══════════════════════════════════════════════════"
+	@echo "4️⃣  FEATURE TESTS (End-to-End)"
+	@echo "═══════════════════════════════════════════════════"
+	@make test-feature
+	@echo ""
+	@echo "✅ ALL TEST SUITES COMPLETE!"
 
 test-coverage: ## Run tests with coverage
 	@echo "🧪 Running tests with coverage..."
