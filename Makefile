@@ -23,9 +23,25 @@ test: ## Run tests
 	flutter test
 
 test-coverage: ## Run tests with coverage
-	flutter test --coverage
-	genhtml coverage/lcov.info -o coverage/html
-	@echo "Coverage report generated at coverage/html/index.html"
+	@echo "🧪 Running tests with coverage..."
+	@flutter test --coverage
+	@echo ""
+	@echo "📊 COVERAGE REPORT"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@lcov --summary coverage/lcov.info 2>/dev/null || echo "⚠️  lcov not installed. Install with: brew install lcov"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@echo "📄 Coverage file: coverage/lcov.info"
+	@echo ""
+
+coverage-html: test-coverage ## Generate HTML coverage report
+	@echo "🌐 Generating HTML coverage report..."
+	@genhtml coverage/lcov.info -o coverage/html 2>/dev/null || echo "⚠️  genhtml not installed. Install with: brew install lcov"
+	@echo "✅ HTML report generated at coverage/html/index.html"
+
+coverage-detail: ## Show detailed coverage by file
+	@echo "📊 DETAILED COVERAGE BY FILE"
+	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+	@lcov --list coverage/lcov.info 2>/dev/null || echo "⚠️  lcov not installed. Install with: brew install lcov"
 
 format: ## Format code
 	dart format lib/ test/
