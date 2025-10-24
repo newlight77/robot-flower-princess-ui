@@ -26,21 +26,25 @@ test-unit: ## Run unit tests only (individual functions and classes)
 	@echo "🧪 Running UNIT tests..."
 	@flutter test test/unit/ --coverage --coverage-path coverage/unit-coverage/lcov.info
 	@echo "✅ Unit tests complete!"
+	@echo "📊 Total Coverage: $$(lcov --summary coverage/unit-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
 
 test-use-case: ## Run use case tests only (business logic and rules)
 	@echo "🧪 Running USE CASE tests..."
 	@flutter test test/use_case/ --coverage --coverage-path coverage/use-case-coverage/lcov.info
 	@echo "✅ Use case tests complete!"
+	@echo "📊 Total Coverage: $$(lcov --summary coverage/use-case-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
 
 test-widget: ## Run widget tests only (UI component tests)
 	@echo "🧪 Running WIDGET tests..."
 	@flutter test test/widget/ --coverage --coverage-path coverage/widget-coverage/lcov.info
 	@echo "✅ Widget tests complete!"
+	@echo "📊 Total Coverage: $$(lcov --summary coverage/widget-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
 
 test-feature: ## Run feature tests only (end-to-end with fake backend)
 	@echo "🧪 Running FEATURE tests..."
 	@flutter test test/feature/ --coverage --coverage-path coverage/feature-coverage/lcov.info
 	@echo "✅ Feature tests complete!"
+	@echo "📊 Total Coverage: $$(lcov --summary coverage/feature-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
 
 test-all: ## Run all tests
 	@echo "🧪 Running ALL TEST SUITES..."
