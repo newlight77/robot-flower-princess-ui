@@ -28,7 +28,9 @@ migrate_working_dir/
 /build/
 
 # Coverage
+.coverage
 coverage/
+coverage-artifacts/
 
 # Environment
 .env

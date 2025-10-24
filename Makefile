@@ -24,25 +24,25 @@ test: ## Run all tests
 
 test-unit: ## Run unit tests only (individual functions and classes)
 	@echo "🧪 Running UNIT tests..."
-	@flutter test test/unit/
+	@flutter test test/unit/ --coverage --coverage-path coverage/unit-coverage/lcov.info
 	@echo "✅ Unit tests complete!"
 
 test-use-case: ## Run use case tests only (business logic and rules)
 	@echo "🧪 Running USE CASE tests..."
-	@flutter test test/use_case/
+	@flutter test test/use_case/ --coverage --coverage-path coverage/use-case-coverage/lcov.info
 	@echo "✅ Use case tests complete!"
 
 test-widget: ## Run widget tests only (UI component tests)
 	@echo "🧪 Running WIDGET tests..."
-	@flutter test test/widget/
+	@flutter test test/widget/ --coverage --coverage-path coverage/widget-coverage/lcov.info
 	@echo "✅ Widget tests complete!"
 
 test-feature: ## Run feature tests only (end-to-end with fake backend)
 	@echo "🧪 Running FEATURE tests..."
-	@flutter test test/feature/
+	@flutter test test/feature/ --coverage --coverage-path coverage/feature-coverage/lcov.info
 	@echo "✅ Feature tests complete!"
 
-test-all-suites: ## Run all test suites separately
+test-all: ## Run all tests
 	@echo "🧪 Running ALL TEST SUITES..."
 	@echo ""
 	@echo "═══════════════════════════════════════════════════"
@@ -65,28 +65,63 @@ test-all-suites: ## Run all test suites separately
 	@echo "═══════════════════════════════════════════════════"
 	@make test-feature
 	@echo ""
-	@echo "✅ ALL TEST SUITES COMPLETE!"
+	@echo "✅ ALL TESTS COMPLETE!"
+
+coverage:
+	@make coverage-combine
+	@make coverage-threshold
+	@make coverage-detail
+	@echo "✅ Coverage Workflow Complete!"
+	@echo ""
 
 test-coverage: ## Run tests with coverage
-	@echo "🧪 Running tests with coverage..."
-	@flutter test --coverage
-	@echo ""
-	@echo "📊 COVERAGE REPORT"
-	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-	@lcov --summary coverage/lcov.info 2>/dev/null || echo "⚠️  lcov not installed. Install with: brew install lcov"
-	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-	@echo "📄 Coverage file: coverage/lcov.info"
+	@make test-unit
+	@make test-use-case
+	@make test-widget
+	@make test-feature
+	@make coverage-combine
+	@make coverage-threshold
+	@make coverage-detail
+	@echo "✅ Coverage Workflow Complete!"
 	@echo ""
 
-coverage-html: test-coverage ## Generate HTML coverage report
+coverage-combine:
+	@echo "🎯 Merging coverage reports..."
+	@lcov --add-tracefile coverage/unit-coverage/lcov.info \
+	      --add-tracefile coverage/use-case-coverage/lcov.info \
+	      --add-tracefile coverage/widget-coverage/lcov.info \
+	      --add-tracefile coverage/feature-coverage/lcov.info \
+	      --output-file coverage/lcov.info
+	@echo "✅ Coverage reports merged"
+	@echo ""
+
+coverage-html: test-all coverage-combine coverage-threshold ## Generate HTML coverage report
 	@echo "🌐 Generating HTML coverage report..."
 	@genhtml coverage/lcov.info -o coverage/html 2>/dev/null || echo "⚠️  genhtml not installed. Install with: brew install lcov"
 	@echo "✅ HTML report generated at coverage/html/index.html"
+
+coverage-threshold:
+	@echo "🎯 Checking coverage threshold (80%)..."
+	@COVERAGE=$$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | awk '{print $$2}' | sed 's/%//'); \
+	THRESHOLD=80; \
+	if [ $$(echo "$$COVERAGE < $$THRESHOLD" | bc) -eq 1 ]; then \
+		echo "❌ Coverage $$COVERAGE% is below threshold $$THRESHOLD%"; \
+		exit 1; \
+	else \
+		echo "✅ Coverage $$COVERAGE% meets threshold $$THRESHOLD%"; \
+	fi
 
 coverage-detail: ## Show detailed coverage by file
 	@echo "📊 DETAILED COVERAGE BY FILE"
 	@echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 	@lcov --list coverage/lcov.info 2>/dev/null || echo "⚠️  lcov not installed. Install with: brew install lcov"
+
+
+coverage-clean: ## Clean coverage artifacts
+	@echo "🧹 Cleaning CI artifacts..."
+	@rm -rf coverage-artifacts
+	@rm -rf coverage
+	@echo "✅ Clean complete"
 
 format: ## Format code
 	dart format lib/ test/
