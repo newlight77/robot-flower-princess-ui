@@ -164,9 +164,15 @@ jobs:
              --add-tracefile coverage-artifacts/feature-coverage/lcov.info \
              --output-file coverage/lcov.info
 
+        echo "🔧 Removing test helpers from coverage..."
+        lcov --remove coverage/lcov.info \
+             '*/game_mock_datasource.dart' \
+             '*/game_mock_repository.dart' \
+             --output-file coverage/lcov.info
+
         COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')
         echo "percentage=$COVERAGE" >> $GITHUB_OUTPUT
-        echo "📊 Total Coverage: $COVERAGE%"
+        echo "📊 Total Coverage: $COVERAGE% (excluding mock files)"
 
     - name: Generate HTML coverage report
       run: |

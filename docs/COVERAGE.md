@@ -24,6 +24,7 @@ Each test suite generates its own coverage report (`lcov.info`) which is uploade
 A dedicated `coverage-report` job:
 - Downloads all individual coverage artifacts
 - Merges them into a single comprehensive report using `lcov`
+- Excludes test helpers from coverage (mock datasource and repository)
 - Generates an HTML coverage report with detailed line-by-line coverage
 - Calculates total coverage percentage
 

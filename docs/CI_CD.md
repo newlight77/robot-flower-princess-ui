@@ -96,6 +96,7 @@ This project uses **GitHub Actions** for continuous integration and continuous d
 
 2. **Merge Coverage Reports**
    - Uses `lcov` to merge all coverage files
+   - Excludes test helpers (`game_mock_datasource.dart`, `game_mock_repository.dart`)
    - Generates single comprehensive `lcov.info`
    - Calculates total coverage percentage
 

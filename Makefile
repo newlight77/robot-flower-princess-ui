@@ -96,7 +96,12 @@ coverage-combine:
 	      --add-tracefile coverage/widget-coverage/lcov.info \
 	      --add-tracefile coverage/feature-coverage/lcov.info \
 	      --output-file coverage/lcov.info
-	@echo "✅ Coverage reports merged"
+	@echo "🔧 Removing test helpers from coverage..."
+	@lcov --remove coverage/lcov.info \
+	      '*/game_mock_datasource.dart' \
+	      '*/game_mock_repository.dart' \
+	      --output-file coverage/lcov.info
+	@echo "✅ Coverage reports merged (excluding mock files)"
 	@echo ""
 
 coverage-html: test-all coverage-combine coverage-threshold ## Generate HTML coverage report
