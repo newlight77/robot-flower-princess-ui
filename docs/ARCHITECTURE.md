@@ -109,3 +109,15 @@ Using **Riverpod** for:
 4. Follow SOLID principles
 5. Use value objects for domain concepts
 6. Keep use cases focused and single-purpose
+
+## Related Documentation
+
+- [Testing Strategy](TESTING_STRATEGY.md) - Comprehensive testing approach
+- [API Integration](API.md) - Backend integration details
+- [CI/CD Pipeline](CI_CD.md) - Automated testing and deployment
+- [Deployment Guide](DEPLOYMENT.md) - Deployment instructions
+
+---
+
+**Last Updated**: October 24, 2025
+**Version**: 1.1

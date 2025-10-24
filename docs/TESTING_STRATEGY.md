@@ -273,26 +273,41 @@ The feature tests use a `FakeGameDataSource` that simulates backend behavior wit
 
 ## CI/CD Integration
 
-The test suites are designed to run in CI/CD pipelines:
+The test suites are integrated into the CI/CD pipeline with:
+- **Parallel Execution**: All 4 test suites run simultaneously
+- **Coverage Merging**: Individual coverage reports merged into single report
+- **Quality Gates**: 80% coverage threshold enforced
+- **Automated Reporting**: Coverage reports uploaded to Codecov
+
+### GitHub Actions Implementation
+
+The actual CI/CD pipeline runs all test suites in parallel:
 
 ```yaml
-# Example CI configuration
-steps:
-  - name: Run Unit Tests
-    run: make test-unit
+# Simplified view - see .github/workflows/ci.yml for full implementation
+jobs:
+  test-unit:
+    run: flutter test test/unit/ --coverage
 
-  - name: Run Use Case Tests
-    run: make test-use-case
+  test-use-case:
+    run: flutter test test/use_case/ --coverage
 
-  - name: Run Widget Tests
-    run: make test-widget
+  test-widget:
+    run: flutter test test/widget/ --coverage
 
-  - name: Run Feature Tests
-    run: make test-feature
+  test-feature:
+    run: flutter test test/feature/ --coverage
 
-  - name: Generate Coverage
-    run: make test-coverage
+  code-coverage:
+    needs: [test-unit, test-use-case, test-widget, test-feature]
+    run: |
+      - Merge coverage reports
+      - Generate HTML report
+      - Check 80% threshold
+      - Upload to Codecov
 ```
+
+**For detailed CI/CD documentation**, see [CI_CD.md](CI_CD.md)
 
 ## Maintenance
 
@@ -341,9 +356,17 @@ steps:
 - [Effective Dart: Testing](https://dart.dev/guides/language/effective-dart/testing)
 - [Widget Testing Guide](https://docs.flutter.dev/cookbook/testing/widget/introduction)
 
+## Related Documentation
+
+- [CI/CD Pipeline](CI_CD.md) - Automated testing in CI/CD
+- [Architecture](ARCHITECTURE.md) - System design and testing strategy
+- [Coverage Report](COVERAGE.md) - Detailed coverage workflow
+- [Deployment Guide](DEPLOYMENT.md) - Testing in deployment
+
 ---
 
 **Last Updated**: October 24, 2025
 **Test Suite Version**: 1.0
-**Total Tests**: 130+
+**Total Tests**: 157
 **Overall Coverage**: 52.6%
+**Target Coverage**: 80%

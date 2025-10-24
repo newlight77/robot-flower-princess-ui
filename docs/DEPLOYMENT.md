@@ -87,17 +87,24 @@ APP_ENV=production
 
 ## CI/CD
 
-GitHub Actions workflow is included in `.github/workflows/ci.yml`
+This project uses **GitHub Actions** for continuous integration and deployment.
 
-### Triggers
-- Push to main/develop branches
-- Pull requests
+### Overview
+- **Workflow File**: `.github/workflows/ci.yml`
+- **Test Suites**: 4 parallel test suites (unit, use case, widget, feature)
+- **Coverage Threshold**: 80% minimum required
+- **Quality Gates**: Automatic build failure if coverage < 80%
 
-### Steps
-1. Run tests
-2. Analyze code
-3. Build for web
-4. Build Docker image (main branch only)
+### Automated Processes
+1. ✅ Run all test suites in parallel
+2. ✅ Merge coverage reports
+3. ✅ Enforce 80% coverage threshold
+4. ✅ Build web application
+5. ✅ Build Docker image (main branch only)
+6. ✅ Upload to Codecov
+7. ✅ Generate coverage reports
+
+**For detailed CI/CD documentation**, see [CI_CD.md](CI_CD.md)
 
 ## Monitoring
 
@@ -112,3 +119,31 @@ Consider setting up:
 2. Set appropriate CORS headers on backend
 3. Validate all user inputs
 4. Keep dependencies updated
+5. Regularly scan for vulnerabilities
+6. Use secrets management for credentials
+7. Keep Docker images updated
+
+### Security Best Practices
+```bash
+# Check for security vulnerabilities
+flutter pub outdated
+dart pub audit
+
+# Update dependencies
+flutter pub upgrade
+
+# Scan Docker images
+docker scan robot-flower-princess:latest
+```
+
+## Related Documentation
+
+- [CI/CD Pipeline](CI_CD.md) - Automated testing and deployment
+- [Testing Strategy](TESTING_STRATEGY.md) - Comprehensive testing approach
+- [Architecture](ARCHITECTURE.md) - System design and structure
+- [API Integration](API.md) - Backend API documentation
+
+---
+
+**Last Updated**: October 24, 2025
+**Version**: 1.1

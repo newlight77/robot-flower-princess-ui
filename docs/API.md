@@ -156,3 +156,15 @@ Or via environment variable:
 export API_BASE_URL=http://localhost:8000
 flutter run
 ```
+
+## Related Documentation
+
+- [Architecture](ARCHITECTURE.md) - System design and layers
+- [Testing Strategy](TESTING_STRATEGY.md) - Testing API integration
+- [CI/CD Pipeline](CI_CD.md) - Automated testing
+- [Deployment Guide](DEPLOYMENT.md) - Environment configuration
+
+---
+
+**Last Updated**: October 24, 2025
+**Version**: 1.1

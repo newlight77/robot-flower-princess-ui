@@ -1,8 +1,12 @@
-# Coverage Workflow Update Summary
+# Test Coverage Implementation
 
 ## 🎯 Overview
 
-The CI/CD workflow has been completely restructured to provide comprehensive test coverage reporting with separate test suite execution, coverage merging, HTML report generation, and quality gates.
+This document provides a detailed technical overview of the test coverage workflow implementation. The CI/CD workflow has been completely restructured to provide comprehensive test coverage reporting with separate test suite execution, coverage merging, HTML report generation, and quality gates.
+
+**For general CI/CD information**, see [CI_CD.md](CI_CD.md)
+
+**For testing strategy**, see [TESTING_STRATEGY.md](TESTING_STRATEGY.md)
 
 ## 📊 Key Features
 
@@ -236,7 +240,15 @@ To reach 80% coverage, add tests for:
 - [LCOV Documentation](http://ltp.sourceforge.net/coverage/lcov.php)
 - [Flutter Testing Guide](https://docs.flutter.dev/testing)
 
+## Related Documentation
+
+- [CI/CD Pipeline](CI_CD.md) - Complete CI/CD documentation
+- [Testing Strategy](TESTING_STRATEGY.md) - Test suite organization
+- [Architecture](ARCHITECTURE.md) - System design
+- [Deployment Guide](DEPLOYMENT.md) - Deployment process
+
 ---
 
-**Generated:** $(date)
-**Version:** 1.0
+**Last Updated**: October 24, 2025
+**Version**: 1.1
+**Coverage Threshold**: 80%
