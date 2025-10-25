@@ -70,8 +70,8 @@ jobs:
         path: coverage/lcov.info
         retention-days: 1
 
-  test-widget:
-    name: Widget Tests
+  test-ui-component:
+    name: UI Component Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -86,18 +86,18 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Run widget tests with coverage
+    - name: Run UI component tests with coverage
       run: |
-        flutter test test/widget/ --coverage
+        flutter test test/ui-component/ --coverage
 
         COVERAGE=$(lcov --summary coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')
         echo "percentage=$COVERAGE" >> $GITHUB_OUTPUT
         echo "📊 Total Coverage: $COVERAGE%"
 
-    - name: Upload widget test coverage
+    - name: Upload UI component test coverage
       uses: actions/upload-artifact@v4
       with:
-        name: widget-coverage
+        name: ui-component-coverage
         path: coverage/lcov.info
         retention-days: 1
 
@@ -135,7 +135,7 @@ jobs:
   code-coverage:
     name: Code Coverage
     runs-on: ubuntu-latest
-    needs: [test-unit, test-use-case, test-widget, test-feature]
+    needs: [test-unit, test-use-case, test-ui-component, test-feature]
 
     steps:
     - uses: actions/checkout@v5
@@ -160,7 +160,7 @@ jobs:
         mkdir -p coverage
         lcov --add-tracefile coverage-artifacts/unit-coverage/lcov.info \
              --add-tracefile coverage-artifacts/use-case-coverage/lcov.info \
-             --add-tracefile coverage-artifacts/widget-coverage/lcov.info \
+             --add-tracefile coverage-artifacts/ui-component-coverage/lcov.info \
              --add-tracefile coverage-artifacts/feature-coverage/lcov.info \
              --output-file coverage/lcov.info
 
@@ -213,12 +213,12 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "## 🧩 Test Suites" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "| Test Suite | Status |" >> $GITHUB_STEP_SUMMARY
-        echo "|------------|--------|" >> $GITHUB_STEP_SUMMARY
-        echo "| Unit Tests | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-        echo "| Use Case Tests | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-        echo "| Widget Tests | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
-        echo "| Feature Tests | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+        echo "| Test Suite                  | Status |" >> $GITHUB_STEP_SUMMARY
+        echo "|-----------------------------|----------|" >> $GITHUB_STEP_SUMMARY
+        echo "| Unit Tests                  | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+        echo "| Use Case Tests              | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+        echo "| UI Component / Widget Tests | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
+        echo "| Feature Tests               | ✅ Passed |" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "## 📈 Coverage Details" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
@@ -256,12 +256,12 @@ jobs:
           **Threshold:** ${threshold}%
           **Status:** ${passed ? 'PASSED' : 'FAILED'}
 
-          | Test Suite | Status |
-          |------------|--------|
-          | Unit Tests | ✅ |
-          | Use Case Tests | ✅ |
-          | Widget Tests | ✅ |
-          | Feature Tests | ✅ |
+          | Test Suite                  | Status   |
+          |-----------------------------|----------|
+          | Unit Tests                  | ✅ Passed|
+          | Use Case Tests              | ✅ Passed|
+          | UI Component / Widget Tests | ✅ Passed|
+          | Feature Tests               | ✅ Passed|
 
           [View detailed coverage report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
           `;
@@ -276,7 +276,7 @@ jobs:
   lint:
     name: Lint & Code Quality
     runs-on: ubuntu-latest
-    needs: [test-unit, test-use-case, test-widget, test-feature]
+    needs: [test-unit, test-use-case, test-ui-component, test-feature]
 
     steps:
     - uses: actions/checkout@v5

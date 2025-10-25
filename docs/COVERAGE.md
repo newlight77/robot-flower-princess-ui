@@ -14,7 +14,7 @@ This document provides a detailed technical overview of the test coverage workfl
 Each test suite now runs in its own job for better isolation and parallel execution:
 - **Unit Tests** (`test-unit`) - Tests individual functions and classes
 - **Use Case Tests** (`test-use-case`) - Tests business logic
-- **Widget Tests** (`test-widget`) - Tests UI components
+- **UI Components Tests / Widgets** (`test-ui-component`) - Tests UI components
 - **Feature Tests** (`test-feature`) - Tests end-to-end scenarios
 
 ### 2. **Coverage Artifacts**
@@ -51,14 +51,14 @@ Multiple reporting mechanisms:
 │    analyze      │  ← Code analysis
 └────────┬────────┘
          │
-    ┌────┴────┬────────┬────────┐
-    ▼         ▼        ▼        ▼
-┌────────┐ ┌──────┐ ┌──────┐ ┌────────┐
-│ unit   │ │ use  │ │widget│ │feature │  ← Parallel test execution
-│ tests  │ │ case │ │tests │ │ tests  │
-└───┬────┘ └──┬───┘ └──┬───┘ └───┬────┘
-    │         │        │         │
-    └─────────┴────────┴─────────┘
+    ┌────┴────┬────────┬────────────────┐
+    ▼         ▼        ▼                ▼
+┌────────┐ ┌──────┐ ┌─────────────┐ ┌────────┐
+│ unit   │ │ use  │ │UI Components│ │feature │  ← Parallel test execution
+│ tests  │ │ case │ │Widget tests │ │ tests  │
+└───┬────┘ └──┬───┘ └──┬──────────┘ └───┬────┘
+    │         │        │                │
+    └─────────┴────────┴────────────────┘
               │
               ▼
     ┌──────────────────┐
@@ -89,7 +89,7 @@ Complete restructure with:
 - Lines 10-27: Code analysis
 - Lines 29-54: Unit tests with coverage
 - Lines 56-81: Use case tests with coverage
-- Lines 83-108: Widget tests with coverage
+- Lines 83-108: UI component tests with coverage
 - Lines 110-135: Feature tests with coverage
 - Lines 137-242: Coverage report generation and quality gate
 - Lines 243-268: Web build
@@ -138,8 +138,8 @@ make coverage-clean
 2️⃣  Running Use Case Tests with Coverage...
 ✅ Use case tests complete (13 tests)
 
-3️⃣  Running Widget Tests with Coverage...
-✅ Widget tests complete (29 tests)
+3️⃣  Running UI Component / Widget Tests with Coverage...
+✅ UI Component / Widget tests complete (29 tests)
 
 4️⃣  Running Feature Tests with Coverage...
 ✅ Feature tests complete (10 tests)
@@ -178,12 +178,12 @@ When you push code or create a PR:
 **Threshold:** 80%
 **Status:** PASSED
 
-| Test Suite | Status |
-|------------|--------|
-| Unit Tests | ✅ |
-| Use Case Tests | ✅ |
-| Widget Tests | ✅ |
-| Feature Tests | ✅ |
+| Test Suite                  | Status |
+|-----------------------------|--------|
+| Unit Tests                  | ✅     |
+| Use Case Tests              | ✅     |
+| II Component / Widget Tests | ✅     |
+| Feature Tests               | ✅     |
 
 [View detailed coverage report](https://github.com/...)
 ```
@@ -218,7 +218,7 @@ Coverage is automatically uploaded to Codecov. To view:
 **Total Tests:** 157
 - Unit Tests: 105 ✅
 - Use Case Tests: 13 ✅
-- Widget Tests: 29 ✅
+- UI Component / Widget Tests: 29 ✅
 - Feature Tests: 10 ✅
 
 **Current Coverage:** ~52.6%

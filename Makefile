@@ -19,34 +19,10 @@ clean: ## Clean build artifacts
 	rm -rf build/
 	rm -rf .dart_tool/
 
+# test: ## Run all tests
+# 	flutter test
+
 test: ## Run all tests
-	flutter test
-
-test-unit: ## Run unit tests only (individual functions and classes)
-	@echo "🧪 Running UNIT tests..."
-	@flutter test test/unit/ --coverage --coverage-path coverage/unit-coverage/lcov.info
-	@echo "✅ Unit tests complete!"
-	@echo "📊 Total Coverage: $$(lcov --summary coverage/unit-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
-
-test-use-case: ## Run use case tests only (business logic and rules)
-	@echo "🧪 Running USE CASE tests..."
-	@flutter test test/use_case/ --coverage --coverage-path coverage/use-case-coverage/lcov.info
-	@echo "✅ Use case tests complete!"
-	@echo "📊 Total Coverage: $$(lcov --summary coverage/use-case-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
-
-test-widget: ## Run widget tests only (UI component tests)
-	@echo "🧪 Running WIDGET tests..."
-	@flutter test test/widget/ --coverage --coverage-path coverage/widget-coverage/lcov.info
-	@echo "✅ Widget tests complete!"
-	@echo "📊 Total Coverage: $$(lcov --summary coverage/widget-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
-
-test-feature: ## Run feature tests only (end-to-end with fake backend)
-	@echo "🧪 Running FEATURE tests..."
-	@flutter test test/feature/ --coverage --coverage-path coverage/feature-coverage/lcov.info
-	@echo "✅ Feature tests complete!"
-	@echo "📊 Total Coverage: $$(lcov --summary coverage/feature-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
-
-test-all: ## Run all tests
 	@echo "🧪 Running ALL TEST SUITES..."
 	@echo ""
 	@echo "═══════════════════════════════════════════════════"
@@ -60,9 +36,9 @@ test-all: ## Run all tests
 	@make test-use-case
 	@echo ""
 	@echo "═══════════════════════════════════════════════════"
-	@echo "3️⃣  WIDGET TESTS (UI Components)"
+	@echo "3️⃣  UI COMPONENT / WIDGET TESTS (UI Components)"
 	@echo "═══════════════════════════════════════════════════"
-	@make test-widget
+	@make test-ui-component
 	@echo ""
 	@echo "═══════════════════════════════════════════════════"
 	@echo "4️⃣  FEATURE TESTS (End-to-End)"
@@ -70,6 +46,30 @@ test-all: ## Run all tests
 	@make test-feature
 	@echo ""
 	@echo "✅ ALL TESTS COMPLETE!"
+
+test-unit: ## Run unit tests only (individual functions and classes)
+	@echo "🧪 Running UNIT tests..."
+	@flutter test test/unit/ --coverage --coverage-path coverage/unit-coverage/lcov.info
+	@echo "✅ Unit tests complete!"
+	@echo "📊 Total Coverage: $$(lcov --summary coverage/unit-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
+
+test-use-case: ## Run use case tests only (business logic and rules)
+	@echo "🧪 Running USE CASE tests..."
+	@flutter test test/use_case/ --coverage --coverage-path coverage/use-case-coverage/lcov.info
+	@echo "✅ Use case tests complete!"
+	@echo "📊 Total Coverage: $$(lcov --summary coverage/use-case-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
+
+test-ui-component: ## Run UI components tests only (UI component tests)
+	@echo "🧪 Running UI COMPONENT / WIDGET TESTS..."
+	@flutter test test/ui-component/ --coverage --coverage-path coverage/ui-component-coverage/lcov.info
+	@echo "✅ UI component / widget tests complete!"
+	@echo "📊 Total Coverage: $$(lcov --summary coverage/ui-component-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
+
+test-feature: ## Run feature tests only (end-to-end with fake backend)
+	@echo "🧪 Running FEATURE tests..."
+	@flutter test test/feature/ --coverage --coverage-path coverage/feature-coverage/lcov.info
+	@echo "✅ Feature tests complete!"
+	@echo "📊 Total Coverage: $$(lcov --summary coverage/feature-coverage/lcov.info 2>&1 | grep "lines" | awk '{print $2}' | sed 's/%//')%"
 
 coverage:
 	@make coverage-combine
@@ -81,7 +81,7 @@ coverage:
 test-coverage: ## Run tests with coverage
 	@make test-unit
 	@make test-use-case
-	@make test-widget
+	@make test-ui-component
 	@make test-feature
 	@make coverage-combine
 	@make coverage-threshold
@@ -93,7 +93,7 @@ coverage-combine:
 	@echo "🎯 Merging coverage reports..."
 	@lcov --add-tracefile coverage/unit-coverage/lcov.info \
 	      --add-tracefile coverage/use-case-coverage/lcov.info \
-	      --add-tracefile coverage/widget-coverage/lcov.info \
+	      --add-tracefile coverage/ui-component-coverage/lcov.info \
 	      --add-tracefile coverage/feature-coverage/lcov.info \
 	      --output-file coverage/lcov.info
 	@echo "🔧 Removing test helpers from coverage..."
@@ -133,10 +133,39 @@ coverage-clean: ## Clean coverage artifacts
 	@echo "✅ Clean complete"
 
 format: ## Format code
-	dart format lib/ test/
+	@echo "🎨 Formatting code..."
+	@dart format lib/ test/
+	@echo "✅ Code formatted"
+
+format-check: ## Check code formatting without modifying files
+	@echo "🔍 Checking code formatting..."
+	@dart format --set-exit-if-changed lib/ test/
+	@echo "✅ Code formatting is correct"
 
 analyze: ## Analyze code
-	flutter analyze
+	@echo "🔬 Analyzing code..."
+	@flutter analyze
+	@echo "✅ Analysis complete"
+
+lint: ## Run all linting checks (format, analyze)
+	@echo "╔═══════════════════════════════════════════════════╗"
+	@echo "║           🔍 LINTING CODE                         ║"
+	@echo "╚═══════════════════════════════════════════════════╝"
+	@echo ""
+	@echo "1️⃣  Checking code formatting..."
+	@dart format --set-exit-if-changed lib/ test/ || (echo "❌ Code formatting issues found. Run 'make format' to fix." && exit 1)
+	@echo "✅ Code formatting is correct"
+	@echo ""
+	@echo "2️⃣  Running static analysis..."
+	@flutter analyze || (echo "❌ Analysis errors found. Fix the issues above." && exit 1)
+	@echo "✅ Analysis passed"
+	@echo ""
+	@echo "3️⃣  Checking for outdated dependencies..."
+	@flutter pub outdated --no-dev-dependencies || true
+	@echo ""
+	@echo "╔═══════════════════════════════════════════════════╗"
+	@echo "║           ✅ ALL LINT CHECKS PASSED               ║"
+	@echo "╚═══════════════════════════════════════════════════╝"
 
 build-web: ## Build for web
 	flutter build web --release
@@ -174,8 +203,16 @@ dev: ## Run in development mode
 run: ## Run in production mode
 	flutter run -d chrome
 
-ci: ## Run CI checks
-	flutter pub get
-	flutter analyze
-	flutter test --coverage
-	flutter build web --release
+ci: ## Run CI checks (lint + test + build)
+	@echo "🤖 Running CI checks..."
+	@flutter pub get
+	@make lint
+	@flutter test --coverage
+	@flutter build web --release
+	@echo "✅ CI checks complete!"
+
+pre-commit: ## Run pre-commit checks (lint + unit tests)
+	@echo "🔍 Running pre-commit checks..."
+	@make lint
+	@make test-unit
+	@echo "✅ Ready to commit!"
