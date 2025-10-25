@@ -102,17 +102,9 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
 
         if (responseMap.containsKey('games')) {
           data = responseMap['games'] as List<dynamic>;
-        } else if (responseMap.containsKey('gamess')) {
-          // Note: API has typo 'gamess' instead of 'games'
-          data = responseMap['gamess'] as List<dynamic>;
-        } else if (responseMap.containsKey('data')) {
-          data = responseMap['data'] as List<dynamic>;
-        } else if (responseMap.containsKey('items')) {
-          data = responseMap['items'] as List<dynamic>;
         } else {
-          // If it's a single game object, wrap it in a list
-          Logger.info('Treating response as single game object');
-          data = [responseMap];
+          throw Exception(
+              'Unexpected response format: ${response.data.runtimeType}');
         }
       } else {
         throw Exception(

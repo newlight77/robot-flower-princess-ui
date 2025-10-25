@@ -631,12 +631,12 @@
       },
       "GamesResponse": {
         "properties": {
-          "gamess": {
+          "games": {
             "items": {
               "$ref": "#/components/schemas/GameSummary"
             },
             "type": "array",
-            "title": "Gamess"
+            "title": "Games"
           },
           "total": {
             "type": "integer",
@@ -645,7 +645,7 @@
         },
         "type": "object",
         "required": [
-          "gamess",
+          "games",
           "total"
         ],
         "title": "GamesResponse"
