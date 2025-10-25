@@ -15,6 +15,8 @@ import 'package:robot_flower_princess_front/domain/ports/outbound/game_repositor
     as _i3;
 import 'package:robot_flower_princess_front/domain/value_objects/action_type.dart'
     as _i7;
+import 'package:robot_flower_princess_front/domain/value_objects/auto_play_strategy.dart'
+    as _i10;
 import 'package:robot_flower_princess_front/domain/value_objects/direction.dart'
     as _i8;
 
@@ -143,11 +145,15 @@ class MockGameRepository extends _i1.Mock implements _i3.GameRepository {
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Game>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Game>> autoPlay(String? gameId) =>
+  _i4.Future<_i2.Either<_i5.Failure, _i6.Game>> autoPlay(
+    String? gameId, {
+    _i10.AutoPlayStrategy strategy = _i10.AutoPlayStrategy.greedy,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #autoPlay,
           [gameId],
+          {#strategy: strategy},
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Game>>.value(
             _FakeEither_0<_i5.Failure, _i6.Game>(
@@ -155,6 +161,7 @@ class MockGameRepository extends _i1.Mock implements _i3.GameRepository {
           Invocation.method(
             #autoPlay,
             [gameId],
+            {#strategy: strategy},
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Game>>);

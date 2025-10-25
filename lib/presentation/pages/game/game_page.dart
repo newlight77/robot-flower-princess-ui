@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../domain/value_objects/action_type.dart';
+import '../../../domain/value_objects/auto_play_strategy.dart';
 import '../../../domain/value_objects/direction.dart';
 import '../../providers/current_game_provider.dart';
 import '../../widgets/game_board_widget.dart';
@@ -234,28 +235,43 @@ class _GamePageState extends ConsumerState<GamePage> {
     final game = ref.read(currentGameProvider).value;
     if (game == null || game.status.isFinished) return;
 
-    final confirmed = await showDialog<bool>(
+    final strategy = await showDialog<AutoPlayStrategy>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Auto Play'),
-        content: const Text(
-          'Let the AI try to solve the game automatically?',
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Choose an AI strategy:'),
+            const SizedBox(height: 16),
+            ListTile(
+              dense: true,
+              leading: const Icon(Icons.security),
+              title: const Text('Greedy (Default)'),
+              subtitle: const Text('Safe & reliable - 75% success rate'),
+              onTap: () => Navigator.pop(context, AutoPlayStrategy.greedy),
+            ),
+            ListTile(
+              dense: true,
+              leading: const Icon(Icons.bolt),
+              title: const Text('Optimal'),
+              subtitle: const Text('Fast & efficient - 62% success, -25% actions'),
+              onTap: () => Navigator.pop(context, AutoPlayStrategy.optimal),
+            ),
+          ],
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => Navigator.pop(context),
             child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            child: const Text('Start'),
           ),
         ],
       ),
     );
 
-    if (confirmed == true) {
-      await ref.read(currentGameProvider.notifier).autoPlay();
+    if (strategy != null) {
+      await ref.read(currentGameProvider.notifier).autoPlay(strategy: strategy);
     }
   }
 

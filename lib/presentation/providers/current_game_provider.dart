@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/entities/game.dart';
 import '../../domain/value_objects/action_type.dart';
+import '../../domain/value_objects/auto_play_strategy.dart';
 import '../../domain/value_objects/direction.dart';
 import 'game_provider.dart';
 
@@ -39,12 +40,14 @@ class CurrentGameNotifier extends StateNotifier<AsyncValue<Game?>> {
     );
   }
 
-  Future<void> autoPlay() async {
+  Future<void> autoPlay({
+    AutoPlayStrategy strategy = AutoPlayStrategy.greedy,
+  }) async {
     final currentGame = state.value;
     if (currentGame == null) return;
 
     state = const AsyncValue.loading();
-    final result = await _autoPlayUseCase(currentGame.id);
+    final result = await _autoPlayUseCase(currentGame.id, strategy: strategy);
     result.fold(
       (failure) =>
           state = AsyncValue.error(failure.message, StackTrace.current),

@@ -286,10 +286,10 @@
     "/api/games/{game_id}/autoplay": {
       "post": {
         "tags": [
-          "games"
+          "aiplayer"
         ],
         "summary": "Autoplay",
-        "description": "Let AI solve the game automatically.",
+        "description": "Let AI solve the game automatically.\n\nTwo strategies available:\n- **greedy** (default): Safe & reliable. 75% success rate. Checks safety before picking flowers.\n- **optimal**: Fast & efficient. 62% success rate, but 25% fewer actions. Uses A* pathfinding and multi-step planning.",
         "operationId": "autoplay_api_games__game_id__autoplay_post",
         "parameters": [
           {
@@ -300,6 +300,22 @@
               "type": "string",
               "title": "Game Id"
             }
+          },
+          {
+            "name": "strategy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "greedy",
+                "optimal"
+              ],
+              "type": "string",
+              "description": "AI strategy: 'greedy' (safe, 75% success) or 'optimal' (fast, 62% success, -25% actions)",
+              "default": "greedy",
+              "title": "Strategy"
+            },
+            "description": "AI strategy: 'greedy' (safe, 75% success) or 'optimal' (fast, 62% success, -25% actions)"
           }
         ],
         "responses": {
@@ -319,27 +335,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/": {
-      "get": {
-        "summary": "Root",
-        "description": "Root endpoint.",
-        "operationId": "root__get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": true,
-                  "type": "object",
-                  "title": "Response Root  Get"
                 }
               }
             }

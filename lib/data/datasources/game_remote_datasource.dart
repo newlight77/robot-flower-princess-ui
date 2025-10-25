@@ -4,6 +4,7 @@ import '../../core/error/exceptions.dart';
 import '../../core/network/api_client.dart';
 import '../../core/utils/logger.dart';
 import '../../domain/value_objects/action_type.dart';
+import '../../domain/value_objects/auto_play_strategy.dart';
 import '../../domain/value_objects/direction.dart';
 import '../models/game_model.dart';
 
@@ -16,7 +17,10 @@ abstract class GameRemoteDataSource {
     ActionType action,
     Direction direction,
   );
-  Future<GameModel> autoPlay(String gameId);
+  Future<GameModel> autoPlay(
+    String gameId, {
+    AutoPlayStrategy strategy = AutoPlayStrategy.greedy,
+  });
   Future<Map<String, dynamic>> getGameHistory(String gameId);
 }
 
@@ -155,9 +159,21 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
   }
 
   @override
-  Future<GameModel> autoPlay(String gameId) async {
+  Future<GameModel> autoPlay(
+    String gameId, {
+    AutoPlayStrategy strategy = AutoPlayStrategy.greedy,
+  }) async {
     try {
-      final response = await client.post(ApiEndpoints.autoPlay(gameId));
+      final queryParams = <String, dynamic>{};
+      // Only include strategy if it's not the default (greedy)
+      if (strategy != AutoPlayStrategy.greedy) {
+        queryParams['strategy'] = strategy.toApiParam();
+      }
+
+      final response = await client.post(
+        ApiEndpoints.autoPlay(gameId),
+        queryParameters: queryParams.isNotEmpty ? queryParams : null,
+      );
       return GameModel.fromJson(response.data as Map<String, dynamic>);
     } on DioException catch (e) {
       throw _handleDioError(e);

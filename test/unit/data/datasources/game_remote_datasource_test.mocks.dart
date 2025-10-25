@@ -57,12 +57,16 @@ class MockApiClient extends _i1.Mock implements _i4.ApiClient {
   _i3.Future<_i2.Response<dynamic>> post(
     String? path, {
     dynamic data,
+    Map<String, dynamic>? queryParameters,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #post,
           [path],
-          {#data: data},
+          {
+            #data: data,
+            #queryParameters: queryParameters,
+          },
         ),
         returnValue:
             _i3.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
@@ -70,7 +74,10 @@ class MockApiClient extends _i1.Mock implements _i4.ApiClient {
           Invocation.method(
             #post,
             [path],
-            {#data: data},
+            {
+              #data: data,
+              #queryParameters: queryParameters,
+            },
           ),
         )),
       ) as _i3.Future<_i2.Response<dynamic>>);

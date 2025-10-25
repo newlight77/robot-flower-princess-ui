@@ -5,6 +5,7 @@ import 'package:robot_flower_princess_front/domain/entities/game_board.dart';
 import 'package:robot_flower_princess_front/domain/entities/princess.dart';
 import 'package:robot_flower_princess_front/domain/entities/robot.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/action_type.dart';
+import 'package:robot_flower_princess_front/domain/value_objects/auto_play_strategy.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/cell_type.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/direction.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/game_status.dart';
@@ -207,7 +208,10 @@ class FakeGameDataSource implements GameRemoteDataSource {
   }
 
   @override
-  Future<GameModel> autoPlay(String gameId) async {
+  Future<GameModel> autoPlay(
+    String gameId, {
+    AutoPlayStrategy strategy = AutoPlayStrategy.greedy,
+  }) async {
     await Future.delayed(const Duration(milliseconds: 200));
 
     final game = _games[gameId];

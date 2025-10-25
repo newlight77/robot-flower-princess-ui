@@ -4,6 +4,7 @@ import '../../domain/entities/game.dart';
 import '../../domain/entities/game_board.dart';
 import '../../domain/ports/outbound/game_repository.dart';
 import '../../domain/value_objects/action_type.dart';
+import '../../domain/value_objects/auto_play_strategy.dart';
 import '../../domain/value_objects/direction.dart';
 import '../datasources/game_mock_datasource.dart';
 
@@ -60,9 +61,15 @@ class GameMockRepository implements GameRepository {
   }
 
   @override
-  Future<Either<Failure, Game>> autoPlay(String gameId) async {
+  Future<Either<Failure, Game>> autoPlay(
+    String gameId, {
+    AutoPlayStrategy strategy = AutoPlayStrategy.greedy,
+  }) async {
     try {
-      final gameModel = await mockDataSource.autoPlay(gameId);
+      final gameModel = await mockDataSource.autoPlay(
+        gameId,
+        strategy: strategy.toApiParam(),
+      );
       return Right(gameModel.toEntity());
     } catch (e) {
       return Left(ServerFailure(e.toString()));

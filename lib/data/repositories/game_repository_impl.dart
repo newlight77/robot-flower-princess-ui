@@ -5,6 +5,7 @@ import '../../domain/entities/game.dart';
 import '../../domain/entities/game_board.dart';
 import '../../domain/ports/outbound/game_repository.dart';
 import '../../domain/value_objects/action_type.dart';
+import '../../domain/value_objects/auto_play_strategy.dart';
 import '../../domain/value_objects/direction.dart';
 import '../datasources/game_remote_datasource.dart';
 
@@ -88,9 +89,12 @@ class GameRepositoryImpl implements GameRepository {
   }
 
   @override
-  Future<Either<Failure, Game>> autoPlay(String gameId) async {
+  Future<Either<Failure, Game>> autoPlay(
+    String gameId, {
+    AutoPlayStrategy strategy = AutoPlayStrategy.greedy,
+  }) async {
     try {
-      final gameModel = await remoteDataSource.autoPlay(gameId);
+      final gameModel = await remoteDataSource.autoPlay(gameId, strategy: strategy);
       return Right(gameModel.toEntity());
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

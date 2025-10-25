@@ -3,6 +3,7 @@ import '../../core/error/failures.dart';
 import '../entities/game.dart';
 import '../ports/inbound/auto_play_use_case.dart';
 import '../ports/outbound/game_repository.dart';
+import '../value_objects/auto_play_strategy.dart';
 
 class AutoPlayImpl implements AutoPlayUseCase {
   final GameRepository repository;
@@ -10,10 +11,13 @@ class AutoPlayImpl implements AutoPlayUseCase {
   AutoPlayImpl(this.repository);
 
   @override
-  Future<Either<Failure, Game>> call(String gameId) async {
+  Future<Either<Failure, Game>> call(
+    String gameId, {
+    AutoPlayStrategy strategy = AutoPlayStrategy.greedy,
+  }) async {
     if (gameId.isEmpty) {
       return const Left(ValidationFailure('Game ID cannot be empty'));
     }
-    return await repository.autoPlay(gameId);
+    return await repository.autoPlay(gameId, strategy: strategy);
   }
 }
