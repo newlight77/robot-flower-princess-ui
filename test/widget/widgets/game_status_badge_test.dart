@@ -5,8 +5,7 @@ import 'package:robot_flower_princess_front/presentation/widgets/game_status_bad
 
 void main() {
   group('GameStatusBadge Widget Tests', () {
-    testWidgets('should render badge widget',
-        (WidgetTester tester) async {
+    testWidgets('should render badge widget', (WidgetTester tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: Scaffold(
@@ -47,10 +46,12 @@ void main() {
       );
 
       final container = tester.widget<Container>(
-        find.descendant(
-          of: find.byType(GameStatusBadge),
-          matching: find.byType(Container),
-        ).first,
+        find
+            .descendant(
+              of: find.byType(GameStatusBadge),
+              matching: find.byType(Container),
+            )
+            .first,
       );
 
       expect(container.padding, isNotNull);

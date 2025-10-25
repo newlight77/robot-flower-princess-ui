@@ -73,7 +73,8 @@ class MockGameRemoteDataSource extends _i1.Mock
       ) as _i4.Future<_i2.GameModel>);
 
   @override
-  _i4.Future<List<_i2.GameModel>> getGames({int? limit, String? status}) => (super.noSuchMethod(
+  _i4.Future<List<_i2.GameModel>> getGames({int? limit, String? status}) =>
+      (super.noSuchMethod(
         Invocation.method(
           #getGames,
           [],
@@ -147,7 +148,7 @@ class MockGameRemoteDataSource extends _i1.Mock
           #getGameHistory,
           [gameId],
         ),
-        returnValue: _i4.Future<Map<String, dynamic>>.value(
-            <String, dynamic>{}),
+        returnValue:
+            _i4.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
       ) as _i4.Future<Map<String, dynamic>>);
 }

@@ -76,7 +76,8 @@ void main() {
       );
 
       // The selected button should exist
-      final buttons = tester.widgetList<ElevatedButton>(find.byType(ElevatedButton));
+      final buttons =
+          tester.widgetList<ElevatedButton>(find.byType(ElevatedButton));
       expect(buttons.length, 4);
     });
 
@@ -98,7 +99,8 @@ void main() {
         ),
       );
 
-      final buttons = tester.widgetList<ElevatedButton>(find.byType(ElevatedButton));
+      final buttons =
+          tester.widgetList<ElevatedButton>(find.byType(ElevatedButton));
       for (final button in buttons) {
         expect(button.onPressed, isNull);
       }
@@ -144,7 +146,9 @@ void main() {
         ),
       );
 
-      final buttons = tester.widgetList<ElevatedButton>(find.byType(ElevatedButton)).toList();
+      final buttons = tester
+          .widgetList<ElevatedButton>(find.byType(ElevatedButton))
+          .toList();
       expect(buttons.length, 4);
     });
 

@@ -109,7 +109,8 @@ class GameBoard extends Equatable {
       // Handle both old format (width/height) and new format (rows/cols)
       final width = json['width'] as int? ?? json['cols'] as int? ?? 0;
       final height = json['height'] as int? ?? json['rows'] as int? ?? 0;
-      Logger.debug('GameBoard.fromJson - width: $width, height: $height', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - width: $width, height: $height',
+          tag: 'GameBoard');
 
       List<Cell> cells = [];
       List<List<dynamic>>? grid;
@@ -120,46 +121,60 @@ class GameBoard extends Equatable {
         // Convert to List<List<dynamic>> safely
         grid = gridData.map((row) => row as List<dynamic>).toList();
         cells = _parseGridToCells(grid);
-        Logger.debug('GameBoard.fromJson - grid parsed to ${cells.length} cells', tag: 'GameBoard');
+        Logger.debug(
+            'GameBoard.fromJson - grid parsed to ${cells.length} cells',
+            tag: 'GameBoard');
       } else if (json['cells'] != null) {
         // Handle old cells format
         cells = (json['cells'] as List?)
                 ?.map((c) => Cell.fromJson(c as Map<String, dynamic>))
                 .toList() ??
             [];
-        Logger.debug('GameBoard.fromJson - cells parsed successfully, count: ${cells.length}', tag: 'GameBoard');
+        Logger.debug(
+            'GameBoard.fromJson - cells parsed successfully, count: ${cells.length}',
+            tag: 'GameBoard');
       }
 
-      Logger.debug('GameBoard.fromJson - robot field: ${json['robot']}', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - robot field: ${json['robot']}',
+          tag: 'GameBoard');
       Robot robot;
       if (json['robot'] != null) {
         robot = Robot.fromJson(json['robot'] as Map<String, dynamic>);
-        Logger.debug('GameBoard.fromJson - robot parsed successfully', tag: 'GameBoard');
+        Logger.debug('GameBoard.fromJson - robot parsed successfully',
+            tag: 'GameBoard');
       } else if (grid != null) {
         // Extract robot position from grid
         final robotPosition = _findRobotPositionInGrid(grid);
         robot = Robot(position: robotPosition, orientation: Direction.north);
-        Logger.debug('GameBoard.fromJson - robot position extracted from grid: $robotPosition', tag: 'GameBoard');
+        Logger.debug(
+            'GameBoard.fromJson - robot position extracted from grid: $robotPosition',
+            tag: 'GameBoard');
       } else {
         // Fallback to default position
-        robot = const Robot(position: Position(x: 0, y: 0), orientation: Direction.north);
-        Logger.debug('GameBoard.fromJson - robot using default position', tag: 'GameBoard');
+        robot = const Robot(
+            position: Position(x: 0, y: 0), orientation: Direction.north);
+        Logger.debug('GameBoard.fromJson - robot using default position',
+            tag: 'GameBoard');
       }
 
       Logger.debug('GameBoard.fromJson - princess field: ${json['princess']}');
       Princess princess;
       if (json['princess'] != null) {
         princess = Princess.fromJson(json['princess'] as Map<String, dynamic>);
-        Logger.debug('GameBoard.fromJson - princess parsed successfully', tag: 'GameBoard');
+        Logger.debug('GameBoard.fromJson - princess parsed successfully',
+            tag: 'GameBoard');
       } else if (grid != null) {
         // Extract princess position from grid
         final princessPosition = _findPrincessPositionInGrid(grid);
         princess = Princess(position: princessPosition);
-        Logger.debug('GameBoard.fromJson - princess position extracted from grid: $princessPosition', tag: 'GameBoard');
+        Logger.debug(
+            'GameBoard.fromJson - princess position extracted from grid: $princessPosition',
+            tag: 'GameBoard');
       } else {
         // Fallback to default position
         princess = Princess(position: Position(x: width - 1, y: height - 1));
-        Logger.debug('GameBoard.fromJson - princess using default position', tag: 'GameBoard');
+        Logger.debug('GameBoard.fromJson - princess using default position',
+            tag: 'GameBoard');
       }
 
       // Parse flowers data
@@ -170,9 +185,12 @@ class GameBoard extends Equatable {
       } else {
         // Count flowers from cells
         flowersRemaining = cells.where((c) => c.type == CellType.flower).length;
-        Logger.debug('GameBoard.fromJson - flowers counted from cells: $flowersRemaining', tag: 'GameBoard');
+        Logger.debug(
+            'GameBoard.fromJson - flowers counted from cells: $flowersRemaining',
+            tag: 'GameBoard');
       }
-      Logger.debug('GameBoard.fromJson - flowersRemaining: $flowersRemaining', tag: 'GameBoard');
+      Logger.debug('GameBoard.fromJson - flowersRemaining: $flowersRemaining',
+          tag: 'GameBoard');
 
       // Parse obstacles data
       int totalObstacles = 0;
@@ -185,9 +203,13 @@ class GameBoard extends Equatable {
         // Count obstacles from cells
         totalObstacles = cells.where((c) => c.type == CellType.obstacle).length;
         obstaclesRemaining = totalObstacles;
-        Logger.debug('GameBoard.fromJson - obstacles counted from cells: $totalObstacles', tag: 'GameBoard');
+        Logger.debug(
+            'GameBoard.fromJson - obstacles counted from cells: $totalObstacles',
+            tag: 'GameBoard');
       }
-      Logger.debug('GameBoard.fromJson - totalObstacles: $totalObstacles, obstaclesRemaining: $obstaclesRemaining', tag: 'GameBoard');
+      Logger.debug(
+          'GameBoard.fromJson - totalObstacles: $totalObstacles, obstaclesRemaining: $obstaclesRemaining',
+          tag: 'GameBoard');
 
       final gameBoard = GameBoard(
         width: width,
@@ -200,11 +222,14 @@ class GameBoard extends Equatable {
         obstaclesRemaining: obstaclesRemaining,
       );
 
-      Logger.info('GameBoard.fromJson - Successfully created GameBoard', tag: 'GameBoard');
+      Logger.info('GameBoard.fromJson - Successfully created GameBoard',
+          tag: 'GameBoard');
       return gameBoard;
     } catch (e, stackTrace) {
-      Logger.error('GameBoard.fromJson - Error: $e', tag: 'GameBoard', error: e);
-      Logger.error('GameBoard.fromJson - Stack trace: $stackTrace', tag: 'GameBoard');
+      Logger.error('GameBoard.fromJson - Error: $e',
+          tag: 'GameBoard', error: e);
+      Logger.error('GameBoard.fromJson - Stack trace: $stackTrace',
+          tag: 'GameBoard');
       throw Exception('Failed to parse GameBoard from JSON: $e. JSON: $json');
     }
   }
@@ -245,7 +270,8 @@ class GameBoard extends Equatable {
   }
 
   List<List<String>> _cellsToGrid() {
-    final grid = List.generate(height, (row) => List.generate(width, (col) => '⬜'));
+    final grid =
+        List.generate(height, (row) => List.generate(width, (col) => '⬜'));
 
     // Place cells
     for (final cell in cells) {

@@ -80,8 +80,8 @@ void main() {
       final initialPosition = game.board.robot.position;
 
       // When: User moves robot east
-      final moveResult = await executeActionUseCase(
-          game.id, ActionType.move, Direction.east);
+      final moveResult =
+          await executeActionUseCase(game.id, ActionType.move, Direction.east);
 
       // Then: Robot position is updated
       expect(moveResult.isRight(), true);
@@ -130,7 +130,8 @@ void main() {
       await createGameUseCase('Game 1', 10);
 
       final createResult = await createGameUseCase('Target Game', 10);
-      final targetGame = createResult.getOrElse(() => throw Exception('Failed'));
+      final targetGame =
+          createResult.getOrElse(() => throw Exception('Failed'));
 
       await createGameUseCase('Game 3', 10);
 
@@ -224,7 +225,8 @@ void main() {
       expect(emptyNameResult.isLeft(), true);
 
       // When: User attempts to create game with invalid size
-      final invalidSizeResult = await createGameUseCase('Valid Name', invalidSize);
+      final invalidSizeResult =
+          await createGameUseCase('Valid Name', invalidSize);
 
       // Then: Validation fails
       expect(invalidSizeResult.isLeft(), true);

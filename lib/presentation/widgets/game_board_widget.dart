@@ -21,7 +21,8 @@ class GameBoardWidget extends StatelessWidget {
       builder: (context, constraints) {
         // Calculate cell size based on available width, ensuring minimum size
         final availableWidth = constraints.maxWidth - 32; // Account for padding
-        final calculatedCellSize = (availableWidth / board.width).clamp(30.0, 80.0);
+        final calculatedCellSize =
+            (availableWidth / board.width).clamp(30.0, 80.0);
         final boardWidth = calculatedCellSize * board.width;
         final boardHeight = calculatedCellSize * board.height;
 
@@ -60,7 +61,6 @@ class GameBoardWidget extends StatelessWidget {
     );
   }
 
-
   Widget _buildCell(BuildContext context, Cell? cell, Position position) {
     final isRobotHere = board.robot.position == position;
     final isPrincessHere = board.princess.position == position;
@@ -70,7 +70,8 @@ class GameBoardWidget extends StatelessWidget {
 
     if (isRobotHere) {
       backgroundColor = AppColors.robotBlue.withValues(alpha: 0.3);
-      print('DEBUG GameBoard: Robot at $position - collectedFlowers=${board.robot.collectedFlowers.length}, deliveredFlowers=${board.robot.deliveredFlowers.length}, hasFlowers=${board.robot.hasFlowers}, flowersHeld=${board.robot.flowersHeld}');
+      print(
+          'DEBUG GameBoard: Robot at $position - collectedFlowers=${board.robot.collectedFlowers.length}, deliveredFlowers=${board.robot.deliveredFlowers.length}, hasFlowers=${board.robot.hasFlowers}, flowersHeld=${board.robot.flowersHeld}');
       icon = board.robot.hasFlowers ? '🤖ིྀ' : '🤖';
       print('DEBUG GameBoard: Using icon: $icon');
     } else if (isPrincessHere) {

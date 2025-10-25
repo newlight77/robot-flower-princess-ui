@@ -10,7 +10,8 @@ class GetGamesImpl implements GetGamesUseCase {
   GetGamesImpl(this.repository);
 
   @override
-  Future<Either<Failure, List<Game>>> call({int limit = 10, String? status}) async {
+  Future<Either<Failure, List<Game>>> call(
+      {int limit = 10, String? status}) async {
     return await repository.getGames(limit: limit, status: status);
   }
 }

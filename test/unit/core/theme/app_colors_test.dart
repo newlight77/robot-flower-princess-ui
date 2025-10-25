@@ -218,13 +218,15 @@ void main() {
 
     group('Color semantics', () {
       test('green colors should have higher green component', () {
-        expect(AppColors.forestGreen.green, greaterThan(AppColors.forestGreen.red));
+        expect(AppColors.forestGreen.green,
+            greaterThan(AppColors.forestGreen.red));
         expect(AppColors.mossGreen.green, greaterThan(AppColors.mossGreen.red));
         expect(AppColors.leafGreen.green, greaterThan(AppColors.leafGreen.red));
       });
 
       test('orange colors should have high red and moderate green', () {
-        expect(AppColors.warmOrange.red, greaterThan(AppColors.warmOrange.blue));
+        expect(
+            AppColors.warmOrange.red, greaterThan(AppColors.warmOrange.blue));
         expect(
           AppColors.sunsetOrange.red,
           greaterThan(AppColors.sunsetOrange.blue),
@@ -340,4 +342,3 @@ void main() {
     });
   });
 }
-

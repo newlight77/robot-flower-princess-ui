@@ -21,7 +21,8 @@ class FakeGameDataSource implements GameRemoteDataSource {
     String name,
     int boardSize,
   ) async {
-    await Future.delayed(const Duration(milliseconds: 100)); // Simulate network delay
+    await Future.delayed(
+        const Duration(milliseconds: 100)); // Simulate network delay
 
     final gameId = 'fake-game-${_gameCounter++}';
 
@@ -46,7 +47,9 @@ class FakeGameDataSource implements GameRemoteDataSource {
       const Cell(position: Position(x: 2, y: 2), type: CellType.flower),
       const Cell(position: Position(x: 3, y: 3), type: CellType.obstacle),
       const Cell(position: Position(x: 4, y: 4), type: CellType.obstacle),
-      Cell(position: Position(x: boardSize - 1, y: boardSize - 1), type: CellType.princess),
+      Cell(
+          position: Position(x: boardSize - 1, y: boardSize - 1),
+          type: CellType.princess),
     ];
 
     final board = GameBoard(
@@ -113,7 +116,8 @@ class FakeGameDataSource implements GameRemoteDataSource {
       final updatedCells = game.board.cells.map((cell) {
         if (cell.position == robot.position) {
           return cell.copyWith(type: CellType.empty);
-        } else if (cell.position == newPosition && cell.type == CellType.empty) {
+        } else if (cell.position == newPosition &&
+            cell.type == CellType.empty) {
           return cell.copyWith(type: CellType.robot);
         }
         return cell;

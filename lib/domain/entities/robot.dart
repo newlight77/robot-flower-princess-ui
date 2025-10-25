@@ -62,12 +62,15 @@ class Robot extends Equatable {
       'position': position.toJson(),
       'orientation': orientation.name,
       'flowers': {
-        'collected': collectedFlowers.map((p) => {'position': p.toJson()}).toList(),
-        'delivered': deliveredFlowers.map((p) => {'position': p.toJson()}).toList(),
+        'collected':
+            collectedFlowers.map((p) => {'position': p.toJson()}).toList(),
+        'delivered':
+            deliveredFlowers.map((p) => {'position': p.toJson()}).toList(),
         'collection_capacity': collectionCapacity,
       },
       'obstacles': {
-        'cleaned': cleanedObstacles.map((p) => {'position': p.toJson()}).toList(),
+        'cleaned':
+            cleanedObstacles.map((p) => {'position': p.toJson()}).toList(),
       },
       'executed_actions': executedActions.map((a) => a.toJson()).toList(),
     };
@@ -87,7 +90,8 @@ class Robot extends Equatable {
 
       Direction orientation;
       if (json['orientation'] != null) {
-        orientation = Direction.values.firstWhere((e) => e.name == json['orientation']);
+        orientation =
+            Direction.values.firstWhere((e) => e.name == json['orientation']);
       } else {
         orientation = Direction.north;
       }
@@ -103,16 +107,19 @@ class Robot extends Equatable {
 
         if (flowersData['collected'] != null) {
           final collected = flowersData['collected'];
-          print('DEBUG: Robot collected flowers: $collected (type: ${collected.runtimeType})');
+          print(
+              'DEBUG: Robot collected flowers: $collected (type: ${collected.runtimeType})');
 
           try {
             // Handle both list and integer formats
             if (collected is List) {
               for (var item in collected) {
-                print('DEBUG: Processing collected item: $item (type: ${item.runtimeType})');
+                print(
+                    'DEBUG: Processing collected item: $item (type: ${item.runtimeType})');
                 if (item is Map<String, dynamic>) {
                   if (item.containsKey('position')) {
-                    final pos = Position.fromJson(item['position'] as Map<String, dynamic>);
+                    final pos = Position.fromJson(
+                        item['position'] as Map<String, dynamic>);
                     collectedFlowers.add(pos);
                     print('DEBUG: Added collected position: $pos');
                   }
@@ -133,16 +140,19 @@ class Robot extends Equatable {
 
         if (flowersData['delivered'] != null) {
           final delivered = flowersData['delivered'];
-          print('DEBUG: Robot delivered flowers: $delivered (type: ${delivered.runtimeType})');
+          print(
+              'DEBUG: Robot delivered flowers: $delivered (type: ${delivered.runtimeType})');
 
           try {
             // Handle both list and integer formats
             if (delivered is List) {
               for (var item in delivered) {
-                print('DEBUG: Processing delivered item: $item (type: ${item.runtimeType})');
+                print(
+                    'DEBUG: Processing delivered item: $item (type: ${item.runtimeType})');
                 if (item is Map<String, dynamic>) {
                   if (item.containsKey('position')) {
-                    final pos = Position.fromJson(item['position'] as Map<String, dynamic>);
+                    final pos = Position.fromJson(
+                        item['position'] as Map<String, dynamic>);
                     deliveredFlowers.add(pos);
                     print('DEBUG: Added delivered position: $pos');
                   }
@@ -164,7 +174,8 @@ class Robot extends Equatable {
         collectionCapacity = flowersData['collection_capacity'] as int? ?? 12;
       }
 
-      print('DEBUG: Robot hasFlowers check: collectedFlowers=${collectedFlowers.length}, deliveredFlowers=${deliveredFlowers.length}, hasFlowers=${collectedFlowers.length - deliveredFlowers.length > 0}');
+      print(
+          'DEBUG: Robot hasFlowers check: collectedFlowers=${collectedFlowers.length}, deliveredFlowers=${deliveredFlowers.length}, hasFlowers=${collectedFlowers.length - deliveredFlowers.length > 0}');
 
       // Parse obstacles data
       List<Position> cleanedObstacles = [];
@@ -173,7 +184,8 @@ class Robot extends Equatable {
         if (obstaclesData['cleaned'] != null) {
           final cleaned = obstaclesData['cleaned'] as List<dynamic>;
           cleanedObstacles = cleaned
-              .map((item) => Position.fromJson((item as Map<String, dynamic>)['position'] as Map<String, dynamic>))
+              .map((item) => Position.fromJson((item
+                  as Map<String, dynamic>)['position'] as Map<String, dynamic>))
               .toList();
         }
       }
@@ -183,7 +195,8 @@ class Robot extends Equatable {
       if (json['executed_actions'] != null) {
         final actions = json['executed_actions'] as List<dynamic>;
         executedActions = actions
-            .map((action) => GameAction.fromJson(action as Map<String, dynamic>))
+            .map(
+                (action) => GameAction.fromJson(action as Map<String, dynamic>))
             .toList();
       }
 

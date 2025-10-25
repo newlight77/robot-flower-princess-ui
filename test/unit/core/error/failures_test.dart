@@ -178,7 +178,9 @@ void main() {
         expect(failure1, isNot(equals(failure2)));
       });
 
-      test('failures of different types should not be equal even with same message', () {
+      test(
+          'failures of different types should not be equal even with same message',
+          () {
         const failure1 = ServerFailure('Same message');
         const failure2 = NetworkFailure('Same message');
 

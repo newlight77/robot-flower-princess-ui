@@ -70,8 +70,7 @@ void main() {
       expect(find.text('Test Game'), findsOneWidget);
     });
 
-    testWidgets('should display robot position',
-        (WidgetTester tester) async {
+    testWidgets('should display robot position', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -140,7 +139,8 @@ void main() {
       expect(find.byType(GameInfoPanel), findsOneWidget);
     });
 
-    testWidgets('should display robot with flowers emoji when robot has flowers',
+    testWidgets(
+        'should display robot with flowers emoji when robot has flowers',
         (WidgetTester tester) async {
       final robotWithFlowers = Robot(
         position: const Position(x: 1, y: 1),
@@ -199,8 +199,7 @@ void main() {
       expect(find.byType(Card), findsOneWidget);
     });
 
-    testWidgets('should display GameStatusBadge',
-        (WidgetTester tester) async {
+    testWidgets('should display GameStatusBadge', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(

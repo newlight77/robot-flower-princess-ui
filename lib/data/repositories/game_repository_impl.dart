@@ -30,9 +30,11 @@ class GameRepositoryImpl implements GameRepository {
   }
 
   @override
-  Future<Either<Failure, List<Game>>> getGames({int limit = 10, String? status}) async {
+  Future<Either<Failure, List<Game>>> getGames(
+      {int limit = 10, String? status}) async {
     try {
-      final gameModels = await remoteDataSource.getGames(limit: limit, status: status);
+      final gameModels =
+          await remoteDataSource.getGames(limit: limit, status: status);
       return Right(gameModels.map((model) => model.toEntity()).toList());
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -140,7 +142,8 @@ class GameRepositoryImpl implements GameRepository {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getGameHistory(String gameId) async {
+  Future<Either<Failure, Map<String, dynamic>>> getGameHistory(
+      String gameId) async {
     try {
       final history = await remoteDataSource.getGameHistory(gameId);
       return Right(history);

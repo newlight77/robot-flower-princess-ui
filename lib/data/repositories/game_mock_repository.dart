@@ -23,9 +23,11 @@ class GameMockRepository implements GameRepository {
   }
 
   @override
-  Future<Either<Failure, List<Game>>> getGames({int limit = 10, String? status}) async {
+  Future<Either<Failure, List<Game>>> getGames(
+      {int limit = 10, String? status}) async {
     try {
-      final gameModels = await mockDataSource.getGames(limit: limit, status: status);
+      final gameModels =
+          await mockDataSource.getGames(limit: limit, status: status);
       return Right(gameModels.map((model) => model.toEntity()).toList());
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -49,7 +51,8 @@ class GameMockRepository implements GameRepository {
     Direction direction,
   ) async {
     try {
-      final gameModel = await mockDataSource.executeAction(gameId, action, direction);
+      final gameModel =
+          await mockDataSource.executeAction(gameId, action, direction);
       return Right(gameModel.toEntity());
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -101,7 +104,8 @@ class GameMockRepository implements GameRepository {
   }
 
   @override
-  Future<Either<Failure, Map<String, dynamic>>> getGameHistory(String gameId) async {
+  Future<Either<Failure, Map<String, dynamic>>> getGameHistory(
+      String gameId) async {
     try {
       final history = await mockDataSource.getGameHistory(gameId);
       return Right(history);

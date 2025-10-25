@@ -92,11 +92,17 @@ void main() {
         'orientation': 'south',
         'flowers': {
           'collected': [
-            {'position': {'x': 1, 'y': 1}},
-            {'position': {'x': 2, 'y': 2}},
+            {
+              'position': {'x': 1, 'y': 1}
+            },
+            {
+              'position': {'x': 2, 'y': 2}
+            },
           ],
           'delivered': [
-            {'position': {'x': 1, 'y': 1}},
+            {
+              'position': {'x': 1, 'y': 1}
+            },
           ],
           'collection_capacity': 12,
         },

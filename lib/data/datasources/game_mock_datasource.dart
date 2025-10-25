@@ -149,8 +149,10 @@ class GameMockDataSource {
     }
 
     // Count flowers and obstacles
-    final flowersRemaining = cells.where((cell) => cell.type == CellType.flower).length;
-    final totalObstacles = cells.where((cell) => cell.type == CellType.obstacle).length;
+    final flowersRemaining =
+        cells.where((cell) => cell.type == CellType.flower).length;
+    final totalObstacles =
+        cells.where((cell) => cell.type == CellType.obstacle).length;
 
     return GameBoard(
       width: size,
@@ -174,7 +176,8 @@ class GameMockDataSource {
     return CellType.empty;
   }
 
-  GameModel _simulateAction(GameModel game, ActionType action, Direction direction) {
+  GameModel _simulateAction(
+      GameModel game, ActionType action, Direction direction) {
     // Simple simulation - just add the action to the game
     final newAction = GameAction(
       type: action,

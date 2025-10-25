@@ -25,7 +25,8 @@ void main() {
 
       test('should have valid max board size', () {
         expect(AppConstants.maxBoardSize, isA<int>());
-        expect(AppConstants.maxBoardSize, greaterThan(AppConstants.minBoardSize));
+        expect(
+            AppConstants.maxBoardSize, greaterThan(AppConstants.minBoardSize));
         expect(AppConstants.maxBoardSize, 50);
       });
 
@@ -84,7 +85,8 @@ void main() {
         expect(
           AppConstants.maxFlowerPercentage + AppConstants.obstaclePercentage,
           lessThan(1.0),
-          reason: 'Combined percentages should leave room for robot and princess',
+          reason:
+              'Combined percentages should leave room for robot and princess',
         );
       });
     });
@@ -142,7 +144,8 @@ void main() {
       test('should be compile-time constants where possible', () {
         // These should be const
         expect(AppConstants.apiTimeout, const Duration(seconds: 30));
-        expect(AppConstants.animationDuration, const Duration(milliseconds: 500));
+        expect(
+            AppConstants.animationDuration, const Duration(milliseconds: 500));
         expect(
           AppConstants.replayStepDuration,
           const Duration(milliseconds: 800),
@@ -154,7 +157,8 @@ void main() {
       test('min board size should allow basic game', () {
         // 3x3 should fit robot, princess, and at least one flower
         final minCells = AppConstants.minBoardSize * AppConstants.minBoardSize;
-        expect(minCells, greaterThanOrEqualTo(4)); // robot + princess + flower + space
+        expect(minCells,
+            greaterThanOrEqualTo(4)); // robot + princess + flower + space
       });
 
       test('max flowers should fit in default board', () {
@@ -170,8 +174,10 @@ void main() {
       test('obstacle percentage should leave playable space', () {
         final totalCells =
             AppConstants.defaultBoardSize * AppConstants.defaultBoardSize;
-        final maxObstacles = (totalCells * AppConstants.obstaclePercentage).floor();
-        final maxFlowers = (totalCells * AppConstants.maxFlowerPercentage).floor();
+        final maxObstacles =
+            (totalCells * AppConstants.obstaclePercentage).floor();
+        final maxFlowers =
+            (totalCells * AppConstants.maxFlowerPercentage).floor();
 
         // Should have space for robot, princess, obstacles, and flowers
         expect(
@@ -213,4 +219,3 @@ void main() {
     });
   });
 }
-

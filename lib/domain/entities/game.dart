@@ -95,8 +95,10 @@ class Game extends Equatable {
     }
 
     return Game(
-      id: json['id'] as String? ?? 'game_${DateTime.now().millisecondsSinceEpoch}',
-      name: json['name'] as String? ?? 'Game ${DateTime.now().toString().substring(0, 19)}',
+      id: json['id'] as String? ??
+          'game_${DateTime.now().millisecondsSinceEpoch}',
+      name: json['name'] as String? ??
+          'Game ${DateTime.now().toString().substring(0, 19)}',
       board: GameBoard.fromJson(boardData),
       status: status,
       actions: (json['actions'] as List?)

@@ -57,7 +57,8 @@ class Princess extends Equatable {
 
   factory Princess.fromJson(Map<String, dynamic> json) {
     try {
-      final position = Position.fromJson(json['position'] as Map<String, dynamic>);
+      final position =
+          Position.fromJson(json['position'] as Map<String, dynamic>);
       final flowersReceived = json['flowers_received'] as int? ?? 0;
 
       PrincessMood mood;
