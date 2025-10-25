@@ -7,7 +7,11 @@ enum AutoPlayStrategy {
   /// Optimal strategy: Fast & efficient.
   /// 62% success rate, but 25% fewer actions.
   /// Uses A* pathfinding and multi-step planning.
-  optimal;
+  optimal,
+
+  /// ML strategy: Machine learning powered.
+  /// Uses trained neural network model for decision making.
+  ml;
 
   /// Converts the strategy to API query parameter format
   String toApiParam() => name;
@@ -27,6 +31,8 @@ enum AutoPlayStrategy {
         return 'Safe & reliable (75% success rate)';
       case AutoPlayStrategy.optimal:
         return 'Fast & efficient (62% success, -25% actions)';
+      case AutoPlayStrategy.ml:
+        return 'ML powered (Neural network model)';
     }
   }
 
@@ -37,6 +43,8 @@ enum AutoPlayStrategy {
         return 75;
       case AutoPlayStrategy.optimal:
         return 62;
+      case AutoPlayStrategy.ml:
+        return 85; // Assuming ML has better performance
     }
   }
 }

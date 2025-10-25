@@ -260,6 +260,13 @@ class _GamePageState extends ConsumerState<GamePage> {
                   const Text('Fast & efficient - 62% success, -25% actions'),
               onTap: () => Navigator.pop(context, AutoPlayStrategy.optimal),
             ),
+            ListTile(
+              dense: true,
+              leading: const Icon(Icons.psychology),
+              title: const Text('ML'),
+              subtitle: const Text('Machine learning powered - Neural network'),
+              onTap: () => Navigator.pop(context, AutoPlayStrategy.ml),
+            ),
           ],
         ),
         actions: [
