@@ -25,11 +25,32 @@ This directory contains all technical documentation for the project. Each docume
 
 ---
 
-### [Testing Strategy (TESTING_STRATEGY.md)](TESTING_STRATEGY.md)
-**Purpose**: Comprehensive testing approach and test suite organization
+### [Testing Guide (TESTING_GUIDE.md)](TESTING_GUIDE.md) 🆕
+**Purpose**: **Comprehensive guide to all 554 tests in the project**
 
 **Topics Covered**:
-- 4 test suites: Unit, Use Case, Widget, Feature
+- Detailed breakdown of all 4 test levels (Unit, Use Case, UI Component, Feature)
+- Intention (technical vs functional) for each level
+- Purpose and what's being tested
+- How tests are implemented with examples
+- Benefits: design aid, development velocity, regression prevention, documentation
+- E2E overlap analysis and recommendations
+- 101 Feature tests vs E2E trade-offs
+- Complete test file organization
+
+**Who should read this**:
+- **Anyone wanting to understand the test suite**
+- Developers writing new tests
+- Architects evaluating test strategy
+- QA planning E2E test coverage
+
+---
+
+### [Testing Strategy (TESTING_STRATEGY.md)](TESTING_STRATEGY.md)
+**Purpose**: High-level testing approach and CI/CD integration
+
+**Topics Covered**:
+- 4 test suites overview
 - Test structure and organization
 - Running tests locally
 - Coverage goals and current status

@@ -27,6 +27,7 @@ Comprehensive documentation is available in the `docs/` directory:
 |----------|-------------|
 | [**Architecture**](docs/ARCHITECTURE.md) | Hexagonal architecture, layers, and design patterns |
 | [**API Integration**](docs/API.md) | REST API endpoints, data models, and integration guide |
+| [**Testing Guide**](docs/TESTING_GUIDE.md) 🆕 | **Complete guide to all 554 tests with E2E analysis** |
 | [**Testing Strategy**](docs/TESTING_STRATEGY.md) | Test suites, coverage goals, and testing best practices |
 | [**CI/CD Pipeline**](docs/CI_CD.md) | GitHub Actions workflow, coverage enforcement, deployment |
 | [**Deployment**](docs/DEPLOYMENT.md) | Docker, web, and mobile deployment instructions |
