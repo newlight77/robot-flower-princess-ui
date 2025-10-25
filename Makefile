@@ -98,8 +98,6 @@ coverage-combine:
 	      --output-file coverage/lcov.info
 	@echo "🔧 Removing test helpers from coverage..."
 	@lcov --remove coverage/lcov.info \
-	      '*/game_mock_datasource.dart' \
-	      '*/game_mock_repository.dart' \
 	      --output-file coverage/lcov.info
 	@echo "✅ Coverage reports merged (excluding mock files)"
 	@echo ""
