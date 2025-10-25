@@ -25,7 +25,7 @@ void main() {
     });
 
     test('should create copy with modified fields', () {
-      final newPosition = const Position(x: 7, y: 8);
+      const newPosition = Position(x: 7, y: 8);
       final copiedPrincess = testPrincess.copyWith(
         position: newPosition,
         flowersReceived: 10,

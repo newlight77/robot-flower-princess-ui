@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:robot_flower_princess_front/core/theme/app_colors.dart';
 
+// Helper extensions to avoid deprecated Color properties
+extension ColorTestHelpers on Color {
+  int get redValue => (r * 255.0).round() & 0xff;
+  int get greenValue => (g * 255.0).round() & 0xff;
+  int get blueValue => (b * 255.0).round() & 0xff;
+  int get alphaValue => (a * 255.0).round() & 0xff;
+  double get opacityValue => a;
+}
+
 void main() {
   group('AppColors', () {
     group('Primary Colors', () {
@@ -178,10 +187,10 @@ void main() {
         ];
 
         for (final color in colors) {
-          expect(color.alpha, inInclusiveRange(0, 255));
-          expect(color.red, inInclusiveRange(0, 255));
-          expect(color.green, inInclusiveRange(0, 255));
-          expect(color.blue, inInclusiveRange(0, 255));
+          expect(color.alphaValue, inInclusiveRange(0, 255));
+          expect(color.redValue, inInclusiveRange(0, 255));
+          expect(color.greenValue, inInclusiveRange(0, 255));
+          expect(color.blueValue, inInclusiveRange(0, 255));
         }
       });
 
@@ -210,58 +219,69 @@ void main() {
         ];
 
         for (final color in colors) {
-          expect(color.alpha, 255, reason: 'Color should be fully opaque');
-          expect(color.opacity, 1.0, reason: 'Opacity should be 1.0');
+          expect(color.alphaValue, 255, reason: 'Color should be fully opaque');
+          expect(color.opacityValue, 1.0, reason: 'Opacity should be 1.0');
         }
       });
     });
 
     group('Color semantics', () {
       test('green colors should have higher green component', () {
-        expect(AppColors.forestGreen.green,
-            greaterThan(AppColors.forestGreen.red));
-        expect(AppColors.mossGreen.green, greaterThan(AppColors.mossGreen.red));
-        expect(AppColors.leafGreen.green, greaterThan(AppColors.leafGreen.red));
+        expect(AppColors.forestGreen.greenValue,
+            greaterThan(AppColors.forestGreen.redValue));
+        expect(AppColors.mossGreen.greenValue,
+            greaterThan(AppColors.mossGreen.redValue));
+        expect(AppColors.leafGreen.greenValue,
+            greaterThan(AppColors.leafGreen.redValue));
       });
 
       test('orange colors should have high red and moderate green', () {
+        expect(AppColors.warmOrange.redValue,
+            greaterThan(AppColors.warmOrange.blueValue));
         expect(
-            AppColors.warmOrange.red, greaterThan(AppColors.warmOrange.blue));
-        expect(
-          AppColors.sunsetOrange.red,
-          greaterThan(AppColors.sunsetOrange.blue),
+          AppColors.sunsetOrange.redValue,
+          greaterThan(AppColors.sunsetOrange.blueValue),
         );
         expect(
-          AppColors.goldenYellow.red,
-          greaterThan(AppColors.goldenYellow.blue),
+          AppColors.goldenYellow.redValue,
+          greaterThan(AppColors.goldenYellow.blueValue),
         );
       });
 
       test('blue colors should have higher blue component', () {
-        expect(AppColors.skyBlue.blue, greaterThan(AppColors.skyBlue.red));
-        expect(AppColors.deepBlue.blue, greaterThan(AppColors.deepBlue.red));
-        expect(AppColors.robotBlue.blue, greaterThan(AppColors.robotBlue.red));
+        expect(AppColors.skyBlue.blueValue,
+            greaterThan(AppColors.skyBlue.redValue));
+        expect(AppColors.deepBlue.blueValue,
+            greaterThan(AppColors.deepBlue.redValue));
+        expect(AppColors.robotBlue.blueValue,
+            greaterThan(AppColors.robotBlue.redValue));
       });
 
       test('gray should have balanced RGB values', () {
-        final gray = AppColors.obstacleGray;
-        final diff = (gray.red - gray.blue).abs();
+        const gray = AppColors.obstacleGray;
+        final diff = (gray.redValue - gray.blueValue).abs();
         expect(diff, lessThan(20), reason: 'Gray should have balanced RGB');
       });
 
       test('success should be predominantly green', () {
-        expect(AppColors.success.green, greaterThan(AppColors.success.red));
-        expect(AppColors.success.green, greaterThan(AppColors.success.blue));
+        expect(AppColors.success.greenValue,
+            greaterThan(AppColors.success.redValue));
+        expect(AppColors.success.greenValue,
+            greaterThan(AppColors.success.blueValue));
       });
 
       test('warning should be predominantly yellow/orange', () {
-        expect(AppColors.warning.red, greaterThan(AppColors.warning.blue));
-        expect(AppColors.warning.green, greaterThan(AppColors.warning.blue));
+        expect(AppColors.warning.redValue,
+            greaterThan(AppColors.warning.blueValue));
+        expect(AppColors.warning.greenValue,
+            greaterThan(AppColors.warning.blueValue));
       });
 
       test('error should be predominantly red', () {
-        expect(AppColors.error.red, greaterThan(AppColors.error.green));
-        expect(AppColors.error.red, greaterThan(AppColors.error.blue));
+        expect(
+            AppColors.error.redValue, greaterThan(AppColors.error.greenValue));
+        expect(
+            AppColors.error.redValue, greaterThan(AppColors.error.blueValue));
       });
     });
 
@@ -278,9 +298,9 @@ void main() {
       });
 
       test('colors should support comparison', () {
-        final color1 = AppColors.forestGreen;
-        final color2 = AppColors.forestGreen;
-        final color3 = AppColors.mossGreen;
+        const color1 = AppColors.forestGreen;
+        const color2 = AppColors.forestGreen;
+        const color3 = AppColors.mossGreen;
 
         expect(color1 == color2, true);
         expect(color1 == color3, false);

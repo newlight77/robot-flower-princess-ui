@@ -18,7 +18,7 @@ void main() {
     });
 
     test('should check if robot has flowers', () {
-      final robotWithFlowers = const Robot(
+      const robotWithFlowers = Robot(
         position: Position(x: 0, y: 0),
         orientation: Direction.north,
         collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
@@ -35,7 +35,7 @@ void main() {
     });
 
     test('should check if robot can pick more flowers', () {
-      final robotCanPick = const Robot(
+      const robotCanPick = Robot(
         position: Position(x: 0, y: 0),
         orientation: Direction.north,
         collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
@@ -70,7 +70,7 @@ void main() {
     });
 
     test('should serialize to JSON', () {
-      final robot = const Robot(
+      const robot = Robot(
         position: Position(x: 2, y: 3),
         orientation: Direction.east,
         collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
@@ -121,14 +121,14 @@ void main() {
     });
 
     test('should maintain equality for same values', () {
-      final robot1 = const Robot(
+      const robot1 = Robot(
         position: Position(x: 1, y: 1),
         orientation: Direction.north,
         collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
         deliveredFlowers: [Position(x: 1, y: 1)],
       );
 
-      final robot2 = const Robot(
+      const robot2 = Robot(
         position: Position(x: 1, y: 1),
         orientation: Direction.north,
         collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],

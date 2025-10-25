@@ -17,7 +17,7 @@ void main() {
     });
 
     test('should create copy with modified fields', () {
-      final newPosition = const Position(x: 3, y: 4);
+      const newPosition = Position(x: 3, y: 4);
       final copiedCell = testCell.copyWith(
         position: newPosition,
         type: CellType.obstacle,

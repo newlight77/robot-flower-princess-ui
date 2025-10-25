@@ -7,7 +7,6 @@ import 'package:robot_flower_princess_front/domain/use_cases/get_games_impl.dart
 import 'package:robot_flower_princess_front/domain/value_objects/action_type.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/direction.dart';
 import 'package:robot_flower_princess_front/domain/value_objects/game_status.dart';
-import 'package:dartz/dartz.dart';
 
 import 'fakes/fake_game_datasource.dart';
 
@@ -150,7 +149,7 @@ void main() {
       // Given: Games with different statuses exist
       await createGameUseCase('Playing Game', 10);
 
-      final wonGameResult = await createGameUseCase('Won Game', 10);
+      await createGameUseCase('Won Game', 10);
       // Manually mark as won (in real scenario, this would happen through gameplay)
       // Note: This is a limitation of our fake - in real scenario, game would transition to won state
 

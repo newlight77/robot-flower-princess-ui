@@ -17,15 +17,15 @@ void main() {
     late Game testGame;
 
     setUp(() {
-      final robot = Robot(
-        position: const Position(x: 0, y: 0),
+      const robot = Robot(
+        position: Position(x: 0, y: 0),
         orientation: Direction.north,
-        collectedFlowers: const [],
-        deliveredFlowers: const [],
-        cleanedObstacles: const [],
+        collectedFlowers: [],
+        deliveredFlowers: [],
+        cleanedObstacles: [],
       );
 
-      final princess = const Princess(
+      const princess = Princess(
         position: Position(x: 4, y: 4),
         flowersReceived: 0,
       );
@@ -142,12 +142,12 @@ void main() {
     testWidgets(
         'should display robot with flowers emoji when robot has flowers',
         (WidgetTester tester) async {
-      final robotWithFlowers = Robot(
-        position: const Position(x: 1, y: 1),
+      const robotWithFlowers = Robot(
+        position: Position(x: 1, y: 1),
         orientation: Direction.east,
-        collectedFlowers: const [Position(x: 2, y: 2)],
-        deliveredFlowers: const [],
-        cleanedObstacles: const [],
+        collectedFlowers: [Position(x: 2, y: 2)],
+        deliveredFlowers: [],
+        cleanedObstacles: [],
       );
 
       final boardWithFlowers = GameBoard(

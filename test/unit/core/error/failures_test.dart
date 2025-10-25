@@ -270,9 +270,11 @@ void main() {
       });
 
       test('should support Set operations', () {
+        // ignore: equal_elements_in_set
         final set = <Failure>{
           const ServerFailure('Error 1'),
-          const ServerFailure('Error 1'), // Duplicate
+          // ignore: equal_elements_in_set
+          const ServerFailure('Error 1'), // Duplicate (intentionally testing)
           const NetworkFailure('Error 2'),
         };
 

@@ -36,11 +36,8 @@ void main() {
       robot: Robot(
         position: Position(x: 1, y: 1),
         orientation: Direction.north,
-        collectedFlowers: [
-          const Position(x: 1, y: 1),
-          const Position(x: 2, y: 2)
-        ],
-        deliveredFlowers: [const Position(x: 1, y: 1)],
+        collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
+        deliveredFlowers: [Position(x: 1, y: 1)],
       ),
       princess: Princess(position: Position(x: 4, y: 4)),
       flowersRemaining: 3,

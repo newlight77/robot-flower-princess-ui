@@ -27,12 +27,12 @@ class FakeGameDataSource implements GameRemoteDataSource {
     final gameId = 'fake-game-${_gameCounter++}';
 
     // Generate a simple board
-    final robot = Robot(
-      position: const Position(x: 0, y: 0),
+    const robot = Robot(
+      position: Position(x: 0, y: 0),
       orientation: Direction.north,
-      collectedFlowers: const [],
-      deliveredFlowers: const [],
-      cleanedObstacles: const [],
+      collectedFlowers: [],
+      deliveredFlowers: [],
+      cleanedObstacles: [],
     );
 
     final princess = Princess(

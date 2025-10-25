@@ -156,13 +156,13 @@ void main() {
     group('Practical usage', () {
       test('min board size should allow basic game', () {
         // 3x3 should fit robot, princess, and at least one flower
-        final minCells = AppConstants.minBoardSize * AppConstants.minBoardSize;
+        const minCells = AppConstants.minBoardSize * AppConstants.minBoardSize;
         expect(minCells,
             greaterThanOrEqualTo(4)); // robot + princess + flower + space
       });
 
       test('max flowers should fit in default board', () {
-        final totalCells =
+        const totalCells =
             AppConstants.defaultBoardSize * AppConstants.defaultBoardSize;
         expect(
           AppConstants.maxFlowers < totalCells,
@@ -172,7 +172,7 @@ void main() {
       });
 
       test('obstacle percentage should leave playable space', () {
-        final totalCells =
+        const totalCells =
             AppConstants.defaultBoardSize * AppConstants.defaultBoardSize;
         final maxObstacles =
             (totalCells * AppConstants.obstaclePercentage).floor();

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import '../value_objects/position.dart';
 import '../value_objects/direction.dart';
 import 'game_action.dart';
@@ -79,7 +80,7 @@ class Robot extends Equatable {
   factory Robot.fromJson(Map<String, dynamic> json) {
     try {
       // Debug logging
-      print('DEBUG: Robot.fromJson - Full JSON: $json');
+      debugPrint('DEBUG: Robot.fromJson - Full JSON: $json');
 
       Position position;
       if (json['position'] != null) {
@@ -103,78 +104,80 @@ class Robot extends Equatable {
 
       if (json['flowers'] != null) {
         final flowersData = json['flowers'] as Map<String, dynamic>;
-        print('DEBUG: Robot flowers data: $flowersData');
+        debugPrint('DEBUG: Robot flowers data: $flowersData');
 
         if (flowersData['collected'] != null) {
           final collected = flowersData['collected'];
-          print(
+          debugPrint(
               'DEBUG: Robot collected flowers: $collected (type: ${collected.runtimeType})');
 
           try {
             // Handle both list and integer formats
             if (collected is List) {
               for (var item in collected) {
-                print(
+                debugPrint(
                     'DEBUG: Processing collected item: $item (type: ${item.runtimeType})');
                 if (item is Map<String, dynamic>) {
                   if (item.containsKey('position')) {
                     final pos = Position.fromJson(
                         item['position'] as Map<String, dynamic>);
                     collectedFlowers.add(pos);
-                    print('DEBUG: Added collected position: $pos');
+                    debugPrint('DEBUG: Added collected position: $pos');
                   }
                 }
               }
             } else if (collected is int) {
               // If backend sends just a count, create dummy positions to represent count
-              print('DEBUG: Backend sent collected count: $collected');
+              debugPrint('DEBUG: Backend sent collected count: $collected');
               for (int i = 0; i < collected; i++) {
-                collectedFlowers.add(Position(x: -1, y: -1)); // Dummy position
+                collectedFlowers
+                    .add(const Position(x: -1, y: -1)); // Dummy position
               }
             }
           } catch (e, stackTrace) {
-            print('ERROR parsing collected flowers: $e');
-            print('Stack trace: $stackTrace');
+            debugPrint('ERROR parsing collected flowers: $e');
+            debugPrint('Stack trace: $stackTrace');
           }
         }
 
         if (flowersData['delivered'] != null) {
           final delivered = flowersData['delivered'];
-          print(
+          debugPrint(
               'DEBUG: Robot delivered flowers: $delivered (type: ${delivered.runtimeType})');
 
           try {
             // Handle both list and integer formats
             if (delivered is List) {
               for (var item in delivered) {
-                print(
+                debugPrint(
                     'DEBUG: Processing delivered item: $item (type: ${item.runtimeType})');
                 if (item is Map<String, dynamic>) {
                   if (item.containsKey('position')) {
                     final pos = Position.fromJson(
                         item['position'] as Map<String, dynamic>);
                     deliveredFlowers.add(pos);
-                    print('DEBUG: Added delivered position: $pos');
+                    debugPrint('DEBUG: Added delivered position: $pos');
                   }
                 }
               }
             } else if (delivered is int) {
               // If backend sends just a count, create dummy positions
-              print('DEBUG: Backend sent delivered count: $delivered');
+              debugPrint('DEBUG: Backend sent delivered count: $delivered');
               for (int i = 0; i < delivered; i++) {
-                deliveredFlowers.add(Position(x: -1, y: -1)); // Dummy position
+                deliveredFlowers
+                    .add(const Position(x: -1, y: -1)); // Dummy position
               }
             }
           } catch (e, stackTrace) {
-            print('ERROR parsing delivered flowers: $e');
-            print('Stack trace: $stackTrace');
+            debugPrint('ERROR parsing delivered flowers: $e');
+            debugPrint('Stack trace: $stackTrace');
           }
         }
 
         collectionCapacity = flowersData['collection_capacity'] as int? ?? 12;
       }
 
-      print(
+      debugPrint(
           'DEBUG: Robot hasFlowers check: collectedFlowers=${collectedFlowers.length}, deliveredFlowers=${deliveredFlowers.length}, hasFlowers=${collectedFlowers.length - deliveredFlowers.length > 0}');
 
       // Parse obstacles data
