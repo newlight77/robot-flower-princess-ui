@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:robot_flower_princess_front/core/error/failures.dart';
+import 'package:robot_flower_princess_front/shared/error/failures.dart';
 import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game.dart';
 import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game_board.dart';
 import 'package:robot_flower_princess_front/hexagons/game/domain/entities/robot.dart';

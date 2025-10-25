@@ -10,7 +10,7 @@ import 'dart:async' as _i3;
 
 import 'package:dio/dio.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:robot_flower_princess_front/core/network/api_client.dart'
+import 'package:robot_flower_princess_front/shared/client/api_client.dart'
     as _i4;
 
 class _FakeResponse_0<T> extends _i1.SmartFake implements _i2.Response<T> {

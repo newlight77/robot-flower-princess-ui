@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:robot_flower_princess_front/core/network/api_client.dart';
-import 'package:robot_flower_princess_front/core/constants/app_constants.dart';
+import 'package:robot_flower_princess_front/shared/client/api_client.dart';
+import 'package:robot_flower_princess_front/configurator/constants/app_constants.dart';
 
 void main() {
   group('ApiClient', () {

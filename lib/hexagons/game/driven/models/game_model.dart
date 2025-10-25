@@ -2,7 +2,7 @@ import '../../domain/entities/game.dart';
 import '../../domain/entities/game_board.dart';
 import '../../domain/entities/game_action.dart';
 import '../../domain/value_objects/game_status.dart';
-import '../../../../core/utils/logger.dart';
+import '../../../../shared/util/logger.dart';
 
 class GameModel extends Game {
   const GameModel({

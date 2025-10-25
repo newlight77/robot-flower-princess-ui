@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../core/constants/app_constants.dart';
+import '../../../../configurator/constants/app_constants.dart';
 import '../../../../hexagons/game/domain/entities/game_board.dart';
 import '../../../providers/game_provider.dart';
 import '../../../widgets/game_board_widget.dart';

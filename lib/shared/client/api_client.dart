@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import '../constants/app_constants.dart';
-import '../utils/logger.dart';
+import '../../configurator/constants/app_constants.dart';
+import '../util/logger.dart';
 
 class ApiClient {
   late final Dio _dio;

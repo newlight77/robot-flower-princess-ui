@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:robot_flower_princess_front/core/error/exceptions.dart';
-import 'package:robot_flower_princess_front/core/error/failures.dart';
+import 'package:robot_flower_princess_front/shared/error/exceptions.dart';
+import 'package:robot_flower_princess_front/shared/error/failures.dart';
 import 'package:robot_flower_princess_front/hexagons/game/driven/datasources/game_remote_datasource.dart';
 import 'package:robot_flower_princess_front/hexagons/game/driven/models/game_model.dart';
 import 'package:robot_flower_princess_front/hexagons/game/driven/repositories/game_repository_impl.dart';

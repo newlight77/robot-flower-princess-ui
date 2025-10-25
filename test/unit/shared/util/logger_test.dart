@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:robot_flower_princess_front/core/utils/logger.dart';
+import 'package:robot_flower_princess_front/shared/util/logger.dart';
 
 void main() {
   group('Logger', () {

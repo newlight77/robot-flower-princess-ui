@@ -250,12 +250,12 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "| Layer | Tests | Coverage | Status |" >> $GITHUB_STEP_SUMMARY
         echo "|-------|-------|----------|--------|" >> $GITHUB_STEP_SUMMARY
+        echo "| **Presentation** (Widgets + Providers) | 65 | ~87% | ✅ Very Good |" >> $GITHUB_STEP_SUMMARY
         echo "| **Domain** (Entities + Value Objects) | 112 | ~95% | ✅ Excellent |" >> $GITHUB_STEP_SUMMARY
         echo "| **Use Cases** (Business Logic) | 49 | 100% | ✅ Perfect |" >> $GITHUB_STEP_SUMMARY
         echo "| **Data** (Models + Repositories) | 150 | ~85% | ✅ Very Good |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Presentation** (Widgets + Providers) | 65 | ~87% | ✅ Very Good |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Core** (Utils + Config) | 77 | ~100% | ✅ Excellent |" >> $GITHUB_STEP_SUMMARY
-        echo "| **Integration** (Feature Tests) | 101 | Full Stack | ✅ Comprehensive |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Configurator** (Config + Constants) | 77 | ~100% | ✅ Excellent |" >> $GITHUB_STEP_SUMMARY
+        echo "| **Shared** (Utils + API Client) | 101 | ~100% | ✅ Excellent |" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
 
         echo "---" >> $GITHUB_STEP_SUMMARY

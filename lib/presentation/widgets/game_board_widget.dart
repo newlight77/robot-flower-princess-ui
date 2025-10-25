@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../configurator/theme/app_colors.dart';
 import '../../hexagons/game/domain/entities/game_board.dart';
 import '../../hexagons/game/domain/entities/cell.dart';
 import '../../hexagons/game/domain/value_objects/cell_type.dart';

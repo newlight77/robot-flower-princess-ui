@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:robot_flower_princess_front/core/theme/app_colors.dart';
+import 'package:robot_flower_princess_front/configurator/theme/app_colors.dart';
 
 // Helper extensions to avoid deprecated Color properties
 extension ColorTestHelpers on Color {

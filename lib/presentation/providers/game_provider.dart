@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/network/api_client.dart';
+import '../../shared/client/api_client.dart';
 import '../../hexagons/game/driven/datasources/game_remote_datasource.dart';
 import '../../hexagons/game/driven/repositories/game_repository_impl.dart';
 import '../../hexagons/game/domain/ports/outbound/game_repository.dart';

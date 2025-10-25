@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'core/theme/app_theme.dart';
+import 'configurator/theme/app_theme.dart';
 import 'presentation/pages/home/home_page.dart';
 // import 'presentation/providers/game_mock_provider.dart' as mock;
 // import 'presentation/providers/game_provider.dart' as real;

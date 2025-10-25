@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/theme/app_colors.dart';
+import '../../configurator/theme/app_colors.dart';
 import '../../hexagons/game/domain/value_objects/action_type.dart';
 
 class ActionButton extends StatelessWidget {

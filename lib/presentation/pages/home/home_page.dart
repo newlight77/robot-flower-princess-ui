@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_colors.dart';
+import '../../../configurator/theme/app_colors.dart';
 import '../../providers/games_list_provider.dart';
 import 'widgets/create_game_dialog.dart';
 import 'widgets/game_list_item.dart';

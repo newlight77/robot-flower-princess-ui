@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/theme/app_colors.dart';
+import '../../../configurator/theme/app_colors.dart';
 import '../../../hexagons/autoplay/domain/value_objects/auto_play_strategy.dart';
 import '../../../hexagons/game/domain/value_objects/action_type.dart';
 import '../../../hexagons/game/domain/value_objects/direction.dart';

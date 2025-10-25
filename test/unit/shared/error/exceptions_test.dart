@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:robot_flower_princess_front/core/error/exceptions.dart';
+import 'package:robot_flower_princess_front/shared/error/exceptions.dart';
 
 void main() {
   group('Exceptions', () {

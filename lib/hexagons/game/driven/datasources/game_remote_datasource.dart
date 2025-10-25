@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import '../../../../core/constants/api_endpoints.dart';
-import '../../../../core/error/exceptions.dart';
-import '../../../../core/network/api_client.dart';
-import '../../../../core/utils/logger.dart';
+import '../../../../configurator/constants/api_endpoints.dart';
+import '../../../../shared/error/exceptions.dart';
+import '../../../../shared/client/api_client.dart';
+import '../../../../shared/util/logger.dart';
 import '../../domain/value_objects/action_type.dart';
 import '../../../autoplay/domain/value_objects/auto_play_strategy.dart';
 import '../../domain/value_objects/direction.dart';

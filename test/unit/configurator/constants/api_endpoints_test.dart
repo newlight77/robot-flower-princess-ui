@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:robot_flower_princess_front/core/constants/api_endpoints.dart';
+import 'package:robot_flower_princess_front/configurator/constants/api_endpoints.dart';
 
 void main() {
   group('ApiEndpoints', () {

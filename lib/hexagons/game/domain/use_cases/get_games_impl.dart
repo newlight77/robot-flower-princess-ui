@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/error/failures.dart';
+import '../../../../shared/error/failures.dart';
 import '../entities/game.dart';
 import '../ports/inbound/get_games_use_case.dart';
 import '../ports/outbound/game_repository.dart';

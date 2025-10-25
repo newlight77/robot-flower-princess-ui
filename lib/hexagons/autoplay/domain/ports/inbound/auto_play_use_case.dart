@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import '../../../../../core/error/failures.dart';
+import '../../../../../shared/error/failures.dart';
 import '../../../../game/domain/entities/game.dart';
 import '../../value_objects/auto_play_strategy.dart';
 

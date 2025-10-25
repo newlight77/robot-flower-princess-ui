@@ -5,7 +5,7 @@ import 'princess.dart';
 import '../value_objects/position.dart';
 import '../value_objects/cell_type.dart';
 import '../value_objects/direction.dart';
-import '../../../../core/utils/logger.dart';
+import '../../../../shared/util/logger.dart';
 
 class GameBoard extends Equatable {
   final int width;

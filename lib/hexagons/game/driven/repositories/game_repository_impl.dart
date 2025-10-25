@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import '../../../../core/error/exceptions.dart';
-import '../../../../core/error/failures.dart';
+import '../../../../shared/error/exceptions.dart';
+import '../../../../shared/error/failures.dart';
 import '../../domain/entities/game.dart';
 import '../../domain/entities/game_board.dart';
 import '../../domain/ports/outbound/game_repository.dart';
