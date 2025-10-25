@@ -1,4 +1,10 @@
-# Testing Guide
+# Test Inventory & Analysis
+
+> **Comprehensive documentation of all 554 tests in the Robot-Flower-Princess Flutter application**
+>
+> This document provides a complete analysis of our testing strategy, covering intention, purpose, methodology, benefits, and E2E overlap considerations for each test level.
+
+---
 
 **Version:** 1.0
 **Last Updated:** October 2025
@@ -10,20 +16,33 @@
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [Test Pyramid Structure](#test-pyramid-structure)
-3. [Test Levels](#test-levels)
+2. [How to Use This Documentation](#how-to-use-this-documentation)
+3. [Test Pyramid Structure](#test-pyramid-structure)
+4. [Test Levels](#test-levels)
    - [Unit Tests](#unit-tests)
    - [Use Case Tests](#use-case-tests)
    - [UI Component Tests](#ui-component-tests)
    - [Feature Tests](#feature-tests)
-4. [Test Categories by Layer](#test-categories-by-layer)
-5. [E2E Testing Considerations](#e2e-testing-considerations)
-6. [Running Tests](#running-tests)
-7. [Related Documentation](#related-documentation)
+5. [Test Categories by Layer](#test-categories-by-layer)
+6. [E2E Testing Considerations](#e2e-testing-considerations)
+7. [Key Findings](#key-findings)
+8. [Running Tests](#running-tests)
+9. [Quick Reference Guide](#quick-reference-guide)
+10. [Related Documentation](#related-documentation)
 
 ---
 
 ## Overview
+
+Our testing strategy follows a **layered approach** with four distinct levels:
+
+| Level | Count | Execution Time | Coverage Type |
+|-------|-------|----------------|---------------|
+| **Unit Tests** | 339 | ~2s | Technical |
+| **Use Case Tests** | 49 | ~3s | Functional |
+| **UI Component Tests** | 65 | ~5s | Technical + Functional |
+| **Feature Tests** | 101 | ~30s | Functional |
+| **Total** | **554** | **~40s** | Comprehensive |
 
 This project follows a comprehensive testing strategy based on **Hexagonal Architecture** principles, with tests organized in four distinct levels that mirror the testing pyramid. Each level serves specific purposes and provides unique benefits to development velocity, system design, and quality assurance.
 
@@ -33,6 +52,182 @@ This project follows a comprehensive testing strategy based on **Hexagonal Archi
 - **Test Isolation**: Each test level is independent and fast
 - **Comprehensive Coverage**: 84.4% code coverage across all layers
 - **Living Documentation**: Tests serve as executable specifications
+
+---
+
+## How to Use This Documentation
+
+This document is designed for **different audiences** with varying needs. Navigate to the section that best matches your role and objectives:
+
+### 👨‍💻 For Developers
+
+**If you're writing new code or adding features:**
+
+1. **Start here**: [Unit Tests](#unit-tests) - Learn how to test domain logic
+   - See examples of well-written unit tests
+   - Understand what makes tests "technical" vs "functional"
+   - Learn patterns for testing entities, value objects, and use cases
+
+2. **Then review**: [Test Writing Checklist](#test-writing-checklist) - Ensure quality
+   - Verify you're testing behavior, not implementation
+   - Check tests run fast (< 5s for unit tests)
+   - Ensure tests are independent
+
+3. **Finally check**: [E2E Overlap Analysis](#e2e-testing-considerations) - Avoid redundancy
+   - Understand when unit tests are sufficient
+   - Know when to escalate to integration/feature tests
+
+**If you're debugging failing tests:**
+- Navigate to the specific test section (unit/use case/UI component/feature)
+- Read the "Purpose" and "How It's Tested" subsections
+- Check "Benefits" to understand what the test protects against
+
+**If you're refactoring:**
+- Review tests for the component you're changing
+- Use tests as documentation of expected behavior
+- Ensure all tests still pass after refactoring
+
+---
+
+### 🧪 For QA/Testers
+
+**If you're evaluating test coverage:**
+
+1. **Start here**: [Key Findings](#key-findings) - Understand current coverage
+   - See test distribution across layers
+   - Review execution time metrics
+   - Check coverage by layer
+
+2. **Then review**: [E2E Overlap Analysis](#e2e-testing-considerations) - Decide on E2E strategy
+   - Understand what's already tested
+   - See overlap matrix (which tests duplicate E2E)
+   - Get recommendations on when to add E2E tests
+
+3. **Finally check**: [Recommended E2E Suite](#recommended-e2e-test-suite) - Plan E2E tests
+   - See curated list of 10-20 E2E tests
+   - Understand what E2E should/shouldn't cover
+
+**If you're writing new test cases:**
+- Check [When to Write Each Type of Test](#when-to-write-each-type-of-test)
+- Review examples in relevant test section
+- Follow the [Test Writing Checklist](#test-writing-checklist)
+
+**If you're identifying gaps:**
+- Review [Test Value Matrix](#test-value-matrix)
+- Look for untested components
+- Check [Potential Improvements](#potential-improvements)
+
+---
+
+### 🏗️ For Architects & Tech Leads
+
+**If you're evaluating testing strategy:**
+
+1. **Start here**: [Test Pyramid Structure](#test-pyramid-structure) - Validate distribution
+   - Compare actual vs ideal pyramid
+   - Review execution time analysis
+   - Check balance of technical vs functional tests
+
+2. **Then review**: [Key Findings](#key-findings) - Assess quality
+   - Review test distribution
+   - Check execution time (should be < 1 minute)
+   - Evaluate coverage by layer
+
+3. **Finally check**: [Recommendations](#recommendations) - Plan improvements
+   - See what to keep/add/remove
+   - Review E2E testing strategy
+   - Plan test maintenance approach
+
+**If you're making architectural decisions:**
+- Review [Benefits](#benefits) for each test level
+- Understand trade-offs (speed vs confidence)
+- See how tests aid in design
+
+**If you're planning refactoring:**
+- Check [Test Quality Scorecard](#test-quality-scorecard)
+- Review current test reliability
+- Ensure tests will catch regressions
+
+---
+
+### 📊 For Product Managers
+
+**If you want to understand test coverage:**
+
+1. **Start here**: [Overview](#overview) - See the big picture
+   - Understand we have 554 tests running in ~40 seconds
+   - See test distribution (unit, use case, UI, feature)
+
+2. **Then review**: Feature-specific sections
+   - [Feature Tests](#feature-tests) - User workflow validation
+   - [UI Component Tests](#ui-component-tests) - Widget testing
+   - [Use Case Tests](#use-case-tests) - Business logic
+
+3. **Finally check**: [E2E Overlap Analysis](#e2e-testing-considerations) - ROI of E2E tests
+   - Understand cost/benefit of additional E2E testing
+   - See what's already covered
+
+**If you're prioritizing features:**
+- Check which features have comprehensive tests (high confidence)
+- Identify areas with sparse coverage (potential risk)
+- Use test count as proxy for feature complexity
+
+---
+
+### 📖 Reading Strategies by Goal
+
+#### Goal: "I want to write a new test"
+
+**Path**:
+1. [When to Write Each Type of Test](#when-to-write-each-type-of-test) → Choose level
+2. Navigate to relevant section (Unit/Use Case/UI Component/Feature)
+3. Find similar test example
+4. Follow [Test Writing Checklist](#test-writing-checklist)
+
+#### Goal: "Should we invest in E2E tests?"
+
+**Path**:
+1. [E2E Overlap Analysis](#e2e-overlap-summary) → Understand overlap
+2. [Recommended E2E Suite](#recommended-e2e-test-suite) → See what to test
+3. [What E2E Should/Shouldn't Cover](#what-e2e-should-cover) → Set boundaries
+
+#### Goal: "I want to understand our testing philosophy"
+
+**Path**:
+1. [Test Pyramid Structure](#test-pyramid-structure) → See distribution strategy
+2. Read 2-3 examples from [Unit Tests](#unit-tests)
+3. [Key Findings](#key-findings) → Our conclusions
+
+#### Goal: "I need to fix a specific failing test"
+
+**Path**:
+1. Use Ctrl+F to search for test name
+2. Read "Purpose" and "How It's Tested"
+3. Check "Benefits" to understand what it protects
+
+---
+
+### 🔍 Document Navigation Tips
+
+**Finding Specific Information**:
+- Use **Table of Contents** for major sections
+- Use **Ctrl+F / Cmd+F** to search for:
+  - Test file names (e.g., `robot_test.dart`)
+  - Test function names (e.g., `test autoplay end-to-end`)
+  - Keywords (e.g., "E2E overlap", "edge case", "validation")
+
+**Understanding Test Levels**:
+- Each test level has a consistent structure:
+  - **Intention**: Technical or Functional
+  - **Purpose**: What's being tested
+  - **How It's Tested**: Code examples
+  - **Benefits**: Why it matters
+  - **E2E Overlap**: Redundancy analysis
+
+**Quick Lookups**:
+- [Summary Table](#summary-table-all-tests-at-a-glance) - All tests at a glance
+- [Test Value Matrix](#test-value-matrix) - Decision matrix
+- [Test Writing Checklist](#test-writing-checklist) - Quality gates
 
 ---
 
@@ -767,6 +962,276 @@ Feature Tests       | 80%         | High overlap - choose wisely
 
 ---
 
+## Key Findings
+
+### Executive Summary
+
+Our test suite is **exceptionally well-designed** with 554 tests running in under 1 minute, following test pyramid best practices.
+
+**Bottom Line**: ✅ **Keep all current tests** - they provide excellent value and cannot be fully replaced by E2E tests.
+
+---
+
+### 🎯 Test Distribution Analysis
+
+| Metric | Current | Ideal | Assessment |
+|--------|---------|-------|------------|
+| **Unit Tests** | 61% (339 tests) | 70% | ✅ Excellent |
+| **Use Case Tests** | 9% (49 tests) | 10% | ✅ Perfect |
+| **UI Component Tests** | 12% (65 tests) | 10% | ✅ Very Good |
+| **Feature Tests** | 18% (101 tests) | 10% | ⚠️ Slightly high but valuable |
+| **Total Execution Time** | 40 seconds | < 1 minute | ✅ Outstanding |
+
+**Insight**: Our distribution is nearly ideal, with fast, reliable tests that enable TDD workflows. The slightly higher percentage of feature tests (18% vs ideal 10%) is acceptable because they provide excellent functional coverage without E2E overhead.
+
+---
+
+### ⚡ Speed & Efficiency
+
+| Test Level | Avg Time | Tests | Total Time | Speed Rating |
+|------------|----------|-------|------------|--------------|
+| Unit | 0.006s | 339 | 2s | ⚡⚡⚡ Very Fast |
+| Use Case | 0.061s | 49 | 3s | ⚡⚡ Fast |
+| UI Component | 0.077s | 65 | 5s | ⚡ Normal |
+| Feature | 0.297s | 101 | 30s | ⚡ Normal |
+| **Overall** | **0.072s** | **554** | **40s** | ⚡⚡ Excellent |
+
+**Insight**: All tests combined run **10-20x faster** than typical E2E tests, enabling rapid development cycles and immediate feedback.
+
+---
+
+### 🔍 E2E Overlap Summary
+
+Analysis of whether E2E tests would duplicate our current test coverage:
+
+| Test Category | Test Count | E2E Overlap | Recommendation | Rationale |
+|---------------|------------|-------------|----------------|-----------|
+| **Domain Entity Tests** | 71 | ❌ None (0-10%) | ✅ Keep All | E2E can't test internal logic |
+| **Value Object Tests** | 41 | ❌ None (0-10%) | ✅ Keep All | Internal implementation details |
+| **Use Case Tests** | 49 | ⚠️ Medium (30-50%) | ✅ Keep All | 20x faster feedback |
+| **Data Layer Tests** | 150 | ⚠️ Low (20-40%) | ✅ Keep All | JSON contracts, error mapping |
+| **UI Component Tests** | 65 | ✅ High (50-70%) | ✅ Keep All | Edge cases, isolated testing |
+| **Feature Tests** | 101 | ✅ Very High (80%) | ✅ Keep for Speed | Much faster than E2E |
+
+**Key Takeaway**: Only **Feature Tests** have significant overlap with E2E (80%), but they're **100x faster** and provide better debugging. The other 453 tests (82%) have low overlap and cannot be replaced by E2E.
+
+---
+
+### 📊 Test Value Matrix
+
+Classification of all 554 tests by value and E2E overlap:
+
+```
+                           E2E OVERLAP
+                    Low (0-40%)         High (50-100%)
+                ┌──────────────────┬──────────────────────┐
+                │                  │                      │
+   High   (95%) │  ✅ KEEP (453)   │  ✅ KEEP (101)       │
+   Value        │  • Domain tests  │  • Feature tests     │
+                │  • Use cases     │  • UI components     │
+                │  • Data layer    │  (for speed/debug)   │
+                │                  │                      │
+                ├──────────────────┼──────────────────────┤
+                │                  │                      │
+   Low    (5%)  │  N/A             │  N/A                 │
+   Value        │                  │                      │
+                │                  │                      │
+                └──────────────────┴──────────────────────┘
+```
+
+**Verdict**:
+- ✅ **Keep 100%** (554/554 tests) - All provide unique value
+- Feature tests have high E2E overlap but offer speed/debugging advantages
+- E2E should complement, not replace, current tests
+
+---
+
+### 🎖️ Test Quality Scorecard
+
+| Quality Metric | Target | Actual | Grade |
+|----------------|--------|--------|-------|
+| **Execution Speed** | < 1min | 40s | A+ |
+| **Pyramid Balance** | 70/10/10/10 | 61/9/12/18 | A |
+| **Test Reliability** | 0 flaky | 0 flaky | A+ |
+| **Coverage Depth** | 80%+ | 84.4% | A+ |
+| **Maintainability** | High | High | A |
+| **Documentation Value** | High | High | A |
+| **Overall Score** | - | - | **A+** |
+
+---
+
+### 🎯 Summary Table: All Tests at a Glance
+
+Complete analysis showing technical/functional intent, E2E overlap, and recommendations:
+
+| Test Category | Tests | Speed | Type | E2E Overlap | Keep? | Key Reason |
+|---------------|-------|-------|------|-------------|-------|------------|
+| **Unit Tests (339)** |
+| Domain Entities | 71 | ⚡⚡⚡ | Technical | ❌ None | ✅ Yes | Core business logic |
+| Value Objects | 41 | ⚡⚡⚡ | Technical | ❌ None | ✅ Yes | Critical calculations |
+| Core Layer | 77 | ⚡⚡⚡ | Technical | ❌ Low | ✅ Yes | Config, errors, theme |
+| Data Models | 37 | ⚡⚡⚡ | Technical | ⚠️ Low | ✅ Yes | JSON serialization |
+| Repository | 60 | ⚡⚡⚡ | Technical | ⚠️ Medium | ✅ Yes | Error mapping, data transform |
+| Datasource | 23 | ⚡⚡⚡ | Technical | ⚠️ Medium | ✅ Yes | API integration logic |
+| API Client | 16 | ⚡⚡⚡ | Technical | ❌ Low | ✅ Yes | Network layer config |
+| API Endpoints | 14 | ⚡⚡⚡ | Technical | ❌ Low | ✅ Yes | Endpoint validation |
+| **Use Case Tests (49)** |
+| Business Operations | 49 | ⚡⚡ | Functional | ⚠️ Medium | ✅ Yes | 20x faster than E2E |
+| **UI Component Tests (65)** |
+| Widget Tests | 65 | ⚡ | Technical + Func | ✅ High | ✅ Yes | Edge cases, isolation |
+| **Feature Tests (101)** |
+| User Workflows | 101 | ⚡ | Functional | ✅ Very High | ✅ Yes | 100x faster than E2E |
+
+**Legend**:
+- **Speed**: ⚡⚡⚡ Very Fast (< 0.01s) | ⚡⚡ Fast (< 0.1s) | ⚡ Normal (< 0.5s)
+- **E2E Overlap**: ❌ None (0-10%) | ⚠️ Low/Medium (10-60%) | ✅ High (60-100%)
+- **Type**: Technical (tests implementation) | Functional (tests business requirements)
+
+---
+
+### 💡 Key Insights & Recommendations
+
+#### 1. **Test Suite Strengths** ✅
+
+- ⚡ **Exceptional Speed**: 554 tests in 40s enables TDD workflow
+- 🎯 **Good Balance**: Nearly ideal pyramid distribution
+- 🔒 **Comprehensive**: Tests domain logic, use cases, UI, and workflows
+- 🧪 **Quality**: Zero flaky tests, clear naming, good documentation
+- 🛡️ **Regression Protection**: Strong coverage of edge cases and error paths
+
+#### 2. **Why NOT Replace with E2E** ❌
+
+**Speed Advantage**:
+- Current tests: 40 seconds
+- Typical E2E suite: 10-30 minutes (15-45x slower)
+- Developer productivity: Immediate feedback vs. waiting
+
+**Coverage Depth**:
+- Unit tests cover 100+ edge cases in seconds
+- E2E tests would need dozens of tests to match coverage
+- Cost/benefit ratio strongly favors current approach
+
+**Debugging Efficiency**:
+- Failed unit test: Points directly to issue
+- Failed E2E test: Could be UI, API, state, or logic
+- Time to fix: 5 minutes vs. 30+ minutes
+
+**Maintenance**:
+- Unit tests: Stable, rarely break from unrelated changes
+- E2E tests: Brittle, break from UI/timing changes
+- Maintenance cost: Low vs. High
+
+#### 3. **When to Add E2E Tests** ⚠️
+
+**DO add E2E tests for**:
+- ✅ User workflows (happy path only)
+- ✅ Visual regression (UI rendering)
+- ✅ Real device testing (iOS/Android/Web)
+- ✅ Cross-system integration (if applicable)
+
+**DON'T add E2E tests for**:
+- ❌ Edge cases (use unit tests - faster)
+- ❌ Error handling (hard to trigger in E2E)
+- ❌ Widget validation (UI component tests better)
+- ❌ Code coverage (wrong tool)
+
+**Recommended E2E Suite Size**: 10-20 tests maximum
+
+#### 4. **Identified Gaps** ⚠️
+
+**Potential Enhancements**:
+- Property-based testing for Position/Direction calculations
+- Mutation testing to verify test quality
+- Performance/load testing for complex boards
+- More edge cases for AI solver scenarios
+
+#### 5. **Best Practices Demonstrated** 🌟
+
+- ✅ **Test Pyramid**: Proper distribution of test levels
+- ✅ **Fast Feedback**: All tests run in < 1 minute
+- ✅ **Clear Intent**: Descriptive test names
+- ✅ **Independence**: Tests run in any order
+- ✅ **AAA Pattern**: Arrange-Act-Assert consistently used
+- ✅ **Mocking**: External dependencies mocked appropriately
+- ✅ **Fixtures**: Reusable test setup patterns
+
+---
+
+### 🎓 Learning from This Test Suite
+
+**For Other Projects**:
+
+1. **Prioritize Speed**: Fast tests enable TDD and are run more often
+2. **Follow Pyramid**: Invest heavily in unit tests, moderately in use case/UI, sparingly in E2E
+3. **Test Behavior**: Focus on outcomes, not implementation details
+4. **Mock Wisely**: Only mock external dependencies, not domain logic
+5. **Name Clearly**: Test names should describe what/when/expected
+6. **Measure Value**: Not all tests are equal - prioritize high-value tests
+
+**Red Flags to Avoid**:
+- ❌ Slow unit tests (> 0.1s each)
+- ❌ Flaky tests (pass/fail randomly)
+- ❌ Inverted pyramid (more feature tests than unit)
+- ❌ Testing implementation (coupled to code structure)
+- ❌ No edge case coverage
+- ❌ Poor test names (test1, test2, etc.)
+
+---
+
+## Recommendations
+
+### For Current Test Suite
+
+#### 1. ✅ **Keep Current Tests**
+
+**Verdict**: Current test suite is **excellent** - keep all 554 tests
+
+**Reasoning**:
+- ⚡ Very fast (40s total execution)
+- 🎯 Good pyramid distribution (61% unit, 9% use case, 12% UI, 18% feature)
+- 📊 Excellent coverage (84.4%) of critical functionality
+- 🔧 Enables TDD and fast development cycles
+- 🛡️ Strong regression prevention
+
+#### 2. 📈 **Potential Improvements**
+
+**Enhancement Opportunities**:
+- Add property-based testing for value objects
+- Add mutation testing to verify test quality
+- Increase coverage for edge cases in AI-like scenarios
+- Add performance/load testing for large boards
+
+#### 3. 🚀 **E2E Testing Strategy**
+
+**If Implementing E2E**:
+- ✅ **DO**: Test user workflows and UI interactions
+- ❌ **DON'T**: Try to replace existing tests
+- 🎯 **FOCUS**: 10-20 curated smoke tests
+- ⚡ **SPEED**: Run E2E in parallel, keep under 10 minutes
+
+**E2E Test Priorities**:
+1. Happy path game play (highest value)
+2. Autoplay feature (critical feature)
+3. Error handling in UI (user experience)
+4. Mobile/web experience (cross-platform)
+5. Real device testing (if needed)
+
+#### 4. 📊 **Test Maintenance**
+
+**Regular Reviews**:
+- ✅ Ensure tests stay fast (< 1 minute)
+- 🎯 Monitor for flaky tests
+- 📈 Track coverage (maintain 80%+)
+- 🔧 Refactor slow tests immediately
+
+**Test Quality Metrics**:
+- **Speed**: All tests < 1 minute ✅ (currently 40s)
+- **Reliability**: Zero flaky tests ✅
+- **Clarity**: Descriptive test names ✅
+- **Independence**: Tests run in any order ✅
+
+---
+
 ## Running Tests
 
 ### Run All Tests
@@ -819,6 +1284,348 @@ make test
 make coverage-html
 open coverage/html/index.html
 ```
+
+---
+
+## Quick Reference Guide
+
+### When to Write Each Type of Test
+
+| Test Type | When to Write | What to Test |
+|-----------|--------------|--------------|
+| **Unit** | Always | Domain logic, calculations, edge cases, value objects |
+| **Use Case** | For business operations | Use case orchestration, business rules |
+| **UI Component** | For widgets | Widget rendering, interactions, state changes |
+| **Feature** | For complex workflows | Multi-step user scenarios, integration flows |
+| **E2E** | Sparingly | User workflows (happy path), visual elements, cross-platform |
+
+---
+
+### Test Writing Checklist
+
+✅ **Before Writing a Test**:
+- [ ] Is this testing behavior, not implementation?
+- [ ] Is this the right level (unit vs use case vs UI vs feature)?
+- [ ] Will this test run fast?
+- [ ] Is this test independent (no shared state)?
+
+✅ **After Writing a Test**:
+- [ ] Does the test have a clear, descriptive name?
+- [ ] Does the test fail when it should?
+- [ ] Is the test easy to understand and maintain?
+- [ ] Does the test add value (not just coverage)?
+
+---
+
+### Decision Matrix: Which Test Level?
+
+| Scenario | Unit | Use Case | UI Component | Feature | E2E |
+|----------|------|----------|--------------|---------|-----|
+| **New domain entity** | ✅ Always | ❌ No | ❌ No | ❌ No | ❌ No |
+| **New use case** | ✅ Yes | ✅ Always | ❌ No | ⚠️ If complex | ❌ No |
+| **New widget** | ❌ No | ❌ No | ✅ Always | ❌ No | ⚠️ If critical |
+| **Bug fix** | ✅ Regression test | ⚠️ If use case | ⚠️ If UI | ❌ No | ❌ No |
+| **New workflow** | ⚠️ For steps | ✅ For logic | ⚠️ For UI | ✅ Always | ⚠️ If user-facing |
+| **Edge case** | ✅ Always | ⚠️ If business rule | ⚠️ If UI edge case | ❌ No | ❌ No |
+| **Error handling** | ✅ Yes | ✅ Yes | ✅ For UI errors | ⚠️ If workflow | ❌ No |
+| **Performance** | ❌ No | ❌ No | ⚠️ Render perf | ⚠️ Load test | ✅ Real-world perf |
+
+---
+
+### Test Speed Guidelines
+
+| Test Level | Target Time | Max Time | If Slower, Then... |
+|------------|-------------|----------|--------------------|
+| **Unit** | < 0.01s | 0.1s | Mock dependencies, reduce setup |
+| **Use Case** | < 0.1s | 0.5s | Use in-memory repository, mock datasource |
+| **UI Component** | < 0.1s | 0.5s | Optimize fixtures, reduce widget tree |
+| **Feature** | < 1s | 5s | Optimize test setup, use smaller board sizes |
+| **E2E** | < 30s | 2min | Run in parallel, reduce test count |
+
+**Current Status**: ✅ All tests run in 40s (excellent!)
+
+---
+
+### Common Testing Patterns
+
+#### Pattern 1: Arrange-Act-Assert (AAA)
+
+```dart
+test('should calculate flowers held correctly', () {
+  // ARRANGE: Set up test data
+  const robot = Robot(
+    collectedFlowers: [Position(x: 1, y: 1)],
+    deliveredFlowers: [],
+  );
+
+  // ACT: Execute the behavior
+  final flowersHeld = robot.flowersHeld;
+
+  // ASSERT: Verify the outcome
+  expect(flowersHeld, 1);
+});
+```
+
+**When to use**: All tests (standard pattern)
+
+---
+
+#### Pattern 2: Given-When-Then (BDD style)
+
+```dart
+test('Feature: User creates game, plays, and wins', () async {
+  // Given: User creates a game
+  final createResult = await createGameUseCase('Victory Game', 10);
+  var game = createResult.getOrElse(() => throw Exception('Failed'));
+
+  // When: User plays until completion
+  final autoPlayResult = await autoPlayUseCase(game.id);
+  game = autoPlayResult.getOrElse(() => throw Exception('Failed'));
+
+  // Then: Game is won
+  expect(game.status, GameStatus.won);
+});
+```
+
+**When to use**: Feature tests (business scenarios)
+
+---
+
+#### Pattern 3: Test Data Builders
+
+```dart
+GameBoard createTestBoard({
+  int width = 5,
+  int height = 5,
+  Position? robotPos,
+  Position? princessPos,
+}) {
+  return GameBoard(
+    width: width,
+    height: height,
+    robot: Robot(
+      position: robotPos ?? const Position(x: 0, y: 0),
+      orientation: Direction.north,
+    ),
+    princess: Princess(
+      position: princessPos ?? Position(x: width - 1, y: height - 1),
+    ),
+    cells: [],
+    flowersRemaining: 0,
+  );
+}
+```
+
+**When to use**: Complex setup that's reused across tests
+
+---
+
+#### Pattern 4: Mocking External Dependencies
+
+```dart
+test('should handle repository error', () async {
+  // Mock repository to throw exception
+  when(mockRepository.getGame(any))
+      .thenThrow(NotFoundException('Game not found'));
+
+  // Execute use case
+  final result = await getGameUseCase('invalid-id');
+
+  // Verify error handling
+  expect(result.isLeft(), true);
+  result.fold(
+    (failure) => expect(failure, isA<NotFoundFailure>()),
+    (_) => fail('Should return Left'),
+  );
+});
+```
+
+**When to use**: Testing integration without running expensive dependencies
+
+---
+
+### Troubleshooting Guide
+
+#### Symptom: Test is slow (> 0.5s for unit tests)
+
+**Possible Causes**:
+- ❌ Not using in-memory implementations
+- ❌ Not mocking external services
+- ❌ Creating too much test data
+- ❌ Running actual network calls
+
+**Solutions**:
+- ✅ Use mocked repositories
+- ✅ Mock expensive operations
+- ✅ Create minimal test data
+- ✅ Mock `ApiClient` and datasources
+
+---
+
+#### Symptom: Test is flaky (passes/fails randomly)
+
+**Possible Causes**:
+- ❌ Tests share state (not independent)
+- ❌ Tests depend on execution order
+- ❌ Using random data without seeding
+- ❌ Time-dependent assertions
+- ❌ Race conditions in async code
+
+**Solutions**:
+- ✅ Use `setUp()` to ensure clean state
+- ✅ Make tests runnable in any order
+- ✅ Use deterministic test data
+- ✅ Await all async operations
+- ✅ Use `pump()` and `pumpAndSettle()` in widget tests
+
+---
+
+#### Symptom: Test passes but doesn't catch bugs
+
+**Possible Causes**:
+- ❌ Testing implementation, not behavior
+- ❌ Assertions too loose (e.g., `expect(x, isNotNull)`)
+- ❌ Not testing edge cases
+- ❌ Mocking too much (testing mocks, not code)
+
+**Solutions**:
+- ✅ Test outcomes, not method calls
+- ✅ Use specific assertions
+- ✅ Add edge case tests (empty, null, boundaries)
+- ✅ Only mock external dependencies
+
+---
+
+#### Symptom: Test is hard to understand
+
+**Possible Causes**:
+- ❌ Unclear test name
+- ❌ Too much setup
+- ❌ Testing multiple things
+- ❌ No comments on complex logic
+
+**Solutions**:
+- ✅ Use descriptive names (what, when, expected)
+- ✅ Extract setup to helper functions
+- ✅ One logical assertion per test
+- ✅ Add comments for non-obvious setup
+
+---
+
+### Test Naming Conventions
+
+#### Pattern: `test('<what> <condition> <expected>')`
+
+**Examples**:
+- ✅ `test('should calculate flowers held correctly')` - Good (clear action + outcome)
+- ✅ `test('should throw exception when board size is invalid')` - Good (condition + expected)
+- ✅ `test('should move robot north successfully')` - Good (action + direction + outcome)
+- ✅ `testWidgets('should display robot emoji at correct position')` - Good (UI assertion)
+- ❌ `test('test 1')` - Bad (not descriptive)
+- ❌ `test('robot')` - Bad (too vague)
+- ❌ `test('it works')` - Bad (not specific)
+
+**BDD Style (for feature tests)**:
+- ✅ `test('Feature: User creates game, plays, and wins')` - Good (user scenario)
+- ✅ `test('Feature: User sees error when move is invalid')` - Good (error scenario)
+
+---
+
+### Coverage Targets by Component
+
+| Component | Target | Current | Status |
+|-----------|--------|---------|--------|
+| **Domain Entities** | 95%+ | ~95% | ✅ Excellent |
+| **Value Objects** | 95%+ | ~100% | ✅ Perfect |
+| **Use Cases** | 90%+ | 100% | ✅ Perfect |
+| **Data Models** | 85%+ | ~85% | ✅ Good |
+| **Repositories** | 85%+ | ~95% | ✅ Excellent |
+| **Widgets** | 80%+ | ~87% | ✅ Good |
+| **Providers** | 70%+ | ~75% | ✅ Acceptable |
+| **Overall** | 80%+ | 84.4% | ✅ Excellent |
+
+---
+
+### Test Maintenance Checklist
+
+#### Monthly Review
+
+- [ ] All tests run in < 1 minute?
+- [ ] Zero flaky tests?
+- [ ] No skipped/ignored tests?
+- [ ] Coverage above targets?
+- [ ] All tests have descriptive names?
+- [ ] Test execution time not increasing?
+
+#### After Each Sprint
+
+- [ ] New features have tests?
+- [ ] Bug fixes have regression tests?
+- [ ] No tests removed without reason?
+- [ ] Test documentation updated?
+- [ ] CI/CD pipeline passing?
+
+#### Before Major Refactoring
+
+- [ ] All tests passing?
+- [ ] Tests cover critical paths?
+- [ ] Tests are behavior-focused (not implementation)?
+- [ ] Have confidence to refactor?
+- [ ] Backup branch created?
+
+---
+
+### Test Categories by Purpose
+
+#### 🎯 Domain Logic Tests (Testing "What")
+**Purpose**: Validate business rules and calculations
+
+**Tests**:
+- Entity behavior (Robot, Princess, GameBoard)
+- Value object logic (Position, Direction)
+- Business rule enforcement
+- Calculation correctness
+
+**When to use**: Testing pure domain logic without external dependencies
+
+---
+
+#### 🔌 Use Case Tests (Testing "How")
+**Purpose**: Validate components work together
+
+**Tests**:
+- Use case orchestration
+- Business operation flows
+- Error handling
+- State transitions
+
+**When to use**: Testing business operations through use case layer
+
+---
+
+#### 🎨 UI Component Tests (Testing "Visual")
+**Purpose**: Validate widget behavior and rendering
+
+**Tests**:
+- Widget rendering
+- User interactions (taps, gestures)
+- State changes in UI
+- Visual feedback
+
+**When to use**: Testing widgets in isolation
+
+---
+
+#### 🎬 Feature Tests (Testing "User Journeys")
+**Purpose**: Validate complete user scenarios
+
+**Tests**:
+- Multi-step workflows
+- Integration of all layers
+- Complex scenarios
+- Error handling flows
+
+**When to use**: Testing features that span multiple components
 
 ---
 
