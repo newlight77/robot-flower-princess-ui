@@ -1,8 +1,15 @@
 # Test Inventory & Analysis
 
-> **Comprehensive documentation of all 554 tests in the Robot-Flower-Princess Flutter application**
+> **📊 Comprehensive Analysis of All 554 Tests**
 >
-> This document provides a complete analysis of our testing strategy, covering intention, purpose, methodology, benefits, and E2E overlap considerations for each test level.
+> This document provides strategic analysis of our testing strategy: test distribution, quality metrics, E2E overlap recommendations, and decision-making guidance. For quick commands and daily test operations, see **[Testing Strategy (TESTING_STRATEGY.md)](TESTING_STRATEGY.md)**.
+
+---
+
+**Purpose**: Strategic analysis for decision-makers
+**Focus**: Test quality, E2E overlap, metrics, recommendations
+**Audience**: Developers, QA, Architects, Product Managers
+**Related**: [Testing Strategy](TESTING_STRATEGY.md) - Quick reference for running tests
 
 ---
 
@@ -24,8 +31,8 @@
    - [UI Component Tests](#ui-component-tests)
    - [Feature Tests](#feature-tests)
 5. [Test Categories by Layer](#test-categories-by-layer)
-6. [E2E Testing Considerations](#e2e-testing-considerations)
-7. [Key Findings](#key-findings)
+6. [Key Findings](#key-findings)
+7. [Recommendations](#recommendations)
 8. [Running Tests](#running-tests)
 9. [Quick Reference Guide](#quick-reference-guide)
 10. [Related Documentation](#related-documentation)
@@ -73,7 +80,7 @@ This document is designed for **different audiences** with varying needs. Naviga
    - Check tests run fast (< 5s for unit tests)
    - Ensure tests are independent
 
-3. **Finally check**: [E2E Overlap Analysis](#e2e-testing-considerations) - Avoid redundancy
+3. **Finally check**: [E2E Overlap Analysis](#e2e-overlap-summary) - Avoid redundancy
    - Understand when unit tests are sufficient
    - Know when to escalate to integration/feature tests
 
@@ -98,12 +105,12 @@ This document is designed for **different audiences** with varying needs. Naviga
    - Review execution time metrics
    - Check coverage by layer
 
-2. **Then review**: [E2E Overlap Analysis](#e2e-testing-considerations) - Decide on E2E strategy
+2. **Then review**: [E2E Overlap Analysis](#e2e-overlap-summary) - Decide on E2E strategy
    - Understand what's already tested
    - See overlap matrix (which tests duplicate E2E)
    - Get recommendations on when to add E2E tests
 
-3. **Finally check**: [Recommended E2E Suite](#recommended-e2e-test-suite) - Plan E2E tests
+3. **Finally check**: [E2E Testing Strategy](#3--e2e-testing-strategy) - Plan E2E tests
    - See curated list of 10-20 E2E tests
    - Understand what E2E should/shouldn't cover
 
@@ -163,7 +170,7 @@ This document is designed for **different audiences** with varying needs. Naviga
    - [UI Component Tests](#ui-component-tests) - Widget testing
    - [Use Case Tests](#use-case-tests) - Business logic
 
-3. **Finally check**: [E2E Overlap Analysis](#e2e-testing-considerations) - ROI of E2E tests
+3. **Finally check**: [E2E Overlap Analysis](#e2e-overlap-summary) - ROI of E2E tests
    - Understand cost/benefit of additional E2E testing
    - See what's already covered
 
@@ -188,8 +195,8 @@ This document is designed for **different audiences** with varying needs. Naviga
 
 **Path**:
 1. [E2E Overlap Analysis](#e2e-overlap-summary) → Understand overlap
-2. [Recommended E2E Suite](#recommended-e2e-test-suite) → See what to test
-3. [What E2E Should/Shouldn't Cover](#what-e2e-should-cover) → Set boundaries
+2. [E2E Testing Strategy](#3--e2e-testing-strategy) → See what to test
+3. [When to Add E2E Tests](#3-when-to-add-e2e-tests-) → Set boundaries
 
 #### Goal: "I want to understand our testing philosophy"
 
@@ -875,93 +882,6 @@ test('Feature: User creates game, plays, and wins', () async {
 
 ---
 
-## E2E Testing Considerations
-
-### Current Test Suite vs E2E
-
-**Current Suite (Inside-Out):**
-- ✅ Fast feedback (30 seconds for all tests)
-- ✅ Reliable (no network, no flakiness)
-- ✅ Easy debugging (stack traces, breakpoints)
-- ✅ Comprehensive coverage (84.4%)
-- ❌ Doesn't test real API integration
-- ❌ Doesn't test real UI rendering on devices
-- ❌ Doesn't validate production environment
-
-**E2E Suite (Outside-In) - Recommended:**
-- ✅ Tests full production stack
-- ✅ Validates real API + real UI
-- ✅ Catches environment issues
-- ✅ Production confidence
-- ❌ Slow (minutes to hours)
-- ❌ Flaky (network, timing, infrastructure)
-- ❌ Expensive to maintain
-- ❌ Hard to debug
-
-### Overlap Analysis
-
-```
-Test Level          | E2E Overlap | Recommendation
---------------------|-------------|----------------------------------
-Unit Tests          | 5%          | Keep separate - internal details
-Use Case Tests      | 30%         | Keep separate - faster feedback
-UI Component Tests  | 50%         | Keep separate - isolated testing
-Feature Tests       | 80%         | High overlap - choose wisely
-```
-
-### Recommended E2E Test Suite
-
-**Keep Feature tests for development velocity**
-**Add ~10-20 E2E tests for production confidence**
-
-#### Suggested E2E Test Coverage
-
-**Critical Happy Paths (Smoke Tests):**
-1. ✅ Create game → See game board
-2. ✅ Move robot → See robot move on screen
-3. ✅ Pick flower → Collect → Deliver → Win
-4. ✅ Auto-play → Game completes → Status updates
-5. ✅ View game list → Games displayed
-6. ✅ Replay game → See history
-
-**Critical Error Paths:**
-7. ✅ Invalid move → Error displayed
-8. ✅ Network failure → Error handled gracefully
-
-**Why these few tests?**
-- Cover critical user journeys
-- Validate production environment
-- Quick feedback (5-10 minutes)
-- High value vs maintenance cost
-
-### Testing Strategy Summary
-
-```
-┌─────────────────────────────────────────────────────┐
-│                                                     │
-│  Development (Fast Feedback)                        │
-│  ├── Unit Tests:       339 tests (~2s)              │
-│  ├── Use Case Tests:    49 tests (~3s)              │
-│  ├── Widget Tests:      65 tests (~5s)              │
-│  └── Feature Tests:    101 tests (~30s)             │
-│                                                     │
-│  Total: 554 tests in ~40 seconds ✅                 │
-│  Run on: Every commit, local development            │
-│                                                     │
-└─────────────────────────────────────────────────────┘
-                         ⬇
-┌─────────────────────────────────────────────────────┐
-│                                                     │
-│  Pre-Release (Production Confidence)                │
-│  └── E2E Tests:        10-20 tests (~10 min)        │
-│                                                     │
-│  Run on: Pre-release, nightly, critical changes     │
-│                                                     │
-└─────────────────────────────────────────────────────┘
-```
-
----
-
 ## Key Findings
 
 ### Executive Summary
@@ -1215,6 +1135,42 @@ Complete analysis showing technical/functional intent, E2E overlap, and recommen
 3. Error handling in UI (user experience)
 4. Mobile/web experience (cross-platform)
 5. Real device testing (if needed)
+
+**Suggested E2E Test Coverage** (Critical Happy Paths):
+1. ✅ Create game → See game board
+2. ✅ Move robot → See robot move on screen
+3. ✅ Pick flower → Collect → Deliver → Win
+4. ✅ Auto-play → Game completes → Status updates
+5. ✅ View game list → Games displayed
+6. ✅ Replay game → See history
+7. ✅ Invalid move → Error displayed
+8. ✅ Network failure → Error handled gracefully
+
+**Testing Strategy Visualization**:
+
+```
+┌─────────────────────────────────────────────────────┐
+│                                                     │
+│  Development (Fast Feedback)                        │
+│  ├── Unit Tests:       339 tests (~2s)              │
+│  ├── Use Case Tests:    49 tests (~3s)              │
+│  ├── Widget Tests:      65 tests (~5s)              │
+│  └── Feature Tests:    101 tests (~30s)             │
+│                                                     │
+│  Total: 554 tests in ~40 seconds ✅                 │
+│  Run on: Every commit, local development            │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+                         ⬇
+┌─────────────────────────────────────────────────────┐
+│                                                     │
+│  Pre-Release (Production Confidence)                │
+│  └── E2E Tests:        10-20 tests (~10 min)        │
+│                                                     │
+│  Run on: Pre-release, nightly, critical changes     │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
 
 #### 4. 📊 **Test Maintenance**
 
@@ -1631,10 +1587,13 @@ test('should handle repository error', () async {
 
 ## Related Documentation
 
-- [Testing Strategy](TESTING_STRATEGY.md) - Overall testing approach
+### Quick Reference for Daily Testing
+- **[Testing Strategy (TESTING_STRATEGY.md)](TESTING_STRATEGY.md)** - Commands, examples, and troubleshooting
+
+### Other Testing Resources
 - [Coverage Guide](COVERAGE.md) - Coverage metrics and goals
-- [Architecture](ARCHITECTURE.md) - System architecture
 - [CI/CD](CI_CD.md) - Continuous integration setup
+- [Architecture](ARCHITECTURE.md) - System architecture
 - [Contributing](../CONTRIBUTING.md) - Contribution guidelines
 
 ---

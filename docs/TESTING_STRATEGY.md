@@ -1,6 +1,17 @@
 # Testing Strategy
 
-This document describes the comprehensive testing strategy for the Robot Flower Princess application.
+> **🚀 Quick Reference for Daily Testing**
+>
+> This document provides practical guidance for running tests, writing new tests, and troubleshooting. If you need comprehensive test analysis, E2E overlap recommendations, or strategic insights, see **[Testing Guide (TESTING_GUIDE.md)](TESTING_GUIDE.md)**.
+
+---
+
+**Purpose**: Operational guide for developers
+**Focus**: Commands, examples, troubleshooting
+**Audience**: Developers working with tests day-to-day
+**Related**: [Testing Guide](TESTING_GUIDE.md) - Comprehensive analysis of all 554 tests
+
+---
 
 ## Overview
 
@@ -39,146 +50,93 @@ test/
 
 ### 1️⃣ Unit Tests (`test/unit/`)
 
-**Purpose**: Test individual functions and classes in isolation.
+Tests individual functions and classes in isolation (339 tests).
 
-**Scope**:
-- Domain entities (`Cell`, `Robot`, `Princess`, `Game`, etc.)
-- Value objects (`Position`, `Direction`, `ActionType`, etc.)
-- Data models (`GameModel`)
-- Core utilities (`Logger`)
-- Repository implementations
-
-**Characteristics**:
-- No external dependencies
-- Fast execution
-- High code coverage
-- Test single responsibility
+**What's tested**: Domain entities, value objects, data models, core utilities
 
 **Example**:
 ```dart
 test('should create cell with required fields', () {
-  const cell = Cell(
-    position: Position(x: 1, y: 2),
-    type: CellType.flower,
-  );
-
+  const cell = Cell(position: Position(x: 1, y: 2), type: CellType.flower);
   expect(cell.position.x, 1);
   expect(cell.type, CellType.flower);
 });
 ```
 
-**Run Command**:
+**Commands**:
 ```bash
-make test-unit
+make test-unit              # Run unit tests with coverage
+flutter test test/unit/     # Run unit tests only
 ```
+
+> 📖 For detailed analysis, see [Testing Guide - Unit Tests](TESTING_GUIDE.md#unit-tests)
 
 ### 2️⃣  Use Case Tests (`test/use_case/`)
 
-**Purpose**: Test business logic and domain rules.
+Tests business logic and application rules (49 tests).
 
-**Scope**:
-- Use case implementations
-- Business rules validation
-- Domain logic correctness
-- Error handling
-
-**Characteristics**:
-- Tests business workflows
-- Uses mocked dependencies
-- Validates business rules
-- Tests success and failure paths
+**What's tested**: Use case implementations, business rules, error handling
 
 **Example**:
 ```dart
-test('CreateGameImpl should return ValidationFailure when name is empty', () async {
-  final result = await createGameUseCase(
-    name: '',
-    rows: 10,
-    cols: 10,
-  );
-
+test('should return ValidationFailure when name is empty', () async {
+  final result = await createGameUseCase(name: '', rows: 10, cols: 10);
   expect(result.isLeft(), true);
 });
 ```
 
-**Run Command**:
+**Commands**:
 ```bash
-make test-use-case
+make test-use-case              # Run use case tests with coverage
+flutter test test/use_case/     # Run use case tests only
 ```
 
-### 3️⃣ Widget Tests (`test/widget/`)
+> 📖 For detailed analysis, see [Testing Guide - Use Case Tests](TESTING_GUIDE.md#use-case-tests)
 
-**Purpose**: Test UI components in isolation.
+### 3️⃣ Widget Tests (`test/ui-component/`)
 
-**Scope**:
-- Individual widgets (`ActionButton`, `DirectionSelector`, etc.)
-- Widget interactions
-- UI rendering
-- Widget state management
+Tests UI components in isolation (65 tests).
 
-**Characteristics**:
-- Tests UI behavior
-- Verifies widget rendering
-- Tests user interactions
-- Uses `WidgetTester`
+**What's tested**: Individual widgets, user interactions, UI rendering, state changes
 
 **Example**:
 ```dart
 testWidgets('should call onPressed when button is tapped', (tester) async {
   var pressCount = 0;
-
-  await tester.pumpWidget(
-    MaterialApp(
-      home: ActionButton(
-        actionType: ActionType.move,
-        onPressed: () => pressCount++,
-      ),
-    ),
-  );
-
+  await tester.pumpWidget(MaterialApp(
+    home: ActionButton(actionType: ActionType.move, onPressed: () => pressCount++),
+  ));
   await tester.tap(find.byType(ElevatedButton));
   expect(pressCount, 1);
 });
 ```
 
-**Run Command**:
+**Commands**:
 ```bash
-make test-widget
+make test-widget                    # Run widget tests with coverage
+flutter test test/ui-component/     # Run widget tests only
 ```
+
+> 📖 For detailed analysis, see [Testing Guide - UI Component Tests](TESTING_GUIDE.md#ui-component-tests)
 
 ### 4️⃣ Feature Tests (`test/feature/`)
 
-**Purpose**: Test complete features from the user's perspective.
+Tests complete features from user's perspective (101 tests).
 
-**Scope**:
-- End-to-end workflows
-- User scenarios
-- Feature integration
-- Complete game flows
+**What's tested**: End-to-end workflows, user scenarios, feature integration
 
-**Characteristics**:
-- Uses fake backend (`FakeGameDataSource`)
-- Tests realistic user scenarios
-- No external dependencies (runs in isolation)
-- Tests multiple components working together
+**Uses fake backend**: No real API calls, runs in isolation with `FakeGameDataSource`
 
 **Example**:
 ```dart
 test('Feature: User creates a game and moves robot', () async {
   // Given: User creates a game
-  final createResult = await createGameUseCase(
-    name: 'My Game',
-    rows: 10,
-    cols: 10,
-  );
+  final createResult = await createGameUseCase(name: 'My Game', rows: 10, cols: 10);
   final game = createResult.getOrElse(() => throw Exception());
 
   // When: User moves robot east
   final moveResult = await executeActionUseCase(
-    gameId: game.id,
-    action: ActionType.move,
-    direction: Direction.east,
-  );
+    gameId: game.id, action: ActionType.move, direction: Direction.east);
 
   // Then: Robot position is updated
   final updatedGame = moveResult.getOrElse(() => throw Exception());
@@ -186,10 +144,13 @@ test('Feature: User creates a game and moves robot', () async {
 });
 ```
 
-**Run Command**:
+**Commands**:
 ```bash
-make test-feature
+make test-feature              # Run feature tests with coverage
+flutter test test/feature/     # Run feature tests only
 ```
+
+> 📖 For detailed analysis and E2E overlap, see [Testing Guide - Feature Tests](TESTING_GUIDE.md#feature-tests)
 
 ## Running Tests
 
@@ -358,15 +319,18 @@ jobs:
 
 ## Related Documentation
 
+### Comprehensive Testing Analysis
+- **[Testing Guide (TESTING_GUIDE.md)](TESTING_GUIDE.md)** - Complete analysis of all 554 tests with E2E overlap recommendations
+
+### Other Testing Resources
 - [CI/CD Pipeline](CI_CD.md) - Automated testing in CI/CD
+- [Coverage Report](COVERAGE.md) - Detailed coverage workflow and metrics
 - [Architecture](ARCHITECTURE.md) - System design and testing strategy
-- [Coverage Report](COVERAGE.md) - Detailed coverage workflow
-- [Deployment Guide](DEPLOYMENT.md) - Testing in deployment
 
 ---
 
-**Last Updated**: October 24, 2025
+**Last Updated**: October 2025
 **Test Suite Version**: 1.0
-**Total Tests**: 157
-**Overall Coverage**: 52.6%
+**Total Tests**: 554
+**Overall Coverage**: 84.4%
 **Target Coverage**: 80%
