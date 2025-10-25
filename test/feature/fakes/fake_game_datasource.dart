@@ -215,9 +215,40 @@ class FakeGameDataSource implements GameRemoteDataSource {
       throw Exception('Game not found');
     }
 
-    // Simulate auto-play by marking game as won
-    final updatedGame = game.copyWith(status: GameStatus.won);
-    _games[gameId] = updatedGame as GameModel;
+    // Simulate auto-play: move robot to princess, collect/deliver flowers, mark as won
+    final princess = game.board.princess;
+    final flowersToDeliver = game.board.flowersRemaining;
+
+    final updatedRobot = game.board.robot.copyWith(
+      position: princess.position,
+      deliveredFlowers: List.generate(
+        flowersToDeliver,
+        (i) => Position(x: i, y: i),
+      ),
+    );
+
+    final updatedPrincess = princess.copyWith(
+      flowersReceived: flowersToDeliver,
+    );
+
+    final updatedBoard = game.board.copyWith(
+      robot: updatedRobot,
+      princess: updatedPrincess,
+      flowersRemaining: 0,
+      obstaclesRemaining: 0,
+    );
+
+    final updatedGame = GameModel(
+      id: game.id,
+      name: game.name,
+      board: updatedBoard,
+      status: GameStatus.won,
+      actions: game.actions,
+      createdAt: game.createdAt,
+      updatedAt: DateTime.now(),
+    );
+
+    _games[gameId] = updatedGame;
     return updatedGame;
   }
 
