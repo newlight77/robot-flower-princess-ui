@@ -256,7 +256,8 @@ class _GamePageState extends ConsumerState<GamePage> {
               dense: true,
               leading: const Icon(Icons.bolt),
               title: const Text('Optimal'),
-              subtitle: const Text('Fast & efficient - 62% success, -25% actions'),
+              subtitle:
+                  const Text('Fast & efficient - 62% success, -25% actions'),
               onTap: () => Navigator.pop(context, AutoPlayStrategy.optimal),
             ),
           ],

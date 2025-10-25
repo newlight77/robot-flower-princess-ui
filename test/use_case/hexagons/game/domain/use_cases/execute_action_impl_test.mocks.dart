@@ -8,7 +8,8 @@ import 'dart:async' as _i4;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:robot_flower_princess_front/core/error/failures.dart' as _i5;
-import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game.dart' as _i6;
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game.dart'
+    as _i6;
 import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game_board.dart'
     as _i9;
 import 'package:robot_flower_princess_front/hexagons/game/domain/ports/outbound/game_repository.dart'
@@ -161,7 +162,7 @@ class MockGameRepository extends _i1.Mock implements _i3.GameRepository {
           Invocation.method(
             #autoPlay,
             [gameId],
-          {#strategy: strategy},
+            {#strategy: strategy},
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Game>>);

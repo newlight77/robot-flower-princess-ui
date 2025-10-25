@@ -8,7 +8,8 @@ import 'dart:async' as _i4;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:robot_flower_princess_front/core/error/failures.dart' as _i5;
-import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game.dart' as _i6;
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game.dart'
+    as _i6;
 import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game_board.dart'
     as _i9;
 import 'package:robot_flower_princess_front/hexagons/game/domain/ports/outbound/game_repository.dart'

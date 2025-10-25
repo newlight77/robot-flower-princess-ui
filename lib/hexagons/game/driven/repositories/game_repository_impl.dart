@@ -94,7 +94,8 @@ class GameRepositoryImpl implements GameRepository {
     AutoPlayStrategy strategy = AutoPlayStrategy.greedy,
   }) async {
     try {
-      final gameModel = await remoteDataSource.autoPlay(gameId, strategy: strategy);
+      final gameModel =
+          await remoteDataSource.autoPlay(gameId, strategy: strategy);
       return Right(gameModel.toEntity());
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

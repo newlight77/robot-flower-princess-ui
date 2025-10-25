@@ -91,7 +91,8 @@ class GameMockDataSource {
 
   Future<GameModel> autoPlay(
     String gameId, {
-    strategy = 'greedy', // Accepts string for flexibility, but doesn't use it in mock
+    strategy =
+        'greedy', // Accepts string for flexibility, but doesn't use it in mock
   }) async {
     // Simulate network delay
     await Future.delayed(const Duration(milliseconds: 1000));
