@@ -17,7 +17,6 @@ void main() {
     late GameRepositoryImpl repository;
     late CreateGameImpl createGameUseCase;
     late AutoPlayImpl autoPlayUseCase;
-    late ExecuteActionImpl executeActionUseCase;
     late GetGamesImpl getGamesUseCase;
 
     setUp(() {
@@ -25,7 +24,6 @@ void main() {
       repository = GameRepositoryImpl(fakeDataSource);
       createGameUseCase = CreateGameImpl(repository);
       autoPlayUseCase = AutoPlayImpl(repository);
-      executeActionUseCase = ExecuteActionImpl(repository);
       getGamesUseCase = GetGamesImpl(repository);
     });
 
@@ -85,15 +83,14 @@ void main() {
 
       // Then: All flowers are delivered to princess
       expect(completedGame.board.flowersRemaining, 0);
-      expect(
-          completedGame.board.princess.flowersReceived, greaterThan(0));
+      expect(completedGame.board.princess.flowersReceived, greaterThan(0));
       expect(completedGame.board.princess.flowersReceived,
           lessThanOrEqualTo(initialFlowers));
     });
 
     test('Feature: User completes multiple games', () async {
       // Given: User creates several games
-      final gameCount = 5;
+      const gameCount = 5;
       final gameIds = <String>[];
 
       for (var i = 0; i < gameCount; i++) {

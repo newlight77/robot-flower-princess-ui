@@ -132,7 +132,9 @@ void main() {
         when(mockClient.get(any, queryParameters: anyNamed('queryParameters')))
             .thenAnswer((_) async => Response(
                   requestOptions: RequestOptions(path: '/api/games/'),
-                  data: {'games': [testGameJson, testGameJson]},
+                  data: {
+                    'games': [testGameJson, testGameJson]
+                  },
                   statusCode: 200,
                 ));
 
@@ -165,7 +167,9 @@ void main() {
 
         await datasource.getGames(limit: 5, status: 'playing');
 
-        verify(mockClient.get(any, queryParameters: anyNamed('queryParameters'))).called(1);
+        verify(mockClient.get(any,
+                queryParameters: anyNamed('queryParameters')))
+            .called(1);
       });
 
       test('should throw ServerException on error', () async {
@@ -188,12 +192,11 @@ void main() {
 
     group('getGame', () {
       test('should return GameModel for valid ID', () async {
-        when(mockClient.get(any))
-            .thenAnswer((_) async => Response(
-                  requestOptions: RequestOptions(path: '/api/games/test-123'),
-                  data: testGameJson,
-                  statusCode: 200,
-                ));
+        when(mockClient.get(any)).thenAnswer((_) async => Response(
+              requestOptions: RequestOptions(path: '/api/games/test-123'),
+              data: testGameJson,
+              statusCode: 200,
+            ));
 
         final result = await datasource.getGame('test-123');
 
@@ -202,8 +205,7 @@ void main() {
       });
 
       test('should throw NotFoundException on 404', () async {
-        when(mockClient.get(any))
-            .thenThrow(DioException(
+        when(mockClient.get(any)).thenThrow(DioException(
           requestOptions: RequestOptions(path: '/api/games/invalid'),
           response: Response(
             requestOptions: RequestOptions(path: '/api/games/invalid'),
@@ -223,7 +225,8 @@ void main() {
       test('should return updated GameModel', () async {
         when(mockClient.post(any, data: anyNamed('data')))
             .thenAnswer((_) async => Response(
-                  requestOptions: RequestOptions(path: '/api/games/test-123/action'),
+                  requestOptions:
+                      RequestOptions(path: '/api/games/test-123/action'),
                   data: testGameJson,
                   statusCode: 200,
                 ));
@@ -238,7 +241,8 @@ void main() {
         verify(mockClient.post(any, data: anyNamed('data'))).called(1);
       });
 
-      test('should throw NetworkException for 409 status (game over)', () async {
+      test('should throw NetworkException for 409 status (game over)',
+          () async {
         // Note: _handleDioError doesn't have special handling for 409,
         // so it returns NetworkException by default
         when(mockClient.post(any, data: anyNamed('data')))
@@ -285,12 +289,12 @@ void main() {
 
     group('autoPlay', () {
       test('should return completed GameModel', () async {
-        when(mockClient.post(any))
-            .thenAnswer((_) async => Response(
-                  requestOptions: RequestOptions(path: '/api/games/test-123/autoplay'),
-                  data: {...testGameJson, 'status': 'victory'},
-                  statusCode: 200,
-                ));
+        when(mockClient.post(any)).thenAnswer((_) async => Response(
+              requestOptions:
+                  RequestOptions(path: '/api/games/test-123/autoplay'),
+              data: {...testGameJson, 'status': 'victory'},
+              statusCode: 200,
+            ));
 
         final result = await datasource.autoPlay('test-123');
 
@@ -299,11 +303,11 @@ void main() {
       });
 
       test('should throw ServerException on error', () async {
-        when(mockClient.post(any))
-            .thenThrow(DioException(
+        when(mockClient.post(any)).thenThrow(DioException(
           requestOptions: RequestOptions(path: '/api/games/test-123/autoplay'),
           response: Response(
-            requestOptions: RequestOptions(path: '/api/games/test-123/autoplay'),
+            requestOptions:
+                RequestOptions(path: '/api/games/test-123/autoplay'),
             statusCode: 500,
             data: {'message': 'Server error'},
           ),
@@ -322,12 +326,12 @@ void main() {
           'history': [testGameJson, testGameJson]
         };
 
-        when(mockClient.get(any))
-            .thenAnswer((_) async => Response(
-                  requestOptions: RequestOptions(path: '/api/games/test-123/history'),
-                  data: historyData,
-                  statusCode: 200,
-                ));
+        when(mockClient.get(any)).thenAnswer((_) async => Response(
+              requestOptions:
+                  RequestOptions(path: '/api/games/test-123/history'),
+              data: historyData,
+              statusCode: 200,
+            ));
 
         final result = await datasource.getGameHistory('test-123');
 
@@ -337,8 +341,7 @@ void main() {
       });
 
       test('should throw NotFoundException on 404', () async {
-        when(mockClient.get(any))
-            .thenThrow(DioException(
+        when(mockClient.get(any)).thenThrow(DioException(
           requestOptions: RequestOptions(path: '/api/games/invalid/history'),
           response: Response(
             requestOptions: RequestOptions(path: '/api/games/invalid/history'),
@@ -369,8 +372,7 @@ void main() {
       });
 
       test('should handle receive timeout', () async {
-        when(mockClient.get(any))
-            .thenThrow(DioException(
+        when(mockClient.get(any)).thenThrow(DioException(
           requestOptions: RequestOptions(path: '/api/games/test'),
           type: DioExceptionType.receiveTimeout,
         ));

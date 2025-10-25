@@ -146,8 +146,7 @@ void main() {
       expect(finalReplay.isRight(), true);
 
       // Then: Complete workflow successful
-      final replayData =
-          finalReplay.getOrElse(() => throw Exception('Failed'));
+      final replayData = finalReplay.getOrElse(() => throw Exception('Failed'));
       expect(replayData, isNotEmpty);
     });
 
@@ -228,8 +227,7 @@ void main() {
 
       // Then: Game completes despite mistakes
       expect(finalState.isRight(), true);
-      final finalGame =
-          finalState.getOrElse(() => throw Exception('Failed'));
+      final finalGame = finalState.getOrElse(() => throw Exception('Failed'));
       expect(finalGame.status, GameStatus.won);
     });
 
@@ -488,4 +486,3 @@ void main() {
     });
   });
 }
-

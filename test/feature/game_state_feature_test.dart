@@ -53,7 +53,6 @@ void main() {
       // Given: User creates a game
       final createResult = await createGameUseCase('Rotation Test', 10);
       final game = createResult.getOrElse(() => throw Exception('Failed'));
-      final initialOrientation = game.board.robot.orientation;
 
       // When: User performs an action
       final actionResult = await executeActionUseCase(
@@ -372,7 +371,9 @@ void main() {
       expect(result.isRight(), true);
       final game = result.getOrElse(() => throw Exception('Failed'));
       expect(game.createdAt, isNotNull);
-      expect(game.createdAt.isBefore(DateTime.now().add(const Duration(seconds: 1))),
+      expect(
+          game.createdAt
+              .isBefore(DateTime.now().add(const Duration(seconds: 1))),
           true);
     });
 
@@ -381,7 +382,6 @@ void main() {
       // Given: User creates a game
       final createResult = await createGameUseCase('Alternate Test', 10);
       final game = createResult.getOrElse(() => throw Exception('Failed'));
-      final startPos = game.board.robot.position;
 
       // When: User alternates between directions
       await executeActionUseCase(game.id, ActionType.move, Direction.east);

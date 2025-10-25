@@ -52,8 +52,8 @@ void main() {
 
       // Make 3 moves
       for (var i = 0; i < 3; i++) {
-        final moveResult =
-            await executeActionUseCase(game.id, ActionType.move, Direction.east);
+        final moveResult = await executeActionUseCase(
+            game.id, ActionType.move, Direction.east);
         game = moveResult.getOrElse(() => throw Exception('Failed'));
       }
 

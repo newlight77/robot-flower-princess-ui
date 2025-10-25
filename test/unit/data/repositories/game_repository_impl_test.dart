@@ -43,7 +43,7 @@ void main() {
         obstaclesRemaining: 2,
       ),
       status: GameStatus.playing,
-      actions: [],
+      actions: const [],
       createdAt: DateTime.now(),
     );
   });
@@ -66,7 +66,8 @@ void main() {
       verify(mockDataSource.createGame('Test Game', 10)).called(1);
     });
 
-    test('should return ServerFailure when ServerException is thrown', () async {
+    test('should return ServerFailure when ServerException is thrown',
+        () async {
       when(mockDataSource.createGame(any, any))
           .thenThrow(ServerException('Server error'));
 
@@ -82,7 +83,8 @@ void main() {
       );
     });
 
-    test('should return NetworkFailure when NetworkException is thrown', () async {
+    test('should return NetworkFailure when NetworkException is thrown',
+        () async {
       when(mockDataSource.createGame(any, any))
           .thenThrow(NetworkException('Network error'));
 
@@ -98,7 +100,8 @@ void main() {
       );
     });
 
-    test('should return ValidationFailure when ValidationException is thrown', () async {
+    test('should return ValidationFailure when ValidationException is thrown',
+        () async {
       when(mockDataSource.createGame(any, any))
           .thenThrow(ValidationException('Invalid board size'));
 
@@ -148,7 +151,8 @@ void main() {
     });
 
     test('should return empty list when no games exist', () async {
-      when(mockDataSource.getGames(limit: anyNamed('limit'), status: anyNamed('status')))
+      when(mockDataSource.getGames(
+              limit: anyNamed('limit'), status: anyNamed('status')))
           .thenAnswer((_) async => []);
 
       final result = await repository.getGames();
@@ -167,11 +171,14 @@ void main() {
       final result = await repository.getGames(limit: 5, status: 'in_progress');
 
       expect(result.isRight(), true);
-      verify(mockDataSource.getGames(limit: 5, status: 'in_progress')).called(1);
+      verify(mockDataSource.getGames(limit: 5, status: 'in_progress'))
+          .called(1);
     });
 
-    test('should return ServerFailure when ServerException is thrown', () async {
-      when(mockDataSource.getGames(limit: anyNamed('limit'), status: anyNamed('status')))
+    test('should return ServerFailure when ServerException is thrown',
+        () async {
+      when(mockDataSource.getGames(
+              limit: anyNamed('limit'), status: anyNamed('status')))
           .thenThrow(ServerException('Server error'));
 
       final result = await repository.getGames();
@@ -183,8 +190,10 @@ void main() {
       );
     });
 
-    test('should return NetworkFailure when NetworkException is thrown', () async {
-      when(mockDataSource.getGames(limit: anyNamed('limit'), status: anyNamed('status')))
+    test('should return NetworkFailure when NetworkException is thrown',
+        () async {
+      when(mockDataSource.getGames(
+              limit: anyNamed('limit'), status: anyNamed('status')))
           .thenThrow(NetworkException('Network error'));
 
       final result = await repository.getGames();
@@ -197,7 +206,8 @@ void main() {
     });
 
     test('should return ServerFailure for unknown exceptions', () async {
-      when(mockDataSource.getGames(limit: anyNamed('limit'), status: anyNamed('status')))
+      when(mockDataSource.getGames(
+              limit: anyNamed('limit'), status: anyNamed('status')))
           .thenThrow(Exception('Unknown'));
 
       final result = await repository.getGames();
@@ -225,7 +235,8 @@ void main() {
       verify(mockDataSource.getGame('test-123')).called(1);
     });
 
-    test('should return NotFoundFailure when NotFoundException is thrown', () async {
+    test('should return NotFoundFailure when NotFoundException is thrown',
+        () async {
       when(mockDataSource.getGame(any))
           .thenThrow(NotFoundException('Game not found'));
 
@@ -241,7 +252,8 @@ void main() {
       );
     });
 
-    test('should return ServerFailure when ServerException is thrown', () async {
+    test('should return ServerFailure when ServerException is thrown',
+        () async {
       when(mockDataSource.getGame(any))
           .thenThrow(ServerException('Server error'));
 
@@ -254,7 +266,8 @@ void main() {
       );
     });
 
-    test('should return NetworkFailure when NetworkException is thrown', () async {
+    test('should return NetworkFailure when NetworkException is thrown',
+        () async {
       when(mockDataSource.getGame(any))
           .thenThrow(NetworkException('Network error'));
 
@@ -287,10 +300,13 @@ void main() {
         (_) => fail('Should return Right'),
         (game) => expect(game.id, testGameModel.id),
       );
-      verify(mockDataSource.executeAction('test-123', ActionType.move, Direction.north)).called(1);
+      verify(mockDataSource.executeAction(
+              'test-123', ActionType.move, Direction.north))
+          .called(1);
     });
 
-    test('should return GameOverFailure when GameOverException is thrown', () async {
+    test('should return GameOverFailure when GameOverException is thrown',
+        () async {
       when(mockDataSource.executeAction(any, any, any))
           .thenThrow(GameOverException('Game is over'));
 
@@ -310,7 +326,8 @@ void main() {
       );
     });
 
-    test('should return ValidationFailure when ValidationException is thrown', () async {
+    test('should return ValidationFailure when ValidationException is thrown',
+        () async {
       when(mockDataSource.executeAction(any, any, any))
           .thenThrow(ValidationException('Invalid action'));
 
@@ -327,7 +344,8 @@ void main() {
       );
     });
 
-    test('should return ServerFailure when ServerException is thrown', () async {
+    test('should return ServerFailure when ServerException is thrown',
+        () async {
       when(mockDataSource.executeAction(any, any, any))
           .thenThrow(ServerException('Server error'));
 
@@ -344,7 +362,8 @@ void main() {
       );
     });
 
-    test('should return NetworkFailure when NetworkException is thrown', () async {
+    test('should return NetworkFailure when NetworkException is thrown',
+        () async {
       when(mockDataSource.executeAction(any, any, any))
           .thenThrow(NetworkException('Network error'));
 
@@ -377,7 +396,8 @@ void main() {
       verify(mockDataSource.autoPlay('test-123')).called(1);
     });
 
-    test('should return ServerFailure when ServerException is thrown', () async {
+    test('should return ServerFailure when ServerException is thrown',
+        () async {
       when(mockDataSource.autoPlay(any))
           .thenThrow(ServerException('Server error'));
 
@@ -390,7 +410,8 @@ void main() {
       );
     });
 
-    test('should return NetworkFailure when NetworkException is thrown', () async {
+    test('should return NetworkFailure when NetworkException is thrown',
+        () async {
       when(mockDataSource.autoPlay(any))
           .thenThrow(NetworkException('Network error'));
 
@@ -404,8 +425,7 @@ void main() {
     });
 
     test('should return ServerFailure for unknown exceptions', () async {
-      when(mockDataSource.autoPlay(any))
-          .thenThrow(Exception('Unknown'));
+      when(mockDataSource.autoPlay(any)).thenThrow(Exception('Unknown'));
 
       final result = await repository.autoPlay('test-123');
 
@@ -422,7 +442,8 @@ void main() {
       width: 5,
       height: 5,
       cells: [],
-      robot: Robot(position: Position(x: 0, y: 0), orientation: Direction.north),
+      robot:
+          Robot(position: Position(x: 0, y: 0), orientation: Direction.north),
       princess: Princess(position: Position(x: 4, y: 4)),
       flowersRemaining: 3,
       totalObstacles: 0,
@@ -488,7 +509,8 @@ void main() {
       );
     });
 
-    test('should return empty list when history has no recognized structure', () async {
+    test('should return empty list when history has no recognized structure',
+        () async {
       final historyResponse = {
         'history': {'unknown': 'structure'}
       };
@@ -504,7 +526,8 @@ void main() {
       );
     });
 
-    test('should return NotFoundFailure when NotFoundException is thrown', () async {
+    test('should return NotFoundFailure when NotFoundException is thrown',
+        () async {
       when(mockDataSource.getGameHistory(any))
           .thenThrow(NotFoundException('Game not found'));
 
@@ -517,7 +540,8 @@ void main() {
       );
     });
 
-    test('should return ServerFailure when ServerException is thrown', () async {
+    test('should return ServerFailure when ServerException is thrown',
+        () async {
       when(mockDataSource.getGameHistory(any))
           .thenThrow(ServerException('Server error'));
 
@@ -530,7 +554,8 @@ void main() {
       );
     });
 
-    test('should return NetworkFailure when NetworkException is thrown', () async {
+    test('should return NetworkFailure when NetworkException is thrown',
+        () async {
       when(mockDataSource.getGameHistory(any))
           .thenThrow(NetworkException('Network error'));
 
@@ -566,7 +591,8 @@ void main() {
       verify(mockDataSource.getGameHistory('test-123')).called(1);
     });
 
-    test('should return NotFoundFailure when NotFoundException is thrown', () async {
+    test('should return NotFoundFailure when NotFoundException is thrown',
+        () async {
       when(mockDataSource.getGameHistory(any))
           .thenThrow(NotFoundException('Game not found'));
 
@@ -579,7 +605,8 @@ void main() {
       );
     });
 
-    test('should return ServerFailure when ServerException is thrown', () async {
+    test('should return ServerFailure when ServerException is thrown',
+        () async {
       when(mockDataSource.getGameHistory(any))
           .thenThrow(ServerException('Server error'));
 
@@ -592,7 +619,8 @@ void main() {
       );
     });
 
-    test('should return NetworkFailure when NetworkException is thrown', () async {
+    test('should return NetworkFailure when NetworkException is thrown',
+        () async {
       when(mockDataSource.getGameHistory(any))
           .thenThrow(NetworkException('Network error'));
 

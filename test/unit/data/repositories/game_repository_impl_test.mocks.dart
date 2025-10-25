@@ -11,8 +11,7 @@ import 'dart:async' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:robot_flower_princess_front/data/datasources/game_remote_datasource.dart'
     as _i2;
-import 'package:robot_flower_princess_front/data/models/game_model.dart'
-    as _i4;
+import 'package:robot_flower_princess_front/data/models/game_model.dart' as _i4;
 import 'package:robot_flower_princess_front/domain/value_objects/action_type.dart'
     as _i5;
 import 'package:robot_flower_princess_front/domain/value_objects/direction.dart'
@@ -66,8 +65,7 @@ class MockGameRemoteDataSource extends _i1.Mock
             #status: status,
           },
         ),
-        returnValue:
-            _i3.Future<List<_i4.GameModel>>.value(<_i4.GameModel>[]),
+        returnValue: _i3.Future<List<_i4.GameModel>>.value(<_i4.GameModel>[]),
       ) as _i3.Future<List<_i4.GameModel>>);
 
   @override

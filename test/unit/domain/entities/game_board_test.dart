@@ -94,7 +94,8 @@ void main() {
           width: 3,
           height: 3,
           cells: [],
-          robot: Robot(position: Position(x: 0, y: 0), orientation: Direction.north),
+          robot: Robot(
+              position: Position(x: 0, y: 0), orientation: Direction.north),
           princess: Princess(position: Position(x: 2, y: 2)),
           flowersRemaining: 0,
           totalObstacles: 0,
@@ -111,7 +112,8 @@ void main() {
           width: 1,
           height: 1,
           cells: [],
-          robot: Robot(position: Position(x: 0, y: 0), orientation: Direction.north),
+          robot: Robot(
+              position: Position(x: 0, y: 0), orientation: Direction.north),
           princess: Princess(position: Position(x: 0, y: 0)),
           flowersRemaining: 0,
           totalObstacles: 0,
@@ -130,7 +132,8 @@ void main() {
           width: 100,
           height: 100,
           cells: [],
-          robot: Robot(position: Position(x: 0, y: 0), orientation: Direction.north),
+          robot: Robot(
+              position: Position(x: 0, y: 0), orientation: Direction.north),
           princess: Princess(position: Position(x: 99, y: 99)),
           flowersRemaining: 0,
           totalObstacles: 0,
@@ -140,7 +143,8 @@ void main() {
         expect(largeBoard.width, 100);
         expect(largeBoard.height, 100);
         expect(largeBoard.isValidPosition(const Position(x: 99, y: 99)), true);
-        expect(largeBoard.isValidPosition(const Position(x: 100, y: 99)), false);
+        expect(
+            largeBoard.isValidPosition(const Position(x: 100, y: 99)), false);
       });
 
       test('should handle rectangular boards', () {
@@ -148,7 +152,8 @@ void main() {
           width: 10,
           height: 5,
           cells: [],
-          robot: Robot(position: Position(x: 0, y: 0), orientation: Direction.north),
+          robot: Robot(
+              position: Position(x: 0, y: 0), orientation: Direction.north),
           princess: Princess(position: Position(x: 9, y: 4)),
           flowersRemaining: 0,
           totalObstacles: 0,
@@ -165,7 +170,8 @@ void main() {
           width: 10,
           height: 10,
           cells: [],
-          robot: Robot(position: Position(x: 0, y: 0), orientation: Direction.north),
+          robot: Robot(
+              position: Position(x: 0, y: 0), orientation: Direction.north),
           princess: Princess(position: Position(x: 9, y: 9)),
           flowersRemaining: 50,
           totalObstacles: 0,
@@ -181,7 +187,8 @@ void main() {
           width: 5,
           height: 5,
           cells: [],
-          robot: Robot(position: Position(x: 0, y: 0), orientation: Direction.north),
+          robot: Robot(
+              position: Position(x: 0, y: 0), orientation: Direction.north),
           princess: Princess(position: Position(x: 4, y: 4)),
           flowersRemaining: 3,
           totalObstacles: 5,
@@ -199,8 +206,10 @@ void main() {
       });
 
       test('should handle extremely large coordinates', () {
-        expect(testBoard.isValidPosition(const Position(x: 1000, y: 1000)), false);
-        expect(testBoard.isValidPosition(const Position(x: 999999, y: 0)), false);
+        expect(
+            testBoard.isValidPosition(const Position(x: 1000, y: 1000)), false);
+        expect(
+            testBoard.isValidPosition(const Position(x: 999999, y: 0)), false);
       });
 
       test('should handle copyWith with no changes', () {
@@ -214,7 +223,8 @@ void main() {
       });
 
       test('should handle copyWith with all fields changed', () {
-        const newRobot = Robot(position: Position(x: 2, y: 2), orientation: Direction.south);
+        const newRobot =
+            Robot(position: Position(x: 2, y: 2), orientation: Direction.south);
         const newPrincess = Princess(position: Position(x: 3, y: 3));
 
         final copied = testBoard.copyWith(
@@ -242,14 +252,16 @@ void main() {
           width: 5,
           height: 5,
           cells: [],
-          robot: Robot(position: Position(x: 2, y: 2), orientation: Direction.north),
+          robot: Robot(
+              position: Position(x: 2, y: 2), orientation: Direction.north),
           princess: Princess(position: Position(x: 2, y: 2)),
           flowersRemaining: 0,
           totalObstacles: 0,
           obstaclesRemaining: 0,
         );
 
-        expect(samePositionBoard.robot.position, samePositionBoard.princess.position);
+        expect(samePositionBoard.robot.position,
+            samePositionBoard.princess.position);
         expect(samePositionBoard.isComplete, true);
       });
 

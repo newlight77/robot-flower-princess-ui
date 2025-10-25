@@ -42,8 +42,8 @@ class MockApiClient extends _i1.Mock implements _i4.ApiClient {
           [path],
           {#queryParameters: queryParameters},
         ),
-        returnValue: _i3.Future<_i2.Response<dynamic>>.value(
-            _FakeResponse_0<dynamic>(
+        returnValue:
+            _i3.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
           this,
           Invocation.method(
             #get,
@@ -64,8 +64,8 @@ class MockApiClient extends _i1.Mock implements _i4.ApiClient {
           [path],
           {#data: data},
         ),
-        returnValue: _i3.Future<_i2.Response<dynamic>>.value(
-            _FakeResponse_0<dynamic>(
+        returnValue:
+            _i3.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
           this,
           Invocation.method(
             #post,
@@ -86,8 +86,8 @@ class MockApiClient extends _i1.Mock implements _i4.ApiClient {
           [path],
           {#data: data},
         ),
-        returnValue: _i3.Future<_i2.Response<dynamic>>.value(
-            _FakeResponse_0<dynamic>(
+        returnValue:
+            _i3.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
           this,
           Invocation.method(
             #put,
@@ -98,14 +98,13 @@ class MockApiClient extends _i1.Mock implements _i4.ApiClient {
       ) as _i3.Future<_i2.Response<dynamic>>);
 
   @override
-  _i3.Future<_i2.Response<dynamic>> delete(String? path) =>
-      (super.noSuchMethod(
+  _i3.Future<_i2.Response<dynamic>> delete(String? path) => (super.noSuchMethod(
         Invocation.method(
           #delete,
           [path],
         ),
-        returnValue: _i3.Future<_i2.Response<dynamic>>.value(
-            _FakeResponse_0<dynamic>(
+        returnValue:
+            _i3.Future<_i2.Response<dynamic>>.value(_FakeResponse_0<dynamic>(
           this,
           Invocation.method(
             #delete,

@@ -44,8 +44,7 @@ void main() {
       expect(find.byType(ActionButton), findsNWidgets(6));
     });
 
-    testWidgets('should display auto play button',
-        (WidgetTester tester) async {
+    testWidgets('should display auto play button', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -347,8 +346,7 @@ void main() {
       expect(wrap.alignment, WrapAlignment.center);
     });
 
-    testWidgets('should display auto play button',
-        (WidgetTester tester) async {
+    testWidgets('should display auto play button', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(

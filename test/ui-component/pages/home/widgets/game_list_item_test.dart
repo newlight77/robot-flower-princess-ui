@@ -170,7 +170,8 @@ void main() {
         ),
       );
 
-      final badge = tester.widget<GameStatusBadge>(find.byType(GameStatusBadge));
+      final badge =
+          tester.widget<GameStatusBadge>(find.byType(GameStatusBadge));
       expect(badge.status, GameStatus.won);
     });
 
@@ -189,7 +190,8 @@ void main() {
         ),
       );
 
-      final badge = tester.widget<GameStatusBadge>(find.byType(GameStatusBadge));
+      final badge =
+          tester.widget<GameStatusBadge>(find.byType(GameStatusBadge));
       expect(badge.status, GameStatus.gameOver);
     });
 

@@ -165,8 +165,12 @@ void main() {
         final model = GameModel.fromJson(validJson);
 
         final after = DateTime.now();
-        expect(model.createdAt.isAfter(before.subtract(const Duration(seconds: 1))), true);
-        expect(model.createdAt.isBefore(after.add(const Duration(seconds: 1))), true);
+        expect(
+            model.createdAt
+                .isAfter(before.subtract(const Duration(seconds: 1))),
+            true);
+        expect(model.createdAt.isBefore(after.add(const Duration(seconds: 1))),
+            true);
       });
 
       test('should handle missing updatedAt as null', () {
@@ -242,7 +246,8 @@ void main() {
         );
       });
 
-      test('should throw exception with descriptive message for parsing errors', () {
+      test('should throw exception with descriptive message for parsing errors',
+          () {
         final invalidJson = {
           'id': 'test',
           'name': 'Test',
@@ -281,7 +286,7 @@ void main() {
             obstaclesRemaining: 0,
           ),
           status: GameStatus.playing,
-          actions: [],
+          actions: const [],
           createdAt: DateTime.parse('2024-01-01T10:00:00.000Z'),
           updatedAt: DateTime.parse('2024-01-01T11:00:00.000Z'),
         );
@@ -305,7 +310,7 @@ void main() {
           name: 'Test',
           board: model.board,
           status: GameStatus.playing,
-          actions: [],
+          actions: const [],
           createdAt: DateTime.parse('2024-01-01T10:00:00.000Z'),
           updatedAt: null,
         );
@@ -321,7 +326,7 @@ void main() {
           name: 'Test',
           board: model.board,
           status: GameStatus.won,
-          actions: [],
+          actions: const [],
           createdAt: DateTime.now(),
         );
 
@@ -336,7 +341,7 @@ void main() {
           name: 'Test',
           board: model.board,
           status: GameStatus.playing,
-          actions: [],
+          actions: const [],
           createdAt: DateTime.now(),
         );
 
@@ -368,7 +373,7 @@ void main() {
           name: 'Entity Test',
           board: board,
           status: GameStatus.playing,
-          actions: [],
+          actions: const [],
           createdAt: DateTime.parse('2024-01-01T10:00:00.000Z'),
           updatedAt: DateTime.parse('2024-01-01T11:00:00.000Z'),
         );
