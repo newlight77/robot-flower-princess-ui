@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:robot_flower_princess_front/domain/entities/game.dart';
-import 'package:robot_flower_princess_front/domain/entities/game_board.dart';
-import 'package:robot_flower_princess_front/domain/entities/princess.dart';
-import 'package:robot_flower_princess_front/domain/entities/robot.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/direction.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/game_status.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/position.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game_board.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/princess.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/robot.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/direction.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/game_status.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/position.dart';
 import 'package:robot_flower_princess_front/presentation/pages/home/widgets/game_list_item.dart';
 import 'package:robot_flower_princess_front/presentation/widgets/game_status_badge.dart';
 

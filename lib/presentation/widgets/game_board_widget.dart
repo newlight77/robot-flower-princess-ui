@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
-import '../../domain/entities/game_board.dart';
-import '../../domain/entities/cell.dart';
-import '../../domain/value_objects/cell_type.dart';
-import '../../domain/value_objects/position.dart';
+import '../../hexagons/game/domain/entities/game_board.dart';
+import '../../hexagons/game/domain/entities/cell.dart';
+import '../../hexagons/game/domain/value_objects/cell_type.dart';
+import '../../hexagons/game/domain/value_objects/position.dart';
 
 class GameBoardWidget extends StatelessWidget {
   final GameBoard board;

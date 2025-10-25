@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
-import '../../domain/value_objects/game_status.dart';
+import '../../hexagons/game/domain/value_objects/game_status.dart';
 
 class GameStatusBadge extends StatelessWidget {
   final GameStatus status;

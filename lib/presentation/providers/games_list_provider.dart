@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/game.dart';
+import '../../hexagons/game/domain/entities/game.dart';
 import 'game_provider.dart';
 
 class GamesListNotifier extends StateNotifier<AsyncValue<List<Game>>> {

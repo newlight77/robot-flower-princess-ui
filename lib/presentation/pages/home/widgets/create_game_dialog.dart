@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/constants/app_constants.dart';
-import '../../../../domain/entities/game.dart';
+import '../../../../hexagons/game/domain/entities/game.dart';
 import '../../../providers/game_provider.dart';
 
 class CreateGameDialog extends ConsumerStatefulWidget {

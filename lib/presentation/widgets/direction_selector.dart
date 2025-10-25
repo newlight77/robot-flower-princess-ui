@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
-import '../../domain/value_objects/direction.dart';
+import '../../hexagons/game/domain/value_objects/direction.dart';
 
 class DirectionSelector extends StatelessWidget {
   final Direction? selectedDirection;

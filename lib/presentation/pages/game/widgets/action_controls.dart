@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/value_objects/action_type.dart';
-import '../../../../domain/value_objects/direction.dart';
+import '../../../../hexagons/game/domain/value_objects/action_type.dart';
+import '../../../../hexagons/game/domain/value_objects/direction.dart';
 import '../../../widgets/action_button.dart';
 import '../../../widgets/direction_selector.dart';
 

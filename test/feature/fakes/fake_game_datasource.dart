@@ -1,15 +1,15 @@
-import 'package:robot_flower_princess_front/data/datasources/game_remote_datasource.dart';
-import 'package:robot_flower_princess_front/data/models/game_model.dart';
-import 'package:robot_flower_princess_front/domain/entities/cell.dart';
-import 'package:robot_flower_princess_front/domain/entities/game_board.dart';
-import 'package:robot_flower_princess_front/domain/entities/princess.dart';
-import 'package:robot_flower_princess_front/domain/entities/robot.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/action_type.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/auto_play_strategy.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/cell_type.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/direction.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/game_status.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/position.dart';
+import 'package:robot_flower_princess_front/hexagons/game/driven/datasources/game_remote_datasource.dart';
+import 'package:robot_flower_princess_front/hexagons/game/driven/models/game_model.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/cell.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/game_board.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/princess.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/entities/robot.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/action_type.dart';
+import 'package:robot_flower_princess_front/hexagons/autoplay/domain/value_objects/auto_play_strategy.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/cell_type.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/direction.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/game_status.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/position.dart';
 
 /// Fake implementation of GameRemoteDataSource for feature testing
 /// This simulates backend behavior without making real HTTP calls

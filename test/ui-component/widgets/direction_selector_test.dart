@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/direction.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/direction.dart';
 import 'package:robot_flower_princess_front/presentation/widgets/direction_selector.dart';
 
 void main() {

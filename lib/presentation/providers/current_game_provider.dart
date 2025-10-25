@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../domain/entities/game.dart';
-import '../../domain/value_objects/action_type.dart';
-import '../../domain/value_objects/auto_play_strategy.dart';
-import '../../domain/value_objects/direction.dart';
+import '../../hexagons/game/domain/entities/game.dart';
+import '../../hexagons/game/domain/value_objects/action_type.dart';
+import '../../hexagons/autoplay/domain/value_objects/auto_play_strategy.dart';
+import '../../hexagons/game/domain/value_objects/direction.dart';
 import 'game_provider.dart';
 
 class CurrentGameNotifier extends StateNotifier<AsyncValue<Game?>> {

@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/network/api_client.dart';
-import '../../data/datasources/game_remote_datasource.dart';
-import '../../data/repositories/game_repository_impl.dart';
-import '../../domain/ports/outbound/game_repository.dart';
-import '../../domain/use_cases/create_game_impl.dart';
-import '../../domain/use_cases/get_games_impl.dart';
-import '../../domain/use_cases/get_game_impl.dart';
-import '../../domain/use_cases/execute_action_impl.dart';
-import '../../domain/use_cases/auto_play_impl.dart';
-import '../../domain/use_cases/replay_game_impl.dart';
+import '../../hexagons/game/driven/datasources/game_remote_datasource.dart';
+import '../../hexagons/game/driven/repositories/game_repository_impl.dart';
+import '../../hexagons/game/domain/ports/outbound/game_repository.dart';
+import '../../hexagons/game/domain/use_cases/create_game_impl.dart';
+import '../../hexagons/game/domain/use_cases/get_games_impl.dart';
+import '../../hexagons/game/domain/use_cases/get_game_impl.dart';
+import '../../hexagons/game/domain/use_cases/execute_action_impl.dart';
+import '../../hexagons/autoplay/domain/use_cases/auto_play_impl.dart';
+import '../../hexagons/game/domain/use_cases/replay_game_impl.dart';
 
 // Infrastructure
 final apiClientProvider = Provider<ApiClient>((ref) => ApiClient());

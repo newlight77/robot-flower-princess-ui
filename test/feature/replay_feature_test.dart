@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:robot_flower_princess_front/data/repositories/game_repository_impl.dart';
-import 'package:robot_flower_princess_front/domain/use_cases/create_game_impl.dart';
-import 'package:robot_flower_princess_front/domain/use_cases/execute_action_impl.dart';
-import 'package:robot_flower_princess_front/domain/use_cases/replay_game_impl.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/action_type.dart';
-import 'package:robot_flower_princess_front/domain/value_objects/direction.dart';
+import 'package:robot_flower_princess_front/hexagons/game/driven/repositories/game_repository_impl.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/use_cases/create_game_impl.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/use_cases/execute_action_impl.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/use_cases/replay_game_impl.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/action_type.dart';
+import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/direction.dart';
 
 import 'fakes/fake_game_datasource.dart';
 
