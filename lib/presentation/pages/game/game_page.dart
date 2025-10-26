@@ -264,7 +264,8 @@ class _GamePageState extends ConsumerState<GamePage> {
               dense: true,
               leading: const Icon(Icons.psychology),
               title: const Text('ML'),
-              subtitle: const Text('Machine learning powered - Neural network'),
+              subtitle:
+                  const Text('Hybrid ML/heuristic - Learns from patterns'),
               onTap: () => Navigator.pop(context, AutoPlayStrategy.ml),
             ),
           ],

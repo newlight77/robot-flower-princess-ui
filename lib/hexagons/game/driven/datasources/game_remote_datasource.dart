@@ -112,9 +112,14 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
       }
 
       Logger.info('Final data length: ${data.length}');
-      return data
-          .map((json) => GameModel.fromJson(json as Map<String, dynamic>))
-          .toList();
+      return data.map((json) {
+        final jsonMap = json as Map<String, dynamic>;
+        // Handle wrapped game format in array items
+        final gameJson = jsonMap['game'] is Map<String, dynamic>
+            ? jsonMap['game'] as Map<String, dynamic>
+            : jsonMap;
+        return GameModel.fromJson(gameJson);
+      }).toList();
     } on DioException catch (e) {
       throw _handleDioError(e);
     }
@@ -124,7 +129,14 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
   Future<GameModel> getGame(String gameId) async {
     try {
       final response = await client.get(ApiEndpoints.game(gameId));
-      return GameModel.fromJson(response.data as Map<String, dynamic>);
+
+      // Handle wrapped response format
+      final responseMap = response.data as Map<String, dynamic>;
+      final gameJson = responseMap['game'] is Map<String, dynamic>
+          ? responseMap['game'] as Map<String, dynamic>
+          : responseMap;
+
+      return GameModel.fromJson(gameJson);
     } on DioException catch (e) {
       throw _handleDioError(e);
     }
@@ -144,7 +156,14 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
           'direction': direction.name,
         },
       );
-      return GameModel.fromJson(response.data as Map<String, dynamic>);
+
+      // Handle wrapped response format
+      final responseMap = response.data as Map<String, dynamic>;
+      final gameJson = responseMap['game'] is Map<String, dynamic>
+          ? responseMap['game'] as Map<String, dynamic>
+          : responseMap;
+
+      return GameModel.fromJson(gameJson);
     } on DioException catch (e) {
       throw _handleDioError(e);
     }
@@ -166,7 +185,14 @@ class GameRemoteDataSourceImpl implements GameRemoteDataSource {
         ApiEndpoints.autoPlay(gameId),
         queryParameters: queryParams.isNotEmpty ? queryParams : null,
       );
-      return GameModel.fromJson(response.data as Map<String, dynamic>);
+
+      // Handle wrapped response format
+      final responseMap = response.data as Map<String, dynamic>;
+      final gameJson = responseMap['game'] is Map<String, dynamic>
+          ? responseMap['game'] as Map<String, dynamic>
+          : responseMap;
+
+      return GameModel.fromJson(gameJson);
     } on DioException catch (e) {
       throw _handleDioError(e);
     }

@@ -52,6 +52,16 @@ class GameModel extends Game {
         if (json['obstacles'] != null) {
           boardData['obstacles'] = json['obstacles'];
         }
+        // Also merge rows/cols/grid if they're at root level
+        if (json['rows'] != null && boardData['rows'] == null) {
+          boardData['rows'] = json['rows'];
+        }
+        if (json['cols'] != null && boardData['cols'] == null) {
+          boardData['cols'] = json['cols'];
+        }
+        if (json['grid'] != null && boardData['grid'] == null) {
+          boardData['grid'] = json['grid'];
+        }
       } else {
         // New format has board data at root level
         boardData = json;

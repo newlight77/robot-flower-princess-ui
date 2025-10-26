@@ -9,8 +9,8 @@ enum AutoPlayStrategy {
   /// Uses A* pathfinding and multi-step planning.
   optimal,
 
-  /// ML strategy: Machine learning powered.
-  /// Uses trained neural network model for decision making.
+  /// ML strategy: Hybrid ML/heuristic approach.
+  /// Uses ML Player service for predictions. Learns from game patterns.
   ml;
 
   /// Converts the strategy to API query parameter format
@@ -32,7 +32,7 @@ enum AutoPlayStrategy {
       case AutoPlayStrategy.optimal:
         return 'Fast & efficient (62% success, -25% actions)';
       case AutoPlayStrategy.ml:
-        return 'ML powered (Neural network model)';
+        return 'Hybrid ML/heuristic - Learns from patterns';
     }
   }
 

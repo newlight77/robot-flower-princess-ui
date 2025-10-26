@@ -38,7 +38,7 @@ class FakeGameDataSource implements GameRemoteDataSource {
 
     final princess = Princess(
       position: Position(x: boardSize - 1, y: boardSize - 1),
-      flowersReceived: 0,
+      flowersReceivedList: const [],
     );
 
     // Create some flowers and obstacles
@@ -232,7 +232,10 @@ class FakeGameDataSource implements GameRemoteDataSource {
     );
 
     final updatedPrincess = princess.copyWith(
-      flowersReceived: flowersToDeliver,
+      flowersReceivedList: List.generate(
+        flowersToDeliver,
+        (i) => Position(x: i, y: i),
+      ),
     );
 
     final updatedBoard = game.board.copyWith(

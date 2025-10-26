@@ -9,6 +9,7 @@ import 'package:robot_flower_princess_front/hexagons/game/domain/entities/robot.
 import 'package:robot_flower_princess_front/hexagons/game/domain/entities/princess.dart';
 import 'package:robot_flower_princess_front/hexagons/game/domain/ports/outbound/game_repository.dart';
 import 'package:robot_flower_princess_front/hexagons/autoplay/domain/use_cases/auto_play_impl.dart';
+import 'package:robot_flower_princess_front/hexagons/autoplay/domain/value_objects/auto_play_strategy.dart';
 import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/game_status.dart';
 import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/position.dart';
 import 'package:robot_flower_princess_front/hexagons/game/domain/value_objects/direction.dart';
@@ -64,7 +65,16 @@ void main() {
           Position(x: 5, y: 5),
         ],
       ),
-      princess: Princess(position: Position(x: 9, y: 9), flowersReceived: 5),
+      princess: Princess(
+        position: Position(x: 9, y: 9),
+        flowersReceivedList: [
+          Position(x: 1, y: 1),
+          Position(x: 2, y: 2),
+          Position(x: 3, y: 3),
+          Position(x: 4, y: 4),
+          Position(x: 5, y: 5),
+        ],
+      ),
       flowersRemaining: 0,
       totalObstacles: 3,
       obstaclesRemaining: 0,
@@ -237,6 +247,70 @@ void main() {
         (_) => fail('Should have returned a game'),
         (game) => expect(game.id, 'game-123'),
       );
+    });
+
+    group('Strategy Parameter', () {
+      test('should use greedy strategy by default', () async {
+        when(mockRepository.autoPlay('game-123',
+                strategy: AutoPlayStrategy.greedy))
+            .thenAnswer((_) async => Right(testGameAfter));
+
+        await useCase('game-123');
+
+        verify(mockRepository.autoPlay('game-123',
+            strategy: AutoPlayStrategy.greedy));
+      });
+
+      test('should call repository with optimal strategy when specified',
+          () async {
+        when(mockRepository.autoPlay('game-123',
+                strategy: AutoPlayStrategy.optimal))
+            .thenAnswer((_) async => Right(testGameAfter));
+
+        await useCase('game-123', strategy: AutoPlayStrategy.optimal);
+
+        verify(mockRepository.autoPlay('game-123',
+            strategy: AutoPlayStrategy.optimal));
+      });
+
+      test('should call repository with ml strategy when specified', () async {
+        when(mockRepository.autoPlay('game-123', strategy: AutoPlayStrategy.ml))
+            .thenAnswer((_) async => Right(testGameAfter));
+
+        await useCase('game-123', strategy: AutoPlayStrategy.ml);
+
+        verify(
+            mockRepository.autoPlay('game-123', strategy: AutoPlayStrategy.ml));
+      });
+
+      test('should handle all strategies successfully', () async {
+        final strategies = [
+          AutoPlayStrategy.greedy,
+          AutoPlayStrategy.optimal,
+          AutoPlayStrategy.ml,
+        ];
+
+        for (final strategy in strategies) {
+          when(mockRepository.autoPlay('game-123', strategy: strategy))
+              .thenAnswer((_) async => Right(testGameAfter));
+
+          final result = await useCase('game-123', strategy: strategy);
+
+          expect(result.isRight(), true);
+          verify(mockRepository.autoPlay('game-123', strategy: strategy));
+        }
+      });
+
+      test('should pass strategy parameter through on failure', () async {
+        when(mockRepository.autoPlay('game-123', strategy: AutoPlayStrategy.ml))
+            .thenAnswer((_) async => const Left(ServerFailure('Server error')));
+
+        final result = await useCase('game-123', strategy: AutoPlayStrategy.ml);
+
+        expect(result.isLeft(), true);
+        verify(
+            mockRepository.autoPlay('game-123', strategy: AutoPlayStrategy.ml));
+      });
     });
   });
 }

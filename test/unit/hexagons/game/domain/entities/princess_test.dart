@@ -7,13 +7,18 @@ void main() {
     const testPosition = Position(x: 5, y: 5);
     const testPrincess = Princess(
       position: testPosition,
-      flowersReceived: 3,
+      flowersReceivedList: [
+        Position(x: 1, y: 1),
+        Position(x: 2, y: 2),
+        Position(x: 3, y: 3),
+      ],
       mood: PrincessMood.happy,
     );
 
     test('should create princess with all fields', () {
       expect(testPrincess.position, testPosition);
-      expect(testPrincess.flowersReceived, 3);
+      expect(testPrincess.flowersReceived, 3); // Backward compatibility getter
+      expect(testPrincess.flowersReceivedList.length, 3);
       expect(testPrincess.mood, PrincessMood.happy);
     });
 
@@ -26,26 +31,36 @@ void main() {
 
     test('should create copy with modified fields', () {
       const newPosition = Position(x: 7, y: 8);
+      final newFlowersList = List.generate(10, (i) => Position(x: i, y: i));
       final copiedPrincess = testPrincess.copyWith(
         position: newPosition,
-        flowersReceived: 10,
+        flowersReceivedList: newFlowersList,
         mood: PrincessMood.sad,
       );
 
       expect(copiedPrincess.position, newPosition);
       expect(copiedPrincess.flowersReceived, 10);
+      expect(copiedPrincess.flowersReceivedList.length, 10);
       expect(copiedPrincess.mood, PrincessMood.sad);
     });
 
     test('should maintain equality for same values', () {
       const princess1 = Princess(
         position: Position(x: 5, y: 5),
-        flowersReceived: 3,
+        flowersReceivedList: [
+          Position(x: 1, y: 1),
+          Position(x: 2, y: 2),
+          Position(x: 3, y: 3)
+        ],
         mood: PrincessMood.happy,
       );
       const princess2 = Princess(
         position: Position(x: 5, y: 5),
-        flowersReceived: 3,
+        flowersReceivedList: [
+          Position(x: 1, y: 1),
+          Position(x: 2, y: 2),
+          Position(x: 3, y: 3)
+        ],
         mood: PrincessMood.happy,
       );
 
@@ -56,12 +71,22 @@ void main() {
     test('should not be equal for different values', () {
       const princess1 = Princess(
         position: testPosition,
-        flowersReceived: 3,
+        flowersReceivedList: [
+          Position(x: 1, y: 1),
+          Position(x: 2, y: 2),
+          Position(x: 3, y: 3)
+        ],
         mood: PrincessMood.happy,
       );
       const princess2 = Princess(
         position: testPosition,
-        flowersReceived: 5,
+        flowersReceivedList: [
+          Position(x: 1, y: 1),
+          Position(x: 2, y: 2),
+          Position(x: 3, y: 3),
+          Position(x: 4, y: 4),
+          Position(x: 5, y: 5)
+        ],
         mood: PrincessMood.happy,
       );
 
@@ -74,11 +99,34 @@ void main() {
       expect(json['position'], isA<Map<String, dynamic>>());
       expect(json['position']['x'], 5);
       expect(json['position']['y'], 5);
-      expect(json['flowers_received'], 3);
+      expect(json['flowers_received'], isA<List>());
+      expect(json['flowers_received'].length, 3);
       expect(json['mood'], 'happy');
     });
 
-    test('should deserialize from JSON with all fields', () {
+    test('should deserialize from JSON with list format (new backend format)',
+        () {
+      final json = {
+        'position': {'row': 8, 'col': 9},
+        'flowers_received': [
+          {'row': 1, 'col': 1},
+          {'row': 2, 'col': 2},
+        ],
+        'mood': 'angry',
+      };
+
+      final princess = Princess.fromJson(json);
+
+      expect(princess.position.x, 9); // col maps to x
+      expect(princess.position.y, 8); // row maps to y
+      expect(princess.flowersReceived, 2);
+      expect(princess.flowersReceivedList.length, 2);
+      expect(princess.mood, PrincessMood.angry);
+    });
+
+    test(
+        'should deserialize from JSON with integer format (backward compatibility)',
+        () {
       final json = {
         'position': {'x': 8, 'y': 9},
         'flowers_received': 7,

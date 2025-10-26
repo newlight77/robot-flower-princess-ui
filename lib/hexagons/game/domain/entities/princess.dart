@@ -23,34 +23,37 @@ enum PrincessMood {
 
 class Princess extends Equatable {
   final Position position;
-  final int flowersReceived;
+  final List<Position> flowersReceivedList;
   final PrincessMood mood;
 
   const Princess({
     required this.position,
-    this.flowersReceived = 0,
+    this.flowersReceivedList = const [],
     this.mood = PrincessMood.neutral,
   });
 
+  // Backward compatibility getter
+  int get flowersReceived => flowersReceivedList.length;
+
   Princess copyWith({
     Position? position,
-    int? flowersReceived,
+    List<Position>? flowersReceivedList,
     PrincessMood? mood,
   }) {
     return Princess(
       position: position ?? this.position,
-      flowersReceived: flowersReceived ?? this.flowersReceived,
+      flowersReceivedList: flowersReceivedList ?? this.flowersReceivedList,
       mood: mood ?? this.mood,
     );
   }
 
   @override
-  List<Object> get props => [position, flowersReceived, mood];
+  List<Object> get props => [position, flowersReceivedList, mood];
 
   Map<String, dynamic> toJson() {
     return {
       'position': position.toJson(),
-      'flowers_received': flowersReceived,
+      'flowers_received': flowersReceivedList.map((p) => p.toJson()).toList(),
       'mood': mood.name,
     };
   }
@@ -59,7 +62,34 @@ class Princess extends Equatable {
     try {
       final position =
           Position.fromJson(json['position'] as Map<String, dynamic>);
-      final flowersReceived = json['flowers_received'] as int? ?? 0;
+
+      // Handle both list and integer formats for backward compatibility
+      List<Position> flowersReceivedList = [];
+      final flowersReceivedData = json['flowers_received'];
+
+      if (flowersReceivedData != null) {
+        if (flowersReceivedData is List) {
+          // New format: list of positions
+          for (var item in flowersReceivedData) {
+            if (item is Map<String, dynamic>) {
+              // If item has 'row' and 'col', it's a position directly
+              if (item.containsKey('row') && item.containsKey('col')) {
+                flowersReceivedList.add(Position.fromJson(item));
+              }
+              // If item has 'position' nested, extract it
+              else if (item.containsKey('position')) {
+                flowersReceivedList.add(Position.fromJson(
+                    item['position'] as Map<String, dynamic>));
+              }
+            }
+          }
+        } else if (flowersReceivedData is int) {
+          // Old format: integer count - create dummy positions
+          for (int i = 0; i < flowersReceivedData; i++) {
+            flowersReceivedList.add(const Position(x: -1, y: -1));
+          }
+        }
+      }
 
       PrincessMood mood;
       final moodString = json['mood'] as String? ?? 'neutral';
@@ -81,7 +111,7 @@ class Princess extends Equatable {
 
       return Princess(
         position: position,
-        flowersReceived: flowersReceived,
+        flowersReceivedList: flowersReceivedList,
         mood: mood,
       );
     } catch (e) {

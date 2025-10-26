@@ -6,6 +6,30 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "summary": "Health Check",
+        "description": "Health check endpoint.\n\nReturns system status and basic API information.\nUsed by monitoring tools and load balancers.",
+        "operationId": "health_check_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Health Check Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/games/": {
       "post": {
         "tags": [
@@ -30,7 +54,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GameStateResponse"
+                  "$ref": "#/components/schemas/CreateGameResponse"
                 }
               }
             }
@@ -125,50 +149,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GameStateResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/games/{game_id}/history": {
-      "get": {
-        "tags": [
-          "games"
-        ],
-        "summary": "Get Game History",
-        "description": "Get the history of a game.",
-        "operationId": "get_game_history_api_games__game_id__history_get",
-        "parameters": [
-          {
-            "name": "game_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "title": "Game Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GameHistoryResponse"
+                  "$ref": "#/components/schemas/GetGameResponse"
                 }
               }
             }
@@ -289,7 +270,7 @@
           "aiplayer"
         ],
         "summary": "Autoplay",
-        "description": "Let AI solve the game automatically.\n\nTwo strategies available:\n- **greedy** (default): Safe & reliable. 75% success rate. Checks safety before picking flowers.\n- **optimal**: Fast & efficient. 62% success rate, but 25% fewer actions. Uses A* pathfinding and multi-step planning.",
+        "description": "Let AI solve the game automatically.\n\nThree strategies available:\n- **greedy** (default): Safe & reliable. 75% success rate. Checks safety before picking flowers.\n- **optimal**: Fast & efficient. 62% success rate, but 25% fewer actions. Uses A* pathfinding and multi-step planning.\n- **ml**: Hybrid ML/heuristic approach. Uses ML Player service for predictions. Learns from game patterns.",
         "operationId": "autoplay_api_games__game_id__autoplay_post",
         "parameters": [
           {
@@ -308,14 +289,15 @@
             "schema": {
               "enum": [
                 "greedy",
-                "optimal"
+                "optimal",
+                "ml"
               ],
               "type": "string",
-              "description": "AI strategy: 'greedy' (safe, 75% success) or 'optimal' (fast, 62% success, -25% actions)",
+              "description": "AI strategy: 'greedy' (safe, 75% success), 'optimal' (fast, 62% success, -25% actions), or 'ml' (hybrid ML/heuristic)",
               "default": "greedy",
               "title": "Strategy"
             },
-            "description": "AI strategy: 'greedy' (safe, 75% success) or 'optimal' (fast, 62% success, -25% actions)"
+            "description": "AI strategy: 'greedy' (safe, 75% success), 'optimal' (fast, 62% success, -25% actions), or 'ml' (hybrid ML/heuristic)"
           }
         ],
         "responses": {
@@ -335,27 +317,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/health": {
-      "get": {
-        "summary": "Health Check",
-        "description": "Health check endpoint.",
-        "operationId": "health_check_health_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": true,
-                  "type": "object",
-                  "title": "Response Health Check Health Get"
                 }
               }
             }
@@ -395,38 +356,10 @@
             "type": "boolean",
             "title": "Success"
           },
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "status": {
-            "type": "string",
-            "title": "Status"
-          },
-          "board": {
+          "game": {
             "additionalProperties": true,
             "type": "object",
-            "title": "Board"
-          },
-          "robot": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Robot"
-          },
-          "princess": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Princess"
-          },
-          "obstacles": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Obstacles"
-          },
-          "flowers": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Flowers"
+            "title": "Game"
           },
           "message": {
             "type": "string",
@@ -436,13 +369,7 @@
         "type": "object",
         "required": [
           "success",
-          "id",
-          "status",
-          "board",
-          "robot",
-          "princess",
-          "obstacles",
-          "flowers",
+          "game",
           "message"
         ],
         "title": "ActionResponse"
@@ -489,151 +416,31 @@
         ],
         "title": "CreateGameRequest"
       },
-      "GameHistoryResponse": {
+      "CreateGameResponse": {
         "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "history": {
+          "game": {
             "additionalProperties": true,
             "type": "object",
-            "title": "History"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "history"
-        ],
-        "title": "GameHistoryResponse"
-      },
-      "GameStateResponse": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "status": {
-            "type": "string",
-            "title": "Status"
+            "title": "Game"
           },
           "message": {
             "type": "string",
             "title": "Message",
             "default": ""
-          },
-          "board": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Board"
-          },
-          "robot": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Robot"
-          },
-          "princess": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Princess"
-          },
-          "obstacles": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Obstacles"
-          },
-          "flowers": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Flowers"
-          },
-          "created_at": {
-            "type": "string",
-            "title": "Created At"
-          },
-          "updated_at": {
-            "type": "string",
-            "title": "Updated At"
           }
         },
         "type": "object",
         "required": [
-          "id",
-          "status",
-          "board",
-          "robot",
-          "princess",
-          "obstacles",
-          "flowers",
-          "created_at",
-          "updated_at"
+          "game"
         ],
-        "title": "GameStateResponse"
-      },
-      "GameSummary": {
-        "properties": {
-          "id": {
-            "type": "string",
-            "title": "Id"
-          },
-          "board": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Board"
-          },
-          "robot": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Robot"
-          },
-          "princess": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Princess"
-          },
-          "obstacles": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Obstacles"
-          },
-          "flowers": {
-            "additionalProperties": true,
-            "type": "object",
-            "title": "Flowers"
-          },
-          "status": {
-            "type": "string",
-            "title": "Status"
-          },
-          "created_at": {
-            "type": "string",
-            "title": "Created At"
-          },
-          "updated_at": {
-            "type": "string",
-            "title": "Updated At"
-          }
-        },
-        "type": "object",
-        "required": [
-          "id",
-          "board",
-          "robot",
-          "princess",
-          "obstacles",
-          "flowers",
-          "status",
-          "created_at",
-          "updated_at"
-        ],
-        "title": "GameSummary"
+        "title": "CreateGameResponse"
       },
       "GamesResponse": {
         "properties": {
           "games": {
             "items": {
-              "$ref": "#/components/schemas/GameSummary"
+              "additionalProperties": true,
+              "type": "object"
             },
             "type": "array",
             "title": "Games"
@@ -641,6 +448,11 @@
           "total": {
             "type": "integer",
             "title": "Total"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "default": ""
           }
         },
         "type": "object",
@@ -649,6 +461,25 @@
           "total"
         ],
         "title": "GamesResponse"
+      },
+      "GetGameResponse": {
+        "properties": {
+          "game": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Game"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "game"
+        ],
+        "title": "GetGameResponse"
       },
       "HTTPValidationError": {
         "properties": {

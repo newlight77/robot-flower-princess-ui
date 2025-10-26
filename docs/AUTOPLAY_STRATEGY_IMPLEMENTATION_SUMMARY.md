@@ -1,15 +1,16 @@
 # AutoPlay Strategy Implementation Summary
 
 ## Overview
-Successfully implemented the autoplay strategy feature to allow users to choose between two AI strategies:
+Successfully implemented the autoplay strategy feature to allow users to choose between three AI strategies:
 - **Greedy** (default): Safe & reliable - 75% success rate
 - **Optimal**: Fast & efficient - 62% success rate, -25% actions
+- **ML**: Hybrid ML/heuristic approach - Uses ML Player service, learns from patterns
 
 ## ✅ Completed Work
 
 ### 1. Domain Layer
-- ✅ Created `AutoPlayStrategy` enum (`lib/domain/value_objects/auto_play_strategy.dart`)
-  - Includes `greedy` and `optimal` strategies
+- ✅ Created `AutoPlayStrategy` enum (`lib/hexagons/autoplay/domain/value_objects/auto_play_strategy.dart`)
+  - Includes `greedy`, `optimal`, and `ml` strategies
   - Has helper methods: `toApiParam()`, `fromString()`, `description`, `successRate`
 - ✅ Updated `AutoPlayUseCase` interface to accept optional strategy parameter
 - ✅ Updated `AutoPlayImpl` to pass strategy to repository
@@ -31,9 +32,10 @@ Successfully implemented the autoplay strategy feature to allow users to choose 
 ### 4. Presentation Layer
 - ✅ Updated `CurrentGameNotifier` to accept strategy parameter in `autoPlay()` method
 - ✅ Updated `GamePage` with strategy selection dialog
-  - Shows two options with icons and descriptions
-  - Greedy: 🛡️ icon
-  - Optimal: ⚡ icon
+  - Shows three options with icons and descriptions
+  - Greedy: 🛡️ icon (Icons.security)
+  - Optimal: ⚡ icon (Icons.bolt)
+  - ML: 🧠 icon (Icons.psychology)
 - ✅ Imported `AutoPlayStrategy` in GamePage
 
 ### 5. Test Mocks - Partially Complete
@@ -112,16 +114,18 @@ test('should call repository with optimal strategy when specified', () async {
 ```
 POST /api/games/{game_id}/autoplay
 POST /api/games/{game_id}/autoplay?strategy=optimal
+POST /api/games/{game_id}/autoplay?strategy=ml
 ```
 
 ### Query Parameters
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
-| strategy | string | No | greedy | AI strategy: `greedy` or `optimal` |
+| strategy | string | No | greedy | AI strategy: `greedy`, `optimal`, or `ml` |
 
 ### Strategies
 - **greedy** (default): Safe & reliable. 75% success rate. Checks safety before picking flowers.
 - **optimal**: Fast & efficient. 62% success rate, but 25% fewer actions. Uses A* pathfinding and multi-step planning.
+- **ml**: Hybrid ML/heuristic approach. Uses ML Player service for predictions. Learns from game patterns.
 
 ## Files Changed
 
@@ -156,4 +160,3 @@ POST /api/games/{game_id}/autoplay?strategy=optimal
 3. Update API documentation
 4. Run full test suite to ensure everything works
 5. Test manually in the UI to ensure dialog works correctly
-

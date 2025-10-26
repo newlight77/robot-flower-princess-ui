@@ -27,7 +27,7 @@ void main() {
 
       const princess = Princess(
         position: Position(x: 4, y: 4),
-        flowersReceived: 0,
+        flowersReceivedList: [],
       );
 
       final cells = <Cell>[

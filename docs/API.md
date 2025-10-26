@@ -51,6 +51,16 @@ Response: Updated Game object
 ### Auto Play
 ```http
 POST /api/games/{gameId}/autoplay
+POST /api/games/{gameId}/autoplay?strategy=optimal
+POST /api/games/{gameId}/autoplay?strategy=ml
+
+Query Parameters:
+- strategy (optional): AI strategy - 'greedy' (default), 'optimal', or 'ml'
+
+Strategies:
+- greedy (default): Safe & reliable. 75% success rate. Checks safety before picking flowers.
+- optimal: Fast & efficient. 62% success rate, but 25% fewer actions. Uses A* pathfinding and multi-step planning.
+- ml: Hybrid ML/heuristic approach. Uses ML Player service for predictions. Learns from game patterns.
 
 Response: Updated Game object
 ```
