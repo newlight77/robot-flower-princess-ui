@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../configurator/constants/app_constants.dart';
@@ -22,10 +23,72 @@ class _CreateGameDialogState extends ConsumerState<CreateGameDialog> {
   int _boardSize = AppConstants.defaultBoardSize;
   bool _isLoading = false;
 
+  // List of fun words for random game names
+  static const _nameWords = [
+    'Adventure', 'Quest', 'Journey', 'Mission', 'Challenge',
+    'Expedition', 'Voyage', 'Trek', 'Odyssey', 'Safari',
+    'Discovery', 'Exploration', 'Campaign', 'Venture', 'Pursuit',
+    'Hunt', 'Search', 'Trial', 'Test', 'Conquest',
+    'Victory', 'Glory', 'Legend', 'Epic', 'Saga',
+    'Tale', 'Story', 'Chronicle', 'Riddle', 'Puzzle',
+    'Mystery', 'Secret', 'Wonder', 'Marvel', 'Treasure',
+    'Garden', 'Paradise', 'Kingdom', 'Realm', 'Empire',
+    'Fantasy', 'Dream', 'Magic', 'Enchant', 'Mystic',
+    'Phoenix', 'Dragon', 'Unicorn', 'Griffin', 'Pegasus',
+    'Warrior', 'Hero', 'Champion', 'Guardian', 'Sentinel',
+    'Knight', 'Ranger', 'Scout', 'Explorer', 'Wanderer',
+    'Seeker', 'Voyager', 'Pathfinder', 'Trailblazer', 'Pioneer',
+    'Horizon', 'Sunrise', 'Sunset', 'Twilight', 'Dawn',
+    'Eclipse', 'Comet', 'Meteor', 'Nova', 'Nebula',
+    'Galaxy', 'Cosmos', 'Universe', 'Infinity', 'Eternal',
+    'Thunder', 'Lightning', 'Storm', 'Tempest', 'Whirlwind',
+    'Blaze', 'Flame', 'Inferno', 'Spark', 'Ember',
+    'Crystal', 'Diamond', 'Ruby', 'Sapphire', 'Emerald',
+    'Amber', 'Jade', 'Pearl', 'Opal', 'Topaz',
+    'Silver', 'Golden', 'Platinum', 'Bronze', 'Copper',
+    'Shadow', 'Phantom', 'Spirit', 'Ghost', 'Specter',
+    'Angel', 'Demon', 'Titan', 'Giant', 'Colossus',
+    'Mountain', 'Valley', 'River', 'Ocean', 'Sea',
+    'Forest', 'Desert', 'Tundra', 'Jungle', 'Meadow',
+    'Castle', 'Fortress', 'Tower', 'Citadel', 'Bastion',
+    'Palace', 'Temple', 'Shrine', 'Sanctuary', 'Haven',
+    'Crown', 'Throne', 'Scepter', 'Shield', 'Sword',
+    'Arrow', 'Spear', 'Axe', 'Hammer', 'Dagger',
+    'Frost', 'Ice', 'Snow', 'Winter', 'Arctic',
+    'Summer', 'Spring', 'Autumn', 'Season', 'Solstice',
+    'Moon', 'Star', 'Sun', 'Sky', 'Cloud',
+    'Rain', 'Wind', 'Mist', 'Fog', 'Haze',
+    'Light', 'Dark', 'Bright', 'Glow', 'Shine',
+    'Royal', 'Noble', 'Grand', 'Majestic', 'Supreme',
+    'Ancient', 'Mystic', 'Sacred', 'Divine', 'Blessed',
+    'Wild', 'Savage', 'Fierce', 'Bold', 'Brave',
+    'Swift', 'Quick', 'Rapid', 'Fast', 'Nimble',
+    'Silent', 'Hidden', 'Secret', 'Lost', 'Forgotten',
+    'Rising', 'Falling', 'Soaring', 'Flying', 'Gliding',
+    'Eternal', 'Timeless', 'Endless', 'Boundless', 'Limitless',
+    'Crimson', 'Azure', 'Violet', 'Scarlet', 'Indigo',
+    'Obsidian', 'Onyx', 'Quartz', 'Marble', 'Granite',
+    'Raven', 'Eagle', 'Hawk', 'Falcon', 'Owl',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = _generateGameName(_boardSize);
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
     super.dispose();
+  }
+
+  String _generateGameName(int boardSize) {
+    final random = Random();
+    final word1 = _nameWords[random.nextInt(_nameWords.length)];
+    final word2 = _nameWords[random.nextInt(_nameWords.length)];
+    final word3 = _nameWords[random.nextInt(_nameWords.length)];
+    return '${boardSize}x$boardSize-$word1-$word2-$word3';
   }
 
   @override
@@ -39,10 +102,19 @@ class _CreateGameDialogState extends ConsumerState<CreateGameDialog> {
           children: [
             TextFormField(
               controller: _nameController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Game Name',
                 hintText: 'Enter a name for your game',
-                prefixIcon: Icon(Icons.games),
+                prefixIcon: const Icon(Icons.games),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.refresh, size: 20),
+                  tooltip: 'Generate new name',
+                  onPressed: () {
+                    setState(() {
+                      _nameController.text = _generateGameName(_boardSize);
+                    });
+                  },
+                ),
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -68,6 +140,8 @@ class _CreateGameDialogState extends ConsumerState<CreateGameDialog> {
               onChanged: (value) {
                 setState(() {
                   _boardSize = value.toInt();
+                  // Update the name with new board size
+                  _nameController.text = _generateGameName(_boardSize);
                 });
               },
             ),
