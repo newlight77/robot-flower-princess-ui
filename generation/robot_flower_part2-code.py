@@ -59,33 +59,33 @@ class Position extends Equatable {
 ''',
 
         'lib/domain/value_objects/direction.dart': '''enum Direction {
-  north,
-  east,
-  south,
-  west;
+  NORTH,
+  EAST,
+  SOUTH,
+  WEST;
 
   String get displayName {
     switch (this) {
-      case Direction.north:
-        return '⬆️ North';
-      case Direction.east:
-        return '➡️ East';
-      case Direction.south:
-        return '⬇️ South';
-      case Direction.west:
-        return '⬅️ West';
+      case Direction.NORTH:
+        return '⬆️ NORTH';
+      case Direction.EAST:
+        return '➡️ EAST';
+      case Direction.SOUTH:
+        return '⬇️ SOUTH';
+      case Direction.WEST:
+        return '⬅️ WEST';
     }
   }
 
   String get icon {
     switch (this) {
-      case Direction.north:
+      case Direction.NORTH:
         return '⬆️';
-      case Direction.east:
+      case Direction.EAST:
         return '➡️';
-      case Direction.south:
+      case Direction.SOUTH:
         return '⬇️';
-      case Direction.west:
+      case Direction.WEST:
         return '⬅️';
     }
   }

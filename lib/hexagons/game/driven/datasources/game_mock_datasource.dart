@@ -129,7 +129,7 @@ class GameMockDataSource {
     final cells = <Cell>[];
     const robot = Robot(
       position: Position(x: 0, y: 0),
-      orientation: Direction.north,
+      orientation: Direction.NORTH,
     );
 
     // Place princess at the opposite corner

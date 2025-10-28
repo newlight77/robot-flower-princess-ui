@@ -295,14 +295,14 @@ void main() {
 
       // When: User executes a complex movement pattern
       final pattern = [
-        (ActionType.move, Direction.east),
-        (ActionType.move, Direction.east),
-        (ActionType.move, Direction.south),
-        (ActionType.move, Direction.south),
-        (ActionType.move, Direction.west),
-        (ActionType.move, Direction.north),
-        (ActionType.move, Direction.east),
-        (ActionType.move, Direction.south),
+        (ActionType.move, Direction.EAST),
+        (ActionType.move, Direction.EAST),
+        (ActionType.move, Direction.SOUTH),
+        (ActionType.move, Direction.SOUTH),
+        (ActionType.move, Direction.WEST),
+        (ActionType.move, Direction.NORTH),
+        (ActionType.move, Direction.EAST),
+        (ActionType.move, Direction.SOUTH),
       ];
 
       for (final (action, direction) in pattern) {
@@ -325,10 +325,10 @@ void main() {
       // When: User performs 50 actions
       for (var i = 0; i < 50; i++) {
         final direction = [
-          Direction.east,
-          Direction.south,
-          Direction.west,
-          Direction.north
+          Direction.EAST,
+          Direction.SOUTH,
+          Direction.WEST,
+          Direction.NORTH
         ][i % 4];
 
         final result =
@@ -357,7 +357,7 @@ void main() {
       // When: User makes moves in different games
       for (final gameId in games.keys) {
         final moveResult =
-            await executeActionUseCase(gameId, ActionType.move, Direction.east);
+            await executeActionUseCase(gameId, ActionType.move, Direction.EAST);
         expect(moveResult.isRight(), true);
       }
 
@@ -372,10 +372,10 @@ void main() {
 
       // When: User attempts to move in various directions
       final directions = [
-        Direction.north,
-        Direction.east,
-        Direction.south,
-        Direction.west
+        Direction.NORTH,
+        Direction.EAST,
+        Direction.SOUTH,
+        Direction.WEST
       ];
 
       for (final direction in directions) {
@@ -407,10 +407,10 @@ void main() {
       // When: User performs 30 random actions
       for (var i = 0; i < 30; i++) {
         final direction = [
-          Direction.east,
-          Direction.south,
-          Direction.west,
-          Direction.north
+          Direction.EAST,
+          Direction.SOUTH,
+          Direction.WEST,
+          Direction.NORTH
         ][i % 4];
 
         final result =

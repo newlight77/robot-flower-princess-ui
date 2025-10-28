@@ -24,8 +24,8 @@ Board Cases :
 ### Rules
 Actions: There are 5 types of actions the robot can do :
 
-↩️ Rotate : the player can command the the robot to turn on itself to be oriented toward a specified direction (east, south, west, north).
-🚶‍♂️ Moving : the player can command the the robot to move, one case at a time, in a direction (east, south, west, north) toward an adjacent case. It can move while holding flowers. If the action is invalid, the game is over.
+↩️ Rotate : the player can command the the robot to turn on itself to be oriented toward a specified direction (EAST, SOUTH, WEST, NORTH).
+🚶‍♂️ Moving : the player can command the the robot to move, one case at a time, in a direction (EAST, SOUTH, WEST, NORTH) toward an adjacent case. It can move while holding flowers. If the action is invalid, the game is over.
 ⛏️🌸 Picking flower : the player can command the robot to pick a flower in a direction toward an adjacent case. It can pick multiple flowers, up to 12.  If the action is invalid, the game is over.
 🫳🌸 Drop flower: the player can command the robot to drop a flower in a direction toward an adjacent case. If the action is invalid, the game is over.
 🫴🏼🌸 Give Flower: the player can command the robot to give flowers in its hands as a bouquet in a direction toward an adjacent case. If the action is invalid, the game is over.

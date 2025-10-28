@@ -19,7 +19,7 @@ void main() {
     setUp(() {
       const robot = Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         collectedFlowers: [],
         deliveredFlowers: [],
         cleanedObstacles: [],
@@ -144,7 +144,7 @@ void main() {
         (WidgetTester tester) async {
       const robotWithFlowers = Robot(
         position: Position(x: 1, y: 1),
-        orientation: Direction.east,
+        orientation: Direction.EAST,
         collectedFlowers: [Position(x: 2, y: 2)],
         deliveredFlowers: [],
         cleanedObstacles: [],

@@ -44,7 +44,7 @@ void main() {
       expect(game.status, GameStatus.playing);
       expect(game.board.robot.position.x, 0);
       expect(game.board.robot.position.y, 0);
-      expect(game.board.robot.orientation, Direction.north);
+      expect(game.board.robot.orientation, Direction.NORTH);
       expect(game.board.flowersRemaining, greaterThan(0));
       expect(game.actions, isEmpty);
     });
@@ -58,7 +58,7 @@ void main() {
       final actionResult = await executeActionUseCase(
         game.id,
         ActionType.rotate,
-        Direction.east,
+        Direction.EAST,
       );
 
       // Then: Action executes successfully
@@ -79,7 +79,7 @@ void main() {
       final moveResult = await executeActionUseCase(
         game.id,
         ActionType.move,
-        Direction.east,
+        Direction.EAST,
       );
 
       // Then: Robot position updates
@@ -126,8 +126,8 @@ void main() {
       final game = createResult.getOrElse(() => throw Exception('Failed'));
 
       // When: User performs multiple actions
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
       final result = await getGameUseCase(game.id);
 
       // Then: Action count reflects performed actions
@@ -143,7 +143,7 @@ void main() {
       final princessPos = game.board.princess.position;
 
       // When: User performs actions
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
       final result = await getGameUseCase(game.id);
 
       // Then: Princess position unchanged
@@ -158,8 +158,8 @@ void main() {
       final game = createResult.getOrElse(() => throw Exception('Failed'));
 
       // When: User performs various actions
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.rotate, Direction.north);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.rotate, Direction.NORTH);
       final result = await getGameUseCase(game.id);
 
       // Then: Board dimensions unchanged
@@ -174,7 +174,7 @@ void main() {
       // Given: User creates and modifies a game
       final createResult = await createGameUseCase('Persist Test', 10);
       final game = createResult.getOrElse(() => throw Exception('Failed'));
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
 
       // When: User retrieves game multiple times
       final result1 = await getGameUseCase(game.id);
@@ -198,7 +198,7 @@ void main() {
       final game2 = result2.getOrElse(() => throw Exception('Failed'));
 
       // When: User modifies one game
-      await executeActionUseCase(game1.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game1.id, ActionType.move, Direction.EAST);
 
       // Then: Other game remains unaffected
       final check1 = await getGameUseCase(game1.id);
@@ -240,9 +240,9 @@ void main() {
       final startX = game.board.robot.position.x;
 
       // When: User makes sequential moves in same direction
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
 
       final result = await getGameUseCase(game.id);
 
@@ -259,7 +259,7 @@ void main() {
       final originalId = game.id;
 
       // When: User performs various operations
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
       final result = await getGameUseCase(game.id);
 
       // Then: Game ID remains unchanged
@@ -275,7 +275,7 @@ void main() {
       final game = createResult.getOrElse(() => throw Exception('Failed'));
 
       // When: User performs actions
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
       final result = await getGameUseCase(game.id);
 
       // Then: Game name unchanged
@@ -292,7 +292,7 @@ void main() {
 
       // When: User performs rapid successive operations
       for (var i = 0; i < 5; i++) {
-        await executeActionUseCase(game.id, ActionType.move, Direction.east);
+        await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
       }
 
       final result = await getGameUseCase(game.id);
@@ -384,8 +384,8 @@ void main() {
       final game = createResult.getOrElse(() => throw Exception('Failed'));
 
       // When: User alternates between directions
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.west);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.WEST);
 
       final result = await getGameUseCase(game.id);
 

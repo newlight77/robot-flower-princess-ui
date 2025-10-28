@@ -34,26 +34,26 @@ void main() {
     test('should create robot with valid parameters', () {
       const robot = Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         flowersHeld: 0,
       );
 
       expect(robot.position.x, 0);
       expect(robot.position.y, 0);
-      expect(robot.orientation, Direction.north);
+      expect(robot.orientation, Direction.NORTH);
       expect(robot.flowersHeld, 0);
     });
 
     test('should check if robot has flowers', () {
       const robotWithFlowers = Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         flowersHeld: 5,
       );
 
       const robotWithoutFlowers = Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         flowersHeld: 0,
       );
 
@@ -64,13 +64,13 @@ void main() {
     test('should check if robot can pick more flowers', () {
       const robotCanPick = Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         flowersHeld: 5,
       );
 
       const robotFull = Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         flowersHeld: 12,
       );
 
@@ -81,7 +81,7 @@ void main() {
     test('should create copy with updated fields', () {
       const original = Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         flowersHeld: 0,
       );
 
@@ -93,13 +93,13 @@ void main() {
       expect(updated.position.x, 1);
       expect(updated.position.y, 1);
       expect(updated.flowersHeld, 3);
-      expect(updated.orientation, Direction.north);
+      expect(updated.orientation, Direction.NORTH);
     });
 
     test('should serialize to JSON', () {
       const robot = Robot(
         position: Position(x: 2, y: 3),
-        orientation: Direction.east,
+        orientation: Direction.EAST,
         flowersHeld: 4,
       );
 
@@ -107,14 +107,14 @@ void main() {
 
       expect(json['position']['x'], 2);
       expect(json['position']['y'], 3);
-      expect(json['orientation'], 'east');
+      expect(json['orientation'], 'EAST');
       expect(json['flowersHeld'], 4);
     });
 
     test('should deserialize from JSON', () {
       final json = {
         'position': {'x': 2, 'y': 3},
-        'orientation': 'south',
+        'orientation': 'SOUTH',
         'flowersHeld': 7,
       };
 
@@ -122,20 +122,20 @@ void main() {
 
       expect(robot.position.x, 2);
       expect(robot.position.y, 3);
-      expect(robot.orientation, Direction.south);
+      expect(robot.orientation, Direction.SOUTH);
       expect(robot.flowersHeld, 7);
     });
 
     test('should maintain equality for same values', () {
       const robot1 = Robot(
         position: Position(x: 1, y: 1),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         flowersHeld: 5,
       );
 
       const robot2 = Robot(
         position: Position(x: 1, y: 1),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         flowersHeld: 5,
       );
 
@@ -168,7 +168,7 @@ void main() {
         ],
         robot: Robot(
           position: Position(x: 0, y: 0),
-          orientation: Direction.north,
+          orientation: Direction.NORTH,
         ),
         princessPosition: Position(x: 4, y: 4),
         totalFlowers: 3,
@@ -259,7 +259,7 @@ void main() {
           cells: [],
           robot: Robot(
             position: Position(x: 0, y: 0),
-            orientation: Direction.north,
+            orientation: Direction.NORTH,
           ),
           princessPosition: Position(x: 9, y: 9),
           totalFlowers: 5,
@@ -374,24 +374,24 @@ void main() {
   group('Direction Value Object', () {
     test('should have all four directions', () {
       expect(Direction.values.length, 4);
-      expect(Direction.values, contains(Direction.north));
-      expect(Direction.values, contains(Direction.east));
-      expect(Direction.values, contains(Direction.south));
-      expect(Direction.values, contains(Direction.west));
+      expect(Direction.values, contains(Direction.NORTH));
+      expect(Direction.values, contains(Direction.EAST));
+      expect(Direction.values, contains(Direction.SOUTH));
+      expect(Direction.values, contains(Direction.WEST));
     });
 
     test('should have display names', () {
-      expect(Direction.north.displayName, '⬆️ North');
-      expect(Direction.east.displayName, '➡️ East');
-      expect(Direction.south.displayName, '⬇️ South');
-      expect(Direction.west.displayName, '⬅️ West');
+      expect(Direction.NORTH.displayName, '⬆️ NORTH');
+      expect(Direction.EAST.displayName, '➡️ EAST');
+      expect(Direction.SOUTH.displayName, '⬇️ SOUTH');
+      expect(Direction.WEST.displayName, '⬅️ WEST');
     });
 
     test('should have icons', () {
-      expect(Direction.north.icon, '⬆️');
-      expect(Direction.east.icon, '➡️');
-      expect(Direction.south.icon, '⬇️');
-      expect(Direction.west.icon, '⬅️');
+      expect(Direction.NORTH.icon, '⬆️');
+      expect(Direction.EAST.icon, '➡️');
+      expect(Direction.SOUTH.icon, '⬇️');
+      expect(Direction.WEST.icon, '⬅️');
     });
   });
 }
@@ -460,7 +460,7 @@ void main() {
       cells: [],
       robot: Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
       ),
       princessPosition: Position(x: 9, y: 9),
       totalFlowers: 5,
@@ -567,7 +567,7 @@ void main() {
         cells: [],
         robot: Robot(
           position: Position(x: 0, y: 0),
-          orientation: Direction.north,
+          orientation: Direction.NORTH,
         ),
         princessPosition: Position(x: 4, y: 4),
         totalFlowers: 3,
@@ -584,7 +584,7 @@ void main() {
         cells: [],
         robot: Robot(
           position: Position(x: 0, y: 0),
-          orientation: Direction.north,
+          orientation: Direction.NORTH,
         ),
         princessPosition: Position(x: 9, y: 9),
         totalFlowers: 5,
@@ -666,7 +666,7 @@ void main() {
       cells: [],
       robot: Robot(
         position: Position(x: 1, y: 1),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         flowersHeld: 2,
       ),
       princessPosition: Position(x: 4, y: 4),
@@ -684,14 +684,14 @@ void main() {
       final result = await useCase(
         'game-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result, Right(testGame));
       verify(mockRepository.executeAction(
         'game-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       ));
     });
 
@@ -702,14 +702,14 @@ void main() {
       final result = await useCase(
         'game-123',
         ActionType.pickFlower,
-        Direction.east,
+        Direction.EAST,
       );
 
       expect(result.isRight(), true);
       verify(mockRepository.executeAction(
         'game-123',
         ActionType.pickFlower,
-        Direction.east,
+        Direction.EAST,
       ));
     });
 
@@ -717,7 +717,7 @@ void main() {
       final result = await useCase(
         '',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result, const Left(ValidationFailure('Game ID cannot be empty')));
@@ -731,7 +731,7 @@ void main() {
       final result = await useCase(
         'game-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result, const Left(GameOverFailure('Invalid move')));

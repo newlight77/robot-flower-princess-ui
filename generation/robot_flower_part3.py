@@ -655,13 +655,13 @@ class DirectionSelector extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildDirectionButton(Direction.north),
+            _buildDirectionButton(Direction.NORTH),
             const SizedBox(width: 8),
-            _buildDirectionButton(Direction.east),
+            _buildDirectionButton(Direction.EAST),
             const SizedBox(width: 8),
-            _buildDirectionButton(Direction.south),
+            _buildDirectionButton(Direction.SOUTH),
             const SizedBox(width: 8),
-            _buildDirectionButton(Direction.west),
+            _buildDirectionButton(Direction.WEST),
           ],
         ),
       ],
@@ -848,7 +848,7 @@ void main() {
       cells: [],
       robot: Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
       ),
       princessPosition: Position(x: 9, y: 9),
       totalFlowers: 5,

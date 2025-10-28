@@ -35,7 +35,7 @@ void main() {
       cells: [],
       robot: Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
       ),
       princess: Princess(position: Position(x: 9, y: 9)),
       flowersRemaining: 5,
@@ -55,7 +55,7 @@ void main() {
       cells: [],
       robot: Robot(
         position: Position(x: 9, y: 9),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         collectedFlowers: [],
         deliveredFlowers: [
           Position(x: 1, y: 1),

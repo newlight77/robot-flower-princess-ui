@@ -134,9 +134,9 @@ test('Feature: User creates a game and moves robot', () async {
   final createResult = await createGameUseCase(name: 'My Game', rows: 10, cols: 10);
   final game = createResult.getOrElse(() => throw Exception());
 
-  // When: User moves robot east
+  // When: User moves robot EAST
   final moveResult = await executeActionUseCase(
-    gameId: game.id, action: ActionType.move, direction: Direction.east);
+    gameId: game.id, action: ActionType.move, direction: Direction.EAST);
 
   // Then: Robot position is updated
   final updatedGame = moveResult.getOrElse(() => throw Exception());

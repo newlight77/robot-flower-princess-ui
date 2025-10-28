@@ -32,7 +32,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -49,7 +49,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -68,7 +68,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.east,
+              selectedDirection: Direction.EAST,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -79,7 +79,7 @@ void main() {
 
       final directionSelector =
           tester.widget<DirectionSelector>(find.byType(DirectionSelector));
-      expect(directionSelector.selectedDirection, Direction.east);
+      expect(directionSelector.selectedDirection, Direction.EAST);
     });
 
     testWidgets('should call onActionPressed when action button is tapped',
@@ -90,7 +90,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (action) => pressedAction = action,
               onAutoPlay: () {},
@@ -114,7 +114,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () => autoPlayCalled = true,
@@ -135,7 +135,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -155,7 +155,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -175,7 +175,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -193,7 +193,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -210,7 +210,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -227,7 +227,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -257,7 +257,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -307,7 +307,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -329,7 +329,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -351,7 +351,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -373,7 +373,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) => pressCount++,
               onAutoPlay: () {},
@@ -399,7 +399,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.east,
+              selectedDirection: Direction.EAST,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},
@@ -410,7 +410,7 @@ void main() {
 
       final directionSelector =
           tester.widget<DirectionSelector>(find.byType(DirectionSelector));
-      expect(directionSelector.selectedDirection, Direction.east);
+      expect(directionSelector.selectedDirection, Direction.EAST);
     });
 
     testWidgets('should have all required UI elements',
@@ -419,7 +419,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: ActionControls(
-              selectedDirection: Direction.north,
+              selectedDirection: Direction.NORTH,
               onDirectionSelected: (_) {},
               onActionPressed: (_) {},
               onAutoPlay: () {},

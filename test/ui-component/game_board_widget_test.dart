@@ -15,7 +15,7 @@ void main() {
       cells: [],
       robot: Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
       ),
       princess: Princess(position: Position(x: 4, y: 4)),
       flowersRemaining: 3,

@@ -5,24 +5,24 @@ void main() {
   group('Direction Value Object', () {
     test('should have all four directions', () {
       expect(Direction.values.length, 4);
-      expect(Direction.values, contains(Direction.north));
-      expect(Direction.values, contains(Direction.east));
-      expect(Direction.values, contains(Direction.south));
-      expect(Direction.values, contains(Direction.west));
+      expect(Direction.values, contains(Direction.NORTH));
+      expect(Direction.values, contains(Direction.EAST));
+      expect(Direction.values, contains(Direction.SOUTH));
+      expect(Direction.values, contains(Direction.WEST));
     });
 
     test('should have display names', () {
-      expect(Direction.north.displayName, '⬆️ North');
-      expect(Direction.east.displayName, '➡️ East');
-      expect(Direction.south.displayName, '⬇️ South');
-      expect(Direction.west.displayName, '⬅️ West');
+      expect(Direction.NORTH.displayName, '⬆️ North');
+      expect(Direction.EAST.displayName, '➡️ East');
+      expect(Direction.SOUTH.displayName, '⬇️ South');
+      expect(Direction.WEST.displayName, '⬅️ West');
     });
 
     test('should have icons', () {
-      expect(Direction.north.icon, '⬆️');
-      expect(Direction.east.icon, '➡️');
-      expect(Direction.south.icon, '⬇️');
-      expect(Direction.west.icon, '⬅️');
+      expect(Direction.NORTH.icon, '⬆️');
+      expect(Direction.EAST.icon, '➡️');
+      expect(Direction.SOUTH.icon, '⬇️');
+      expect(Direction.WEST.icon, '⬅️');
     });
   });
 }

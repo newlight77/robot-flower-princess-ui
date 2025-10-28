@@ -24,7 +24,7 @@ void main() {
           cells: [],
           robot: Robot(
             position: Position(x: 0, y: 0),
-            orientation: Direction.north,
+            orientation: Direction.NORTH,
             collectedFlowers: [],
             deliveredFlowers: [],
           ),

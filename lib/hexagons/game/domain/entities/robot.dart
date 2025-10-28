@@ -94,7 +94,7 @@ class Robot extends Equatable {
         orientation =
             Direction.values.firstWhere((e) => e.name == json['orientation']);
       } else {
-        orientation = Direction.north;
+        orientation = Direction.NORTH;
       }
 
       // Parse flowers data
@@ -118,11 +118,18 @@ class Robot extends Equatable {
                 debugPrint(
                     'DEBUG: Processing collected item: $item (type: ${item.runtimeType})');
                 if (item is Map<String, dynamic>) {
+                  // Check if the item has a 'position' wrapper or is a direct position
                   if (item.containsKey('position')) {
+                    // Wrapped format: {'position': {'row': ..., 'col': ...}}
                     final pos = Position.fromJson(
                         item['position'] as Map<String, dynamic>);
                     collectedFlowers.add(pos);
-                    debugPrint('DEBUG: Added collected position: $pos');
+                    debugPrint('DEBUG: Added collected position (wrapped): $pos');
+                  } else if (item.containsKey('row') && item.containsKey('col')) {
+                    // Direct format: {'row': ..., 'col': ...}
+                    final pos = Position.fromJson(item);
+                    collectedFlowers.add(pos);
+                    debugPrint('DEBUG: Added collected position (direct): $pos');
                   }
                 }
               }
@@ -152,11 +159,18 @@ class Robot extends Equatable {
                 debugPrint(
                     'DEBUG: Processing delivered item: $item (type: ${item.runtimeType})');
                 if (item is Map<String, dynamic>) {
+                  // Check if the item has a 'position' wrapper or is a direct position
                   if (item.containsKey('position')) {
+                    // Wrapped format: {'position': {'row': ..., 'col': ...}}
                     final pos = Position.fromJson(
                         item['position'] as Map<String, dynamic>);
                     deliveredFlowers.add(pos);
-                    debugPrint('DEBUG: Added delivered position: $pos');
+                    debugPrint('DEBUG: Added delivered position (wrapped): $pos');
+                  } else if (item.containsKey('row') && item.containsKey('col')) {
+                    // Direct format: {'row': ..., 'col': ...}
+                    final pos = Position.fromJson(item);
+                    deliveredFlowers.add(pos);
+                    debugPrint('DEBUG: Added delivered position (direct): $pos');
                   }
                 }
               }
@@ -184,12 +198,34 @@ class Robot extends Equatable {
       List<Position> cleanedObstacles = [];
       if (json['obstacles'] != null) {
         final obstaclesData = json['obstacles'] as Map<String, dynamic>;
+        debugPrint('DEBUG: Robot obstacles data: $obstaclesData');
+
         if (obstaclesData['cleaned'] != null) {
           final cleaned = obstaclesData['cleaned'] as List<dynamic>;
-          cleanedObstacles = cleaned
-              .map((item) => Position.fromJson((item
-                  as Map<String, dynamic>)['position'] as Map<String, dynamic>))
-              .toList();
+          debugPrint('DEBUG: Robot cleaned obstacles: $cleaned');
+
+          try {
+            cleanedObstacles = cleaned.map((item) {
+              debugPrint('DEBUG: Processing cleaned obstacle item: $item (type: ${item.runtimeType})');
+
+              if (item is Map<String, dynamic>) {
+                // Check if the item has a 'position' wrapper or is a direct position
+                if (item.containsKey('position')) {
+                  // Wrapped format: {'position': {'row': ..., 'col': ...}}
+                  return Position.fromJson(item['position'] as Map<String, dynamic>);
+                } else {
+                  // Direct format: {'row': ..., 'col': ...}
+                  return Position.fromJson(item);
+                }
+              }
+              throw Exception('Unexpected cleaned obstacle format: $item');
+            }).toList();
+            debugPrint('DEBUG: Parsed ${cleanedObstacles.length} cleaned obstacles');
+          } catch (e, stackTrace) {
+            debugPrint('ERROR parsing cleaned obstacles: $e');
+            debugPrint('Stack trace: $stackTrace');
+            rethrow;
+          }
         }
       }
 

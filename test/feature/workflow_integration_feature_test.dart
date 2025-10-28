@@ -54,7 +54,7 @@ void main() {
       final moveResult = await executeActionUseCase(
         game.id,
         ActionType.move,
-        Direction.east,
+        Direction.EAST,
       );
       expect(moveResult.isRight(), true);
 
@@ -90,9 +90,9 @@ void main() {
       final g3 = game3.getOrElse(() => throw Exception('Failed'));
 
       // Make moves in different games
-      await executeActionUseCase(g1.id, ActionType.move, Direction.east);
-      await executeActionUseCase(g2.id, ActionType.move, Direction.north);
-      await executeActionUseCase(g3.id, ActionType.move, Direction.south);
+      await executeActionUseCase(g1.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(g2.id, ActionType.move, Direction.NORTH);
+      await executeActionUseCase(g3.id, ActionType.move, Direction.SOUTH);
 
       // Complete one game
       await autoPlayUseCase(g1.id);
@@ -126,9 +126,9 @@ void main() {
       final game = createResult.getOrElse(() => throw Exception('Failed'));
 
       // Play several moves
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.south);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.SOUTH);
 
       // Get current state
       final currentState = await getGameUseCase(game.id);
@@ -205,17 +205,17 @@ void main() {
       final game = createResult.getOrElse(() => throw Exception('Failed'));
 
       // Make some moves (simulating wrong path)
-      await executeActionUseCase(game.id, ActionType.move, Direction.west);
-      await executeActionUseCase(game.id, ActionType.move, Direction.west);
+      await executeActionUseCase(game.id, ActionType.move, Direction.WEST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.WEST);
 
       // Check state
       var currentState = await getGameUseCase(game.id);
       expect(currentState.isRight(), true);
 
       // Correct course
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
 
       currentState = await getGameUseCase(game.id);
       expect(currentState.isRight(), true);
@@ -280,12 +280,12 @@ void main() {
       final game3 = g3.getOrElse(() => throw Exception('Failed'));
 
       // Interleaved operations
-      await executeActionUseCase(game1.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game2.id, ActionType.move, Direction.north);
-      await executeActionUseCase(game3.id, ActionType.move, Direction.south);
-      await executeActionUseCase(game1.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game2.id, ActionType.move, Direction.north);
-      await executeActionUseCase(game3.id, ActionType.move, Direction.south);
+      await executeActionUseCase(game1.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game2.id, ActionType.move, Direction.NORTH);
+      await executeActionUseCase(game3.id, ActionType.move, Direction.SOUTH);
+      await executeActionUseCase(game1.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game2.id, ActionType.move, Direction.NORTH);
+      await executeActionUseCase(game3.id, ActionType.move, Direction.SOUTH);
 
       // Check all games maintained separate state
       final check1 = await getGameUseCase(game1.id);
@@ -379,11 +379,11 @@ void main() {
       final game = createResult.getOrElse(() => throw Exception('Failed'));
 
       // Make moves
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
       final replay1 = await replayGameUseCase(game.id);
       expect(replay1.isRight(), true);
 
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
       final replay2 = await replayGameUseCase(game.id);
       expect(replay2.isRight(), true);
 
@@ -468,9 +468,9 @@ void main() {
       final game = createResult.getOrElse(() => throw Exception('Failed'));
 
       // Manual moves
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.east);
-      await executeActionUseCase(game.id, ActionType.move, Direction.south);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
+      await executeActionUseCase(game.id, ActionType.move, Direction.SOUTH);
 
       // Check progress
       final progress = await getGameUseCase(game.id);

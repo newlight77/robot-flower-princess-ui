@@ -197,42 +197,42 @@
                     "summary": "Rotate robot",
                     "value": {
                       "action": "rotate",
-                      "direction": "south"
+                      "direction": "SOUTH"
                     }
                   },
                   "move": {
                     "summary": "Move robot",
                     "value": {
                       "action": "move",
-                      "direction": "south"
+                      "direction": "SOUTH"
                     }
                   },
                   "pickFlower": {
                     "summary": "Pick a flower",
                     "value": {
                       "action": "pickFlower",
-                      "direction": "south"
+                      "direction": "SOUTH"
                     }
                   },
                   "dropFlower": {
                     "summary": "Drop a flower",
                     "value": {
                       "action": "dropFlower",
-                      "direction": "south"
+                      "direction": "SOUTH"
                     }
                   },
                   "giveFlower": {
                     "summary": "Give flowers",
                     "value": {
                       "action": "giveFlower",
-                      "direction": "south"
+                      "direction": "SOUTH"
                     }
                   },
                   "clean": {
                     "summary": "Clean obstacle",
                     "value": {
                       "action": "clean",
-                      "direction": "south"
+                      "direction": "SOUTH"
                     }
                   }
                 }
@@ -335,10 +335,10 @@
           "direction": {
             "type": "string",
             "enum": [
-              "north",
-              "south",
-              "east",
-              "west"
+              "NORTH",
+              "SOUTH",
+              "EAST",
+              "WEST"
             ],
             "title": "Direction"
           }
@@ -390,15 +390,15 @@
         "properties": {
           "rows": {
             "type": "integer",
-            "maximum": 50,
-            "minimum": 3,
+            "maximum": 50.0,
+            "minimum": 3.0,
             "title": "Rows",
             "description": "Number of rows (3-50)"
           },
           "cols": {
             "type": "integer",
-            "maximum": 50,
-            "minimum": 3,
+            "maximum": 50.0,
+            "minimum": 3.0,
             "title": "Cols",
             "description": "Number of columns (3-50)"
           },

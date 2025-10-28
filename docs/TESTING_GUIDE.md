@@ -312,8 +312,8 @@ test('should calculate flowers held correctly', () {
 ```dart
 // Example: Direction value object
 test('should rotate direction correctly', () {
-  expect(Direction.north.rotateClockwise(), Direction.east);
-  expect(Direction.east.rotateClockwise(), Direction.south);
+  expect(Direction.NORTH.rotateClockwise(), Direction.EAST);
+  expect(Direction.EAST.rotateClockwise(), Direction.SOUTH);
 });
 ```
 
@@ -421,7 +421,7 @@ Test the application's use cases (business operations) to ensure they correctly 
 **Approach:**
 ```dart
 // Example: ExecuteActionImpl use case test
-test('should move robot north successfully', () async {
+test('should move robot NORTH successfully', () async {
   // Given: A game with robot at (5, 5)
   final game = Game(
     board: GameBoard(robot: Robot(position: Position(x: 5, y: 5))),
@@ -430,11 +430,11 @@ test('should move robot north successfully', () async {
   when(mockRepository.executeAction(any, any, any))
       .thenAnswer((_) async => Right(updatedGame));
 
-  // When: User moves north
+  // When: User moves NORTH
   final result = await executeActionUseCase(
     'game-123',
     ActionType.move,
-    Direction.north,
+    Direction.NORTH,
   );
 
   // Then: Robot moves to (5, 4)
@@ -1361,7 +1361,7 @@ GameBoard createTestBoard({
     height: height,
     robot: Robot(
       position: robotPos ?? const Position(x: 0, y: 0),
-      orientation: Direction.north,
+      orientation: Direction.NORTH,
     ),
     princess: Princess(
       position: princessPos ?? Position(x: width - 1, y: height - 1),
@@ -1475,7 +1475,7 @@ test('should handle repository error', () async {
 **Examples**:
 - ✅ `test('should calculate flowers held correctly')` - Good (clear action + outcome)
 - ✅ `test('should throw exception when board size is invalid')` - Good (condition + expected)
-- ✅ `test('should move robot north successfully')` - Good (action + direction + outcome)
+- ✅ `test('should move robot NORTH successfully')` - Good (action + direction + outcome)
 - ✅ `testWidgets('should display robot emoji at correct position')` - Good (UI assertion)
 - ❌ `test('test 1')` - Bad (not descriptive)
 - ❌ `test('robot')` - Bad (too vague)

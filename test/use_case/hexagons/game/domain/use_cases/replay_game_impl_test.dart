@@ -29,7 +29,7 @@ void main() {
     cells: [],
     robot: Robot(
       position: Position(x: 0, y: 0),
-      orientation: Direction.north,
+      orientation: Direction.NORTH,
     ),
     princess: Princess(position: Position(x: 9, y: 9)),
     flowersRemaining: 5,
@@ -43,7 +43,7 @@ void main() {
     cells: [],
     robot: Robot(
       position: Position(x: 1, y: 0),
-      orientation: Direction.east,
+      orientation: Direction.EAST,
     ),
     princess: Princess(position: Position(x: 9, y: 9)),
     flowersRemaining: 5,
@@ -57,7 +57,7 @@ void main() {
     cells: [],
     robot: Robot(
       position: Position(x: 2, y: 0),
-      orientation: Direction.east,
+      orientation: Direction.EAST,
       collectedFlowers: [Position(x: 1, y: 0)],
     ),
     princess: Princess(position: Position(x: 9, y: 9)),
@@ -72,7 +72,7 @@ void main() {
     cells: [],
     robot: Robot(
       position: Position(x: 9, y: 9),
-      orientation: Direction.east,
+      orientation: Direction.EAST,
       collectedFlowers: [],
       deliveredFlowers: [
         Position(x: 1, y: 0),
@@ -290,7 +290,7 @@ void main() {
           cells: const [],
           robot: Robot(
             position: Position(x: index % 10, y: index ~/ 10),
-            orientation: Direction.east,
+            orientation: Direction.EAST,
           ),
           princess: const Princess(position: Position(x: 9, y: 9)),
           flowersRemaining: 5,

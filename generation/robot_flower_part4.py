@@ -999,7 +999,7 @@ void main() {
       cells: [],
       robot: Robot(
         position: Position(x: 0, y: 0),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
       ),
       princessPosition: Position(x: 4, y: 4),
       totalFlowers: 3,

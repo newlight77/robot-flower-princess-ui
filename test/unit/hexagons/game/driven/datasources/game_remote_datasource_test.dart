@@ -32,7 +32,7 @@ void main() {
     ],
     'robot': {
       'position': {'x': 1, 'y': 0},
-      'orientation': 'north',
+      'orientation': 'NORTH',
       'flowers': {'collected': [], 'delivered': [], 'collection_capacity': 12},
       'obstacles': {'cleaned': []},
       'executed_actions': []
@@ -234,7 +234,7 @@ void main() {
         final result = await datasource.executeAction(
           'test-123',
           ActionType.move,
-          Direction.north,
+          Direction.NORTH,
         );
 
         expect(result.id, 'test-123');
@@ -259,7 +259,7 @@ void main() {
           () => datasource.executeAction(
             'test-123',
             ActionType.move,
-            Direction.north,
+            Direction.NORTH,
           ),
           throwsA(isA<NetworkException>()),
         );
@@ -280,7 +280,7 @@ void main() {
           () => datasource.executeAction(
             'test-123',
             ActionType.move,
-            Direction.north,
+            Direction.NORTH,
           ),
           throwsA(isA<ValidationException>()),
         );

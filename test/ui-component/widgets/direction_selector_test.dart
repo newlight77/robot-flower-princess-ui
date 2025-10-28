@@ -55,11 +55,11 @@ void main() {
         ),
       );
 
-      // Tap the first button (north)
+      // Tap the first button (NORTH)
       await tester.tap(find.byType(ElevatedButton).first);
       await tester.pump();
 
-      expect(selectedDirection, Direction.north);
+      expect(selectedDirection, Direction.NORTH);
     });
 
     testWidgets('should highlight selected direction',
@@ -68,7 +68,7 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: DirectionSelector(
-              selectedDirection: Direction.east,
+              selectedDirection: Direction.EAST,
               onDirectionSelected: (_) {},
             ),
           ),

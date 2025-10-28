@@ -30,7 +30,7 @@ class FakeGameDataSource implements GameRemoteDataSource {
     // Generate a simple board
     const robot = Robot(
       position: Position(x: 0, y: 0),
-      orientation: Direction.north,
+      orientation: Direction.NORTH,
       collectedFlowers: [],
       deliveredFlowers: [],
       cleanedObstacles: [],
@@ -96,16 +96,16 @@ class FakeGameDataSource implements GameRemoteDataSource {
       Position newPosition = robot.position;
 
       switch (direction) {
-        case Direction.north:
+        case Direction.NORTH:
           newPosition = Position(x: robot.position.x, y: robot.position.y - 1);
           break;
-        case Direction.south:
+        case Direction.SOUTH:
           newPosition = Position(x: robot.position.x, y: robot.position.y + 1);
           break;
-        case Direction.east:
+        case Direction.EAST:
           newPosition = Position(x: robot.position.x + 1, y: robot.position.y);
           break;
-        case Direction.west:
+        case Direction.WEST:
           newPosition = Position(x: robot.position.x - 1, y: robot.position.y);
           break;
       }

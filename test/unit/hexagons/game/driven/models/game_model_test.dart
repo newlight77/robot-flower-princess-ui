@@ -28,7 +28,7 @@ void main() {
         },
         'robot': {
           'position': {'x': 1, 'y': 0},
-          'orientation': 'north',
+          'orientation': 'NORTH',
           'flowers': {
             'collected': [],
             'delivered': [],
@@ -193,13 +193,13 @@ void main() {
         validJson['actions'] = [
           {
             'type': 'move',
-            'direction': 'north',
+            'direction': 'NORTH',
             'timestamp': '2024-01-01T10:05:00.000Z',
             'success': true
           },
           {
             'type': 'pickFlower',
-            'direction': 'north',
+            'direction': 'NORTH',
             'timestamp': '2024-01-01T10:06:00.000Z',
             'success': true
           }
@@ -278,7 +278,7 @@ void main() {
             cells: [],
             robot: Robot(
               position: Position(x: 0, y: 0),
-              orientation: Direction.north,
+              orientation: Direction.NORTH,
             ),
             princess: Princess(position: Position(x: 2, y: 2)),
             flowersRemaining: 1,
@@ -360,7 +360,7 @@ void main() {
           cells: [],
           robot: Robot(
             position: Position(x: 0, y: 0),
-            orientation: Direction.north,
+            orientation: Direction.NORTH,
           ),
           princess: Princess(position: Position(x: 2, y: 2)),
           flowersRemaining: 1,

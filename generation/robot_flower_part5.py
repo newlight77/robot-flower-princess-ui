@@ -473,7 +473,7 @@ Content-Type: application/json
 
 {
   "action": "rotate|move|pickFlower|dropFlower|giveFlower|clean",
-  "direction": "north|east|south|west"
+  "direction": "NORTH|EAST|SOUTH|WEST"
 }
 
 Response: Updated Game object
@@ -525,7 +525,7 @@ Response: Array of GameBoard objects (step-by-step states)
 ```json
 {
   "position": Position,
-  "orientation": "north|east|south|west",
+  "orientation": "NORTH|EAST|SOUTH|WEST",
   "flowersHeld": number
 }
 ```
@@ -550,7 +550,7 @@ Response: Array of GameBoard objects (step-by-step states)
 ```json
 {
   "type": "rotate|move|pickFlower|dropFlower|giveFlower|clean",
-  "direction": "north|east|south|west",
+  "direction": "NORTH|EAST|SOUTH|WEST",
   "timestamp": "ISO8601 datetime",
   "success": boolean,
   "errorMessage": "string?"

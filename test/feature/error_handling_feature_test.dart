@@ -57,7 +57,7 @@ void main() {
       final result = await executeActionUseCase(
         'non-existent-id',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       // Then: Error is returned gracefully
@@ -180,7 +180,7 @@ void main() {
 
       // When: User tries to execute action
       final result =
-          await executeActionUseCase('', ActionType.move, Direction.north);
+          await executeActionUseCase('', ActionType.move, Direction.NORTH);
 
       // Then: Validation error is returned
       expect(result.isLeft(), true);

@@ -78,9 +78,9 @@ void main() {
       final game = createResult.getOrElse(() => throw Exception('Failed'));
       final initialPosition = game.board.robot.position;
 
-      // When: User moves robot east
+      // When: User moves robot EAST
       final moveResult =
-          await executeActionUseCase(game.id, ActionType.move, Direction.east);
+          await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
 
       // Then: Robot position is updated
       expect(moveResult.isRight(), true);
@@ -98,23 +98,23 @@ void main() {
       // When: User performs multiple moves
       var currentGame = game;
 
-      // Move east
+      // Move EAST
       var result = await executeActionUseCase(
-          currentGame.id, ActionType.move, Direction.east);
+          currentGame.id, ActionType.move, Direction.EAST);
       currentGame = result.getOrElse(() => throw Exception('Failed'));
       expect(currentGame.board.robot.position.x, 1);
       expect(currentGame.board.robot.position.y, 0);
 
-      // Move south
+      // Move SOUTH
       result = await executeActionUseCase(
-          currentGame.id, ActionType.move, Direction.south);
+          currentGame.id, ActionType.move, Direction.SOUTH);
       currentGame = result.getOrElse(() => throw Exception('Failed'));
       expect(currentGame.board.robot.position.x, 1);
       expect(currentGame.board.robot.position.y, 1);
 
-      // Move west
+      // Move WEST
       result = await executeActionUseCase(
-          currentGame.id, ActionType.move, Direction.west);
+          currentGame.id, ActionType.move, Direction.WEST);
       currentGame = result.getOrElse(() => throw Exception('Failed'));
       expect(currentGame.board.robot.position.x, 0);
       expect(currentGame.board.robot.position.y, 1);
@@ -176,10 +176,10 @@ void main() {
       // And: User performs several actions
       var currentGame = game;
       final actions = [
-        (ActionType.move, Direction.east),
-        (ActionType.move, Direction.south),
-        (ActionType.move, Direction.south),
-        (ActionType.move, Direction.east),
+        (ActionType.move, Direction.EAST),
+        (ActionType.move, Direction.SOUTH),
+        (ActionType.move, Direction.SOUTH),
+        (ActionType.move, Direction.EAST),
       ];
 
       for (final (action, direction) in actions) {

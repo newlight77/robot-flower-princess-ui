@@ -35,7 +35,7 @@ void main() {
         cells: [],
         robot: Robot(
           position: Position(x: 0, y: 0),
-          orientation: Direction.north,
+          orientation: Direction.NORTH,
         ),
         princess: Princess(position: Position(x: 4, y: 4)),
         flowersRemaining: 3,
@@ -286,13 +286,13 @@ void main() {
       when(mockDataSource.executeAction(
         'test-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       )).thenAnswer((_) async => testGameModel);
 
       final result = await repository.executeAction(
         'test-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result.isRight(), true);
@@ -301,7 +301,7 @@ void main() {
         (game) => expect(game.id, testGameModel.id),
       );
       verify(mockDataSource.executeAction(
-              'test-123', ActionType.move, Direction.north))
+              'test-123', ActionType.move, Direction.NORTH))
           .called(1);
     });
 
@@ -313,7 +313,7 @@ void main() {
       final result = await repository.executeAction(
         'test-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result.isLeft(), true);
@@ -334,7 +334,7 @@ void main() {
       final result = await repository.executeAction(
         'test-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result.isLeft(), true);
@@ -352,7 +352,7 @@ void main() {
       final result = await repository.executeAction(
         'test-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result.isLeft(), true);
@@ -370,7 +370,7 @@ void main() {
       final result = await repository.executeAction(
         'test-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result.isLeft(), true);
@@ -443,7 +443,7 @@ void main() {
       height: 5,
       cells: [],
       robot:
-          Robot(position: Position(x: 0, y: 0), orientation: Direction.north),
+          Robot(position: Position(x: 0, y: 0), orientation: Direction.NORTH),
       princess: Princess(position: Position(x: 4, y: 4)),
       flowersRemaining: 3,
       totalObstacles: 0,

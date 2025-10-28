@@ -53,7 +53,7 @@ void main() {
       // Make 3 moves
       for (var i = 0; i < 3; i++) {
         final moveResult = await executeActionUseCase(
-            game.id, ActionType.move, Direction.east);
+            game.id, ActionType.move, Direction.EAST);
         game = moveResult.getOrElse(() => throw Exception('Failed'));
       }
 
@@ -79,10 +79,10 @@ void main() {
       var game = createResult.getOrElse(() => throw Exception('Failed'));
 
       final actions = [
-        (ActionType.move, Direction.east),
-        (ActionType.move, Direction.south),
-        (ActionType.move, Direction.south),
-        (ActionType.move, Direction.west),
+        (ActionType.move, Direction.EAST),
+        (ActionType.move, Direction.SOUTH),
+        (ActionType.move, Direction.SOUTH),
+        (ActionType.move, Direction.WEST),
       ];
 
       for (final (action, direction) in actions) {
@@ -138,7 +138,7 @@ void main() {
         // Make different number of moves in each game
         for (var j = 0; j <= i; j++) {
           final moveResult = await executeActionUseCase(
-              game.id, ActionType.move, Direction.east);
+              game.id, ActionType.move, Direction.EAST);
           game = moveResult.getOrElse(() => throw Exception('Failed'));
         }
 
@@ -164,11 +164,11 @@ void main() {
 
       // Move robot twice
       var moveResult =
-          await executeActionUseCase(game.id, ActionType.move, Direction.east);
+          await executeActionUseCase(game.id, ActionType.move, Direction.EAST);
       game = moveResult.getOrElse(() => throw Exception('Failed'));
 
       moveResult =
-          await executeActionUseCase(game.id, ActionType.move, Direction.south);
+          await executeActionUseCase(game.id, ActionType.move, Direction.SOUTH);
       game = moveResult.getOrElse(() => throw Exception('Failed'));
 
       final currentPosition = game.board.robot.position;
@@ -193,11 +193,11 @@ void main() {
 
       // Execute a series of strategic moves
       final strategy = [
-        (ActionType.move, Direction.east),
-        (ActionType.move, Direction.east),
-        (ActionType.move, Direction.south),
-        (ActionType.move, Direction.south),
-        (ActionType.move, Direction.west),
+        (ActionType.move, Direction.EAST),
+        (ActionType.move, Direction.EAST),
+        (ActionType.move, Direction.SOUTH),
+        (ActionType.move, Direction.SOUTH),
+        (ActionType.move, Direction.WEST),
       ];
 
       for (final (action, direction) in strategy) {
@@ -231,7 +231,7 @@ void main() {
       // Make several moves
       for (var i = 0; i < 3; i++) {
         final moveResult = await executeActionUseCase(
-            game.id, ActionType.move, Direction.east);
+            game.id, ActionType.move, Direction.EAST);
         game = moveResult.getOrElse(() => throw Exception('Failed'));
       }
 
@@ -257,7 +257,7 @@ void main() {
 
         // Make a move
         final moveResult = await executeActionUseCase(
-            game.id, ActionType.move, Direction.east);
+            game.id, ActionType.move, Direction.EAST);
         game = moveResult.getOrElse(() => throw Exception('Failed'));
 
         // When: User replays

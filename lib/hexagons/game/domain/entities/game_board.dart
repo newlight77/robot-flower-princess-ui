@@ -145,14 +145,14 @@ class GameBoard extends Equatable {
       } else if (grid != null) {
         // Extract robot position from grid
         final robotPosition = _findRobotPositionInGrid(grid);
-        robot = Robot(position: robotPosition, orientation: Direction.north);
+        robot = Robot(position: robotPosition, orientation: Direction.NORTH);
         Logger.debug(
             'GameBoard.fromJson - robot position extracted from grid: $robotPosition',
             tag: 'GameBoard');
       } else {
         // Fallback to default position
         robot = const Robot(
-            position: Position(x: 0, y: 0), orientation: Direction.north);
+            position: Position(x: 0, y: 0), orientation: Direction.NORTH);
         Logger.debug('GameBoard.fromJson - robot using default position',
             tag: 'GameBoard');
       }

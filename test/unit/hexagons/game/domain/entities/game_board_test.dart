@@ -22,7 +22,7 @@ void main() {
         ],
         robot: Robot(
           position: Position(x: 0, y: 0),
-          orientation: Direction.north,
+          orientation: Direction.NORTH,
         ),
         princess: Princess(position: Position(x: 4, y: 4)),
         flowersRemaining: 3,
@@ -95,7 +95,7 @@ void main() {
           height: 3,
           cells: [],
           robot: Robot(
-              position: Position(x: 0, y: 0), orientation: Direction.north),
+              position: Position(x: 0, y: 0), orientation: Direction.NORTH),
           princess: Princess(position: Position(x: 2, y: 2)),
           flowersRemaining: 0,
           totalObstacles: 0,
@@ -113,7 +113,7 @@ void main() {
           height: 1,
           cells: [],
           robot: Robot(
-              position: Position(x: 0, y: 0), orientation: Direction.north),
+              position: Position(x: 0, y: 0), orientation: Direction.NORTH),
           princess: Princess(position: Position(x: 0, y: 0)),
           flowersRemaining: 0,
           totalObstacles: 0,
@@ -133,7 +133,7 @@ void main() {
           height: 100,
           cells: [],
           robot: Robot(
-              position: Position(x: 0, y: 0), orientation: Direction.north),
+              position: Position(x: 0, y: 0), orientation: Direction.NORTH),
           princess: Princess(position: Position(x: 99, y: 99)),
           flowersRemaining: 0,
           totalObstacles: 0,
@@ -153,7 +153,7 @@ void main() {
           height: 5,
           cells: [],
           robot: Robot(
-              position: Position(x: 0, y: 0), orientation: Direction.north),
+              position: Position(x: 0, y: 0), orientation: Direction.NORTH),
           princess: Princess(position: Position(x: 9, y: 4)),
           flowersRemaining: 0,
           totalObstacles: 0,
@@ -171,7 +171,7 @@ void main() {
           height: 10,
           cells: [],
           robot: Robot(
-              position: Position(x: 0, y: 0), orientation: Direction.north),
+              position: Position(x: 0, y: 0), orientation: Direction.NORTH),
           princess: Princess(position: Position(x: 9, y: 9)),
           flowersRemaining: 50,
           totalObstacles: 0,
@@ -188,7 +188,7 @@ void main() {
           height: 5,
           cells: [],
           robot: Robot(
-              position: Position(x: 0, y: 0), orientation: Direction.north),
+              position: Position(x: 0, y: 0), orientation: Direction.NORTH),
           princess: Princess(position: Position(x: 4, y: 4)),
           flowersRemaining: 3,
           totalObstacles: 5,
@@ -224,7 +224,7 @@ void main() {
 
       test('should handle copyWith with all fields changed', () {
         const newRobot =
-            Robot(position: Position(x: 2, y: 2), orientation: Direction.south);
+            Robot(position: Position(x: 2, y: 2), orientation: Direction.SOUTH);
         const newPrincess = Princess(position: Position(x: 3, y: 3));
 
         final copied = testBoard.copyWith(
@@ -253,7 +253,7 @@ void main() {
           height: 5,
           cells: [],
           robot: Robot(
-              position: Position(x: 2, y: 2), orientation: Direction.north),
+              position: Position(x: 2, y: 2), orientation: Direction.NORTH),
           princess: Princess(position: Position(x: 2, y: 2)),
           flowersRemaining: 0,
           totalObstacles: 0,

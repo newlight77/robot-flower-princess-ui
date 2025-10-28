@@ -35,7 +35,7 @@ void main() {
       cells: [],
       robot: Robot(
         position: Position(x: 1, y: 1),
-        orientation: Direction.north,
+        orientation: Direction.NORTH,
         collectedFlowers: [Position(x: 1, y: 1), Position(x: 2, y: 2)],
         deliveredFlowers: [Position(x: 1, y: 1)],
       ),
@@ -56,14 +56,14 @@ void main() {
       final result = await useCase(
         'game-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result, Right(testGame));
       verify(mockRepository.executeAction(
         'game-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       ));
     });
 
@@ -74,14 +74,14 @@ void main() {
       final result = await useCase(
         'game-123',
         ActionType.pickFlower,
-        Direction.east,
+        Direction.EAST,
       );
 
       expect(result.isRight(), true);
       verify(mockRepository.executeAction(
         'game-123',
         ActionType.pickFlower,
-        Direction.east,
+        Direction.EAST,
       ));
     });
 
@@ -89,7 +89,7 @@ void main() {
       final result = await useCase(
         '',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result, const Left(ValidationFailure('Game ID cannot be empty')));
@@ -103,7 +103,7 @@ void main() {
       final result = await useCase(
         'game-123',
         ActionType.move,
-        Direction.north,
+        Direction.NORTH,
       );
 
       expect(result, const Left(GameOverFailure('Invalid move')));

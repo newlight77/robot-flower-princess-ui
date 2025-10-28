@@ -1,31 +1,31 @@
 enum Direction {
-  north,
-  east,
-  south,
-  west;
+  NORTH,
+  EAST,
+  SOUTH,
+  WEST;
 
   String get displayName {
     switch (this) {
-      case Direction.north:
+      case Direction.NORTH:
         return '⬆️ North';
-      case Direction.east:
+      case Direction.EAST:
         return '➡️ East';
-      case Direction.south:
+      case Direction.SOUTH:
         return '⬇️ South';
-      case Direction.west:
+      case Direction.WEST:
         return '⬅️ West';
     }
   }
 
   String get icon {
     switch (this) {
-      case Direction.north:
+      case Direction.NORTH:
         return '⬆️';
-      case Direction.east:
+      case Direction.EAST:
         return '➡️';
-      case Direction.south:
+      case Direction.SOUTH:
         return '⬇️';
-      case Direction.west:
+      case Direction.WEST:
         return '⬅️';
     }
   }
