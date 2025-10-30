@@ -124,12 +124,15 @@ class Robot extends Equatable {
                     final pos = Position.fromJson(
                         item['position'] as Map<String, dynamic>);
                     collectedFlowers.add(pos);
-                    debugPrint('DEBUG: Added collected position (wrapped): $pos');
-                  } else if (item.containsKey('row') && item.containsKey('col')) {
+                    debugPrint(
+                        'DEBUG: Added collected position (wrapped): $pos');
+                  } else if (item.containsKey('row') &&
+                      item.containsKey('col')) {
                     // Direct format: {'row': ..., 'col': ...}
                     final pos = Position.fromJson(item);
                     collectedFlowers.add(pos);
-                    debugPrint('DEBUG: Added collected position (direct): $pos');
+                    debugPrint(
+                        'DEBUG: Added collected position (direct): $pos');
                   }
                 }
               }
@@ -165,12 +168,15 @@ class Robot extends Equatable {
                     final pos = Position.fromJson(
                         item['position'] as Map<String, dynamic>);
                     deliveredFlowers.add(pos);
-                    debugPrint('DEBUG: Added delivered position (wrapped): $pos');
-                  } else if (item.containsKey('row') && item.containsKey('col')) {
+                    debugPrint(
+                        'DEBUG: Added delivered position (wrapped): $pos');
+                  } else if (item.containsKey('row') &&
+                      item.containsKey('col')) {
                     // Direct format: {'row': ..., 'col': ...}
                     final pos = Position.fromJson(item);
                     deliveredFlowers.add(pos);
-                    debugPrint('DEBUG: Added delivered position (direct): $pos');
+                    debugPrint(
+                        'DEBUG: Added delivered position (direct): $pos');
                   }
                 }
               }
@@ -206,13 +212,15 @@ class Robot extends Equatable {
 
           try {
             cleanedObstacles = cleaned.map((item) {
-              debugPrint('DEBUG: Processing cleaned obstacle item: $item (type: ${item.runtimeType})');
+              debugPrint(
+                  'DEBUG: Processing cleaned obstacle item: $item (type: ${item.runtimeType})');
 
               if (item is Map<String, dynamic>) {
                 // Check if the item has a 'position' wrapper or is a direct position
                 if (item.containsKey('position')) {
                   // Wrapped format: {'position': {'row': ..., 'col': ...}}
-                  return Position.fromJson(item['position'] as Map<String, dynamic>);
+                  return Position.fromJson(
+                      item['position'] as Map<String, dynamic>);
                 } else {
                   // Direct format: {'row': ..., 'col': ...}
                   return Position.fromJson(item);
@@ -220,7 +228,8 @@ class Robot extends Equatable {
               }
               throw Exception('Unexpected cleaned obstacle format: $item');
             }).toList();
-            debugPrint('DEBUG: Parsed ${cleanedObstacles.length} cleaned obstacles');
+            debugPrint(
+                'DEBUG: Parsed ${cleanedObstacles.length} cleaned obstacles');
           } catch (e, stackTrace) {
             debugPrint('ERROR parsing cleaned obstacles: $e');
             debugPrint('Stack trace: $stackTrace');
