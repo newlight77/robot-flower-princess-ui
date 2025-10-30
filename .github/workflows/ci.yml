@@ -398,14 +398,14 @@ jobs:
         name: web-build
         path: build/web
 
-  docker:
-    name: Build Docker Image
-    needs: [build-web]
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  # docker:
+  #   name: Build Docker Image
+  #   needs: [build-web]
+  #   runs-on: ubuntu-latest
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
-    steps:
-    - uses: actions/checkout@v5
+  #   steps:
+  #   - uses: actions/checkout@v5
 
-    - name: Build Docker image
-      run: docker build -t robot-flower-princess:${{ github.sha }} .
+  #   - name: Build Docker image
+  #     run: docker build -t robot-flower-princess:${{ github.sha }} .
